@@ -92,7 +92,7 @@ package com.wartype.bullets
 		{
 			var enemyWord:WordBase; //Ссылка на атакуемое слово
 			var words:Array = _universe.words.objects; //Массив появившихся на экране слов
-			var distance:Number; //Дистанция от пули до слова
+			//var distance:Number; //Дистанция от пули до слова
 			
 			this.x += _speed.x * delta;
 			this.y += _speed.y * delta;
@@ -109,8 +109,9 @@ package com.wartype.bullets
 			{
 				enemyWord = words[i];
 				
-				distance = Amath.distance(this.x, this.y, enemyWord.x, enemyWord.y);
-				if (distance <= this.width / 2 + enemyWord.width / 4)
+				//distance = Amath.distance(this.x, this.y, enemyWord.x, enemyWord.y);
+				//if (distance <= this.width / 2 + enemyWord.width / 4)
+				if(this.hitTestObject(enemyWord))
 				{
 					if (enemyWord.isAttacked == true)
 					{

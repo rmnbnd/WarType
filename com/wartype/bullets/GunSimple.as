@@ -49,6 +49,11 @@ package com.wartype.bullets
 			_health -= value;
 		}
 		
+		public function get getHealth():int
+		{
+			return _health;
+		}
+		
 		//Функция-обработчик события нажатия на кнопку
 		public function keyDownHandler(event:KeyboardEvent):void
 		{
@@ -110,11 +115,7 @@ package com.wartype.bullets
 		
 		override public function update(delta:Number):void
 		{
-			_textFieldGun.text = "HP:" + _health.toString();
-			if (_health <= 0)
-			{
-				_universe.endGame();
-			}
+			super.update(delta);
 		}
 		
 		//Функция выстрела

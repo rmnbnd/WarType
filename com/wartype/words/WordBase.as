@@ -15,74 +15,53 @@ package com.wartype.words
 	
 	public class WordBase extends Sprite implements IObject
 	{
-		private var _wordsArrayLenght:int; //Размерность массива
-		private var _textLabel:TextField; //Текстовое поле для вывода текста слова на экран
-		private var textClip:Sprite; //Спрайт для вывода текста слова на экран
-		private var _wordObjText:String; //Собственно, само слово
-		
+		protected var _wordsArrayLenght:int; //Размерность массива
+		protected var _textLabel:TextField; //Текстовое поле для вывода текста слова на экран
+		protected var textClip:Sprite; //Спрайт для вывода текста слова на экран
+		protected var _wordObjText:String; //Собственно, само слово
 		protected var _sprite:Sprite; //Спрайт слова
-		protected var _speedY:Number; //Скорость по Y
+		protected var _speedY:int; //Скорость по Y
 		protected var _go:Boolean; //Движется ли слово
 		protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
 		protected var _gun:GunSimple = GunSimple.getInstance();
 		
+		public var isAttacked:Boolean; //Атаковано ли слово
 		public var wordsArray:Array = []; //Массив букв слова
 		public var isDead:Boolean; //Уничтожено ли слово
-		public var isAttacked:Boolean; //Атаковано ли слово
 	
 		
-		public function WordBase(wordObject:String)
+		public function WordBase()
+		{	
+			
+		}
+		
+		public function init():void
 		{
-			_wordObjText = wordObject; //Записываем слово, передаваемое в конструктор, в переменную
-			wordsArray = wordObject.split(''); //Разделяем слово по буквам
-			_wordsArrayLenght = wordsArray.length; //Записываем размерность массива в переменную
-			trace(wordsArray);
-			_speedY = 50; //Устанавливаем скорость
-			_sprite = new word_mc(); //Спрайт для слова
-			_go = true; //Флаг движения
-			isDead = false; //Флаг "смерти" слова
-		    isAttacked = false; //Флаг атакуемости слова
-			
-			_universe.words.add(this); //Добавляем слово в массив слов (ObjectController)
-			start_coordinats(); //Устанавливаем рандомно слово
-			
-			textClip = new textlabel_mc(); //Клип для TextLabel
-			addChild(textClip);
+			this.x = ((App.SCR_WIDTH - 50) - 50) * Math.random() + 50;
+			if (_sprite != null && textClip != null)
+			{
+				addChild(_sprite);
+				addChild(textClip);
+			}
 			
 			if (textClip["text"] != null)
 			{
 				_textLabel = textClip["text"] as TextField;
 			}
+			_universe.words.add(this); //Добавляем слово в массив слов (ObjectController)
+			_universe.addChild(this);
 		}
 		
 		//Фукнция нанесения урона по нажатию на клавишу
 		public function damage():void
 		{
-			//Выводим слово после нанесения урона
-			_wordObjText = '';
-			wordsArray.shift();
-			for (var i:int = 0; i < wordsArray.length; i++)
-			{
-				_wordObjText += wordsArray[i].toString();
-			}
 			
-			if (wordsArray.length <= 0 || this.y >= App.SCR_HEIGHT)
-			{
-				_textLabel.visible = false;
-				isDead = true;
-				GunSimple.isAttackedFlag = false;
-			}
 		}
 		
 		//Нанесение урона пулей
 		public function destruction():void
 		{
-			_wordsArrayLenght--;
 			
-			if (_wordsArrayLenght <= 0 && wordsArray.length <=0)
-			{
-				free();
-			}
 		}
 		
 		public function free():void
@@ -101,31 +80,12 @@ package com.wartype.words
 		
 		public function update(delta:Number):void
 		{
-			if (_go)
-			{
-				this.y += _speedY * delta;
-				_textLabel.text = _wordObjText.toString();
-			}
-			
-			if (this.y >= App.SCR_HEIGHT)
-			{
-				_gun.setHealth = 10;
-				free();
-				return;
-			}
+			//nothing
 		}
 		
 		public function stop():void
 		{
 			_speedY = 0;
-		}
-		
-		//Функция, устанавливающая рандомно слово на сцене
-		private function start_coordinats():void
-		{
-			this.x = ((App.SCR_WIDTH - 50) - 50) * Math.random() + 50;
-			addChild(_sprite);
-			_universe.addChild(this);
 		}
 	}
 }

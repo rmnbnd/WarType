@@ -54,7 +54,11 @@ package com.wartype.bullets
 		
 		public function update(delta:Number):void
 		{
-			//nothing
+			_textFieldGun.text = "HP:" + _health.toString();
+			if (_health <= 0)
+			{
+				_universe.endGame();
+			}
 		}
 		
 		public function free():void

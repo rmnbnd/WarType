@@ -4,7 +4,6 @@ package com.wartype
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	
 	public class Game extends Sprite
 	{
 		
