@@ -1,4 +1,4 @@
-package com.wartype.bullets
+﻿package com.wartype.bullets
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -96,7 +96,18 @@ package com.wartype.bullets
 						{
 							isAttackedFlag = true;
 						}
-						_head.rotation = Amath.getAngleDeg(this.x, this.y, _wordTarget.x, _wordTarget.y);
+						
+						//update our player location parameters
+						var playerX = this.x;
+						var playerY = this.y;
+	
+						//calculate player_mc rotation, based on player position & mouse position 
+						var rotationDirection = Math.round(180 - ((Math.atan2(_wordTarget.x - playerX, _wordTarget.y - playerY)) * 180/Math.PI));
+	
+						//set rotation
+						this.rotation = rotationDirection;	
+						
+						//_head.rotation = Amath.getAngleDeg(_head.x, _head.y, _wordTarget.x, _wordTarget.y);
 						_wordTarget.damage();
 						shoot();
 					}
@@ -122,8 +133,23 @@ package com.wartype.bullets
 		private function shoot():void
 		{
 			var bullet:BulletSimple = new BulletSimple();
-			bullet.init(this.x, this.y, _bulletSpeed, _head.rotation);
+			bullet.init(this.x, this.y, _bulletSpeed, this.rotation);
+		}
+		
+		public function getDegrees(radians:Number):Number
+		{
+			return Math.floor(radians/(Math.PI/180));
 		}
 	
+		public function getRadians(delta_x:Number, delta_y:Number):Number
+		{
+			var r:Number = Math.atan2(delta_y, delta_x);
+			
+			if (delta_y < 0)
+			{
+				r += (2 * Math.PI);
+			}
+			return r;
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.wartype.bullets
+﻿package com.wartype.bullets
 {
 	import com.wartype.Universe;
 	import com.wartype.App;
@@ -10,6 +10,11 @@ package com.wartype.bullets
 	
 	public class BulletBase extends Sprite implements IObject
 	{
+		var bulletSpeed:Number = 20; //pixels
+		
+		var xSpeed;
+		var ySpeed;
+		
 		protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
 		protected var _sprite:Sprite; //Спрайт пули
 		protected var _speed:Avector = new Avector(); //Скорость пули
@@ -40,48 +45,20 @@ package com.wartype.bullets
 				addChild(_sprite);
 			}
 			
+			
+			//position bullet on player
 			this.x = ax;
 			this.y = ay;
-			this.rotation = -90; //Устанавливаем пулю в направлении вверх
 			
+			var bulletLifeTimer = 0;
 			
-			//////////////////////////////////////////////////САМОНАВОДКА
-			
-			var rotation:int = angle;
-			
-			if (Math.abs(rotation - this.rotation) > 180)
-			{
-				if (rotation > 0 && this.rotation < 0)
-				{
-					this.rotation -= (360 - rotation + this.rotation) / coef;
-				}
-				else if (this.rotation > 0 && rotation < 0)
-				{
-					this.rotation += (360 - rotation + this.rotation) / coef;
-				}
-			}
-			else if (rotation < this.rotation)
-			{
-				this.rotation -= Math.abs(this.rotation - rotation) / coef;
-			}
-			else
-			{
-				this.rotation += Math.abs(rotation - this.rotation) / coef;
-			}
-			
-			_speed.x = speed * (90 - Math.abs(this.rotation)) / 90;
-			
-			if (this.rotation < 0)
-			{
-				_speed.y = -speed + Math.abs(_speed.x);//идем вверх.
-			}
-			else
-			{
-				_speed.y = speed - Math.abs(_speed.x);//идем вниз.
-			}
-			
-			//////////////////////////////////////////////////САМОНАВОДКА
-			
+			//calculate random bullet offset.
+			var randomNum = 1;
+				
+			//set bullet firing angle
+			var bulletAngle = ((angle+randomNum-90)*Math.PI/180);
+			xSpeed = Math.cos(bulletAngle)*bulletSpeed;
+			ySpeed = Math.sin(bulletAngle)*bulletSpeed;
 			
 			_isFree = false;
 			_universe.bullets.add(this);
@@ -90,12 +67,14 @@ package com.wartype.bullets
 		
 		public function update(delta:Number):void
 		{
+
+			this.x += xSpeed;
+			this.y += ySpeed;
+			
+			
+			
 			var enemyWord:WordBase; //Ссылка на атакуемое слово
 			var words:Array = _universe.words.objects; //Массив появившихся на экране слов
-			//var distance:Number; //Дистанция от пули до слова
-			
-			this.x += _speed.x * delta;
-			this.y += _speed.y * delta;
 			
 			//Проверка на выход за пределы сцены
 			if (this.x < 0 || this.x > App.SCR_WIDTH || this.y < 0 || this.y > App.SCR_HEIGHT)
