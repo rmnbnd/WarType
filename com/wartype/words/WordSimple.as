@@ -17,7 +17,7 @@ package com.wartype.words
 			_wordsArrayLenght = wordsArray.length; //Записываем размерность массива в переменную
 			trace(wordsArray);
 			
-			_speedY = speed; //Устанавливаем скорость
+			speedY = speed; //Устанавливаем скорость
 			_go = true; //Флаг движения
 			isDead = false; //Флаг "смерти" слова
 		    isAttacked = false; //Флаг атакуемости слова
@@ -34,7 +34,7 @@ package com.wartype.words
 		{
 			if (_go)
 			{
-				this.y += _speedY * delta;
+				this.y += speedY * delta;
 				_textLabel.text = _wordObjText.toString();
 			}
 			

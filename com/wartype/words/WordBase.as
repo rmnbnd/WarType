@@ -20,7 +20,7 @@ package com.wartype.words
 		protected var textClip:Sprite; //Спрайт для вывода текста слова на экран
 		protected var _wordObjText:String; //Собственно, само слово
 		protected var _sprite:Sprite; //Спрайт слова
-		protected var _speedY:int; //Скорость по Y
+		private var _speedY:int; //Скорость по Y
 		protected var _go:Boolean; //Движется ли слово
 		protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
 		protected var _gun:GunSimple = GunSimple.getInstance();
@@ -86,6 +86,16 @@ package com.wartype.words
 		public function stop():void
 		{
 			_speedY = 0;
+		}
+
+		public function set speedY(value:int):void
+		{
+			_speedY = value;
+		}
+
+		public function get speedY():int
+		{
+			return _speedY;
 		}
 	}
 }
