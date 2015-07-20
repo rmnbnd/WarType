@@ -17,8 +17,8 @@ package com.wartype
     {
         private static var _instance:Universe; //Ссылка на игровой мир
         private var _timerWord:Timer; //Таймер выпадения слов
-        private var _timerWave:Timer;
-        private var _timerSlowly:Timer;
+/*        private var _timerWave:Timer;
+        private var _timerSlowly:Timer;*/
         private var _wordsArray:Array; //Массив слов
         private var _random:int; //Рандомное число для выбора слова из массива слов
         private var _wordObject:String; //Слово в стринг для передачи в конструктор WordBase
@@ -48,41 +48,14 @@ package com.wartype
             }
         }
 
-        //Функция получения ссылки на игровой мир
-        public static function getInstance():Universe
-        {
-            return (_instance == null) ? new Universe() : _instance;
-        }
-
-        public function set wordsArray(value:Array):void
-        {
-            if (value != null)
-            {
-                _wordsArray = value;
-            }
-        }
-
-        public function set timer(value:int):void
-        {
-            if (value != 0)
-            {
-                _timerWord = new Timer(value);
-            }
-        }
-
-        public function set speedY(value:int):void
-        {
-            _speedY = value;
-        }
-
         public function endGame():void
         {
             _timerWord.stop();
-            _timerWave.stop();
+/*          _timerWave.stop();
             _timerSlowly.stop();
-            _timerWord.removeEventListener(TimerEvent.TIMER, create_new_word);
             _timerWave.removeEventListener(TimerEvent.TIMER, create_new_wave);
-            _timerSlowly.removeEventListener(TimerEvent.TIMER, create_new_slowly);
+            _timerSlowly.removeEventListener(TimerEvent.TIMER, create_new_slowly);*/
+            _timerWord.removeEventListener(TimerEvent.TIMER, create_new_word);
             stage.removeEventListener(KeyboardEvent.KEY_DOWN, _gun.keyDownHandler);
             this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
             for (var i:int = 0; i < words.objects.length; i++)
@@ -93,7 +66,7 @@ package com.wartype
             bullets.clear();
             if (_gun.getHealth <= 0)
             {
-                trace("Game over! You are died!");
+                trace("Game over! You are dead!");
             }
             else
             {
@@ -121,18 +94,18 @@ package com.wartype
             guns = new ObjectController();
             _gun = new GunSimple();
 
-            _timerWave = new Timer(60000);
-            _timerSlowly = new Timer(80000);
+            //_timerWave = new Timer(60000);
+            //_timerSlowly = new Timer(80000);
 
             addEventListener(Event.ENTER_FRAME, enterFrameHandler);
             stage.addEventListener(KeyboardEvent.KEY_DOWN, _gun.keyDownHandler); //Слушатель на нажатие кнопки
 
-            _timerWord.addEventListener(TimerEvent.TIMER, create_new_word); //Слушатель на тик таймера
-            _timerWave.addEventListener(TimerEvent.TIMER, create_new_wave);
-            _timerSlowly.addEventListener(TimerEvent.TIMER, create_new_slowly);
+            _timerWord.addEventListener(TimerEvent.TIMER, create_new_word); //Words timer
             _timerWord.start(); //Старт таймера
-            _timerWave.start();
-            _timerSlowly.start();
+            //_timerWave.addEventListener(TimerEvent.TIMER, create_new_wave);
+            //_timerSlowly.addEventListener(TimerEvent.TIMER, create_new_slowly);
+            //_timerWave.start();
+            //_timerSlowly.start();
 
             removeEventListener(Event.ADDED_TO_STAGE, init);
         }
@@ -164,16 +137,12 @@ package com.wartype
             {
                 _random = Math.random() * _wordsArray.length;
                 _wordObject = _wordsArray[_random];
-                 _word = new WordSimple(_wordObject, _speedY);
+                _word = new WordSimple(_wordObject, _speedY);
                 _wordsArray.splice(_random, 1);  //удаляет элемент из массива
-            }
-            else
-            {
-                return;
             }
         }
 
-        private function create_new_wave(event:TimerEvent):void
+        /*private function create_new_wave(event:TimerEvent):void
         {
             _speedY = 100;
             trace("Prepare for battle! A new wave of words is coming!");
@@ -187,11 +156,38 @@ package com.wartype
             _timerWave.stop();
             _timerWave.start();
 
-        }
+        }*/
 
         public function get word():WordBase
         {
             return _word;
+        }
+
+        //Функция получения ссылки на игровой мир
+        public static function getInstance():Universe
+        {
+            return (_instance == null) ? new Universe() : _instance;
+        }
+
+        public function set wordsArray(value:Array):void
+        {
+            if (value != null)
+            {
+                _wordsArray = value;
+            }
+        }
+
+        public function set timer(value:int):void
+        {
+            if (value != 0)
+            {
+                _timerWord = new Timer(value);
+            }
+        }
+
+        public function set speedY(value:int):void
+        {
+            _speedY = value;
         }
     }
 }

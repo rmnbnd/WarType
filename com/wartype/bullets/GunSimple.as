@@ -1,15 +1,10 @@
 ﻿package com.wartype.bullets
 {
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.text.TextField;
-	import flash.ui.Keyboard;
-	import flash.events.KeyboardEvent;
-	import com.wartype.Universe;
-	import com.wartype.words.WordBase;
-	import com.framework.math.*;
 	import com.wartype.App;
-	
+	import com.wartype.words.WordBase;
+
+	import flash.events.KeyboardEvent;
+
 	public class GunSimple extends GunBase
 	{
 		private var _word:WordBase; //Ссылка на слово
@@ -135,21 +130,6 @@
 			var bullet:BulletSimple = new BulletSimple();
 			bullet.init(this.x, this.y, _bulletSpeed, this.rotation);
 		}
-		
-		public function getDegrees(radians:Number):Number
-		{
-			return Math.floor(radians/(Math.PI/180));
-		}
-	
-		public function getRadians(delta_x:Number, delta_y:Number):Number
-		{
-			var r:Number = Math.atan2(delta_y, delta_x);
-			
-			if (delta_y < 0)
-			{
-				r += (2 * Math.PI);
-			}
-			return r;
-		}
+
 	}
 }

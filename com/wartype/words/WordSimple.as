@@ -18,7 +18,7 @@ package com.wartype.words
 			trace(wordsArray);
 			
 			speedY = speed; //Устанавливаем скорость
-			_go = true; //Флаг движения
+			_go = true; //Флаг движения (потом понадобится)
 			isDead = false; //Флаг "смерти" слова
 		    isAttacked = false; //Флаг атакуемости слова
 			
@@ -38,11 +38,10 @@ package com.wartype.words
 				_textLabel.text = _wordObjText.toString();
 			}
 			
-			if (this.y >= App.SCR_HEIGHT + 30 )
+			if (this.y >= App.SCR_HEIGHT - 20)
 			{
 				_gun.setHealth = 10;
 				free();
-				return;
 			}
 		}
 		
