@@ -1,10 +1,15 @@
 package com.wartype.levels
 {
 	import com.wartype.Universe;
-	
-	public class LevelBase 
+
+	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.net.URLStream;
+
+	public class LevelBase
 	{
-		protected var _universe = Universe.getInstance();
+		protected var _universe:Universe = Universe.getInstance();
 		protected var _wordsArray:Array;
 		protected var _timerWord:int;
 		protected var _speedY:int;

@@ -2,6 +2,7 @@ package com.wartype
 {
     import com.wartype.bullets.*;
     import com.wartype.controllers.ObjectController;
+    import com.wartype.guns.GunSimple;
     import com.wartype.levels.LevelBase;
     import com.wartype.levels.LevelManager;
     import com.wartype.words.*;
@@ -20,14 +21,10 @@ package com.wartype
 /*        private var _timerWave:Timer;
         private var _timerSlowly:Timer;*/
         private var _wordsArray:Array; //Массив слов
-        private var _random:int; //Рандомное число для выбора слова из массива слов
         private var _wordObject:String; //Слово в стринг для передачи в конструктор WordBase
-        private var _deltaTime:Number = 0; //Delta-время
-        private var _lastTick:int = 0; //Последний тик таймера
-        private var _maxDeltaTime:Number = 0.03; //Максимальное Delta-время
+        private var _lastTick:int = 0; //Последний тик таймера //Максимальное Delta-время
         private var _gun:GunSimple = GunSimple.getInstance(); //Пушка
         private var _word:WordBase;
-        private var _levelManager:LevelManager;
         private var _speedY:int;
 
         public var words:ObjectController;
@@ -83,7 +80,7 @@ package com.wartype
             }
             _instance = this;
 
-            _levelManager = new LevelManager();
+            var _levelManager:LevelManager = new LevelManager();
             currentLevel = _levelManager.getLevel(1); //Создаём уровень
             currentLevel.load();
 
@@ -114,7 +111,8 @@ package com.wartype
         {
             //Расчёты Delta-времени для избежания ошибок в выводе графики при низких fps
             //getTimer() считает время с момента запуска приложения до вызова функции
-            _deltaTime = (getTimer() - _lastTick) / 1000;
+            var _deltaTime:Number = (getTimer() - _lastTick) / 1000;
+            var _maxDeltaTime:Number = 0.03;
             _deltaTime = (_deltaTime > _maxDeltaTime) ? _maxDeltaTime : _deltaTime;
 
             //Обновление всех объектов на экране
@@ -133,6 +131,7 @@ package com.wartype
         //Функция создаёт рандомно слово по тику таймера
         private function create_new_word(event:TimerEvent):void
         {
+            var _random:int;
             if (_wordsArray.length - 1 >= 0)
             {
                 _random = Math.random() * _wordsArray.length;

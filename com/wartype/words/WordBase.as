@@ -1,24 +1,20 @@
 package com.wartype.words
 {
-	import flash.display.Sprite;
-	import flash.display.MovieClip;
-	import flash.events.Event;
-	import flash.events.TimerEvent;
-	import flash.text.TextField;
-	import flash.utils.Timer;
-	
 	import com.wartype.App;
 	import com.wartype.Universe;
+	import com.wartype.guns.GunSimple;
 	import com.wartype.interfaces.IObject;
-	import com.wartype.controllers.ObjectController;
-	import com.wartype.bullets.GunSimple;
-	
+
+	import flash.display.Sprite;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
+
 	public class WordBase extends Sprite implements IObject
 	{
 		protected var _wordsArrayLenght:int; //Размерность массива
 		protected var _textLabel:TextField; //Текстовое поле для вывода текста слова на экран
 		protected var textClip:Sprite; //Спрайт для вывода текста слова на экран
-		protected var _wordObjText:String; //Собственно, само слово
+		protected var wordIntoTextField:String; //Собственно, само слово
 		protected var _sprite:Sprite; //Спрайт слова
 		private var _speedY:int; //Скорость по Y
 		protected var _go:Boolean; //Движется ли слово
@@ -26,14 +22,13 @@ package com.wartype.words
 		protected var _gun:GunSimple = GunSimple.getInstance();
 		
 		public var isAttacked:Boolean; //Атаковано ли слово
-		public var wordsArray:Array = []; //Массив букв слова
+		public var wordSplitChars:Array = []; //Массив букв слова
 		public var isDead:Boolean; //Уничтожено ли слово
-	
+
+		private static const RED_COLOR_16BIT:String = "0xff0000";
 		
 		public function WordBase()
-		{	
-			
-		}
+		{}
 		
 		public function init():void
 		{
@@ -52,16 +47,17 @@ package com.wartype.words
 			_universe.addChild(this);
 		}
 		
-		//Фукнция нанесения урона по нажатию на клавишу
+		//Фукнция нанесения урона слову по нажатию на клавишу
 		public function damage():void
-		{
-			
-		}
+		{}
 		
 		//Нанесение урона пулей
 		public function destruction():void
 		{
-			
+			if (_wordsArrayLenght <= 0 && wordSplitChars.length <= 0)
+			{
+				free();
+			}
 		}
 		
 		public function free():void
@@ -80,7 +76,12 @@ package com.wartype.words
 		
 		public function update(delta:Number):void
 		{
-			//nothing
+			if (_go)
+			{
+				this.y += speedY * delta;
+				_textLabel.text = wordIntoTextField.toString();
+				setTextFormat();
+			}
 		}
 		
 		public function stop():void
@@ -96,6 +97,17 @@ package com.wartype.words
 		public function get speedY():int
 		{
 			return _speedY;
+		}
+
+		private function setTextFormat():void
+		{
+			var textFormat:TextFormat = new TextFormat();
+			textFormat.color = RED_COLOR_16BIT;
+			textFormat.size = 16;
+			if(wordSplitChars.length != 0)
+			{
+				_textLabel.setTextFormat(textFormat, 0, 1);
+			}
 		}
 	}
 }
