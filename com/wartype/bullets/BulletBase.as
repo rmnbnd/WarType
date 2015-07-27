@@ -2,6 +2,7 @@
 {
 	import com.wartype.Universe;
 	import com.wartype.App;
+	import com.wartype.levels.LevelManager;
 	import com.wartype.words.WordBase;
 	import com.wartype.interfaces.IObject;
 	import com.framework.math.*;
@@ -10,10 +11,10 @@
 	
 	public class BulletBase extends Sprite implements IObject
 	{
-		var bulletSpeed:Number = 20; //pixels
+		internal var bulletSpeed:Number = 20; //pixels
 		
-		var xSpeed;
-		var ySpeed;
+		internal var xSpeed:Number;
+		internal var ySpeed:Number;
 		
 		protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
 		protected var _sprite:Sprite; //Спрайт пули
@@ -74,7 +75,7 @@
 			
 			
 			var enemyWord:WordBase; //Ссылка на атакуемое слово
-			var words:Array = _universe.words.objects; //Массив появившихся на экране слов
+			var words:Array = LevelManager.getWords.objects; //Массив появившихся на экране слов
 			
 			//Проверка на выход за пределы сцены
 			if (this.x < 0 || this.x > App.SCR_WIDTH || this.y < 0 || this.y > App.SCR_HEIGHT)

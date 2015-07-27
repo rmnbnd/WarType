@@ -5,6 +5,7 @@ package com.wartype.guns
     import com.wartype.Universe;
     import com.wartype.bullets.BulletSimple;
     import com.wartype.interfaces.IObject;
+    import com.wartype.levels.LevelManager;
     import com.wartype.words.WordBase;
 
     import flash.display.MovieClip;
@@ -27,6 +28,7 @@ package com.wartype.guns
         internal var _key:String; //Нажатая кнопка
         public static var isAttackedWord:Boolean; //Флаг, указывающий,
         //было ли атаковано слово (для захвата ссылки на объект)
+        private static var _instanceGun:GunBase;
 
 
         public function GunBase()
@@ -35,6 +37,7 @@ package com.wartype.guns
         //Инициализируем пушку
         public function init():void
         {
+            _instanceGun = this;
             if (_body != null && _head != null && _textSprite != null)
             {
                 addChild(_body);
@@ -47,7 +50,7 @@ package com.wartype.guns
             }
 
             x = App.SCRN_WIDTH_HALF;
-            y = App.SCR_HEIGHT - this.height * 1.5;
+            y = App.SCR_HEIGHT - this.height * 1.1;
             _head.rotation = 270; //Разворачиваем пушку, т.к изначально она стоит дулом вправо (0 deg)
 
             _isFree = false;
@@ -82,14 +85,14 @@ package com.wartype.guns
         public function keyDownHandler(event:KeyboardEvent):void
         {
             _key = String.fromCharCode(event.keyCode);
-            var words_enemies:Array = _universe.words.objects;
+            var words_enemies:Array = LevelManager.getWords.objects;
             if (isAttackedWord == false)
             {
                 for (var i:int = words_enemies.length - 1; i >= 0; --i)
                 {
                     _word = words_enemies[i];
 
-                    if (_key == _word.wordSplitChars[0])
+                    if (_key == _word.wordSplitChars[0] && _word.stage)
                     {
                         _wordTarget = _word;
                     }
@@ -142,6 +145,21 @@ package com.wartype.guns
         {
             var bullet:BulletSimple = new BulletSimple();
             bullet.init(this.x, this.y, _bulletSpeed, this.rotation);
+        }
+
+        public static function getInstance():GunBase
+        {
+            return _instanceGun;
+        }
+
+        public function set setHealth(value:Number):void
+        {
+            _health -= value;
+        }
+
+        public function get getHealth():int
+        {
+            return _health;
         }
 
     }

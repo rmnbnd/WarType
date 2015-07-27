@@ -2,8 +2,10 @@ package com.wartype.words
 {
 	import com.wartype.App;
 	import com.wartype.Universe;
+	import com.wartype.guns.GunBase;
 	import com.wartype.guns.GunSimple;
 	import com.wartype.interfaces.IObject;
+	import com.wartype.levels.LevelManager;
 
 	import flash.display.Sprite;
 	import flash.text.TextField;
@@ -19,7 +21,7 @@ package com.wartype.words
 		private var _speedY:int; //Скорость по Y
 		protected var _go:Boolean; //Движется ли слово
 		protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
-		protected var _gun:GunSimple = GunSimple.getInstance();
+		protected var _gun:GunBase = GunBase.getInstance();
 		
 		public var isAttacked:Boolean; //Атаковано ли слово
 		public var wordSplitChars:Array = []; //Массив букв слова
@@ -43,17 +45,42 @@ package com.wartype.words
 			{
 				_textLabel = textClip["text"] as TextField;
 			}
-			_universe.words.add(this); //Добавляем слово в массив слов (ObjectController)
-			_universe.addChild(this);
+			LevelManager.getWords.add(this); //Добавляем слово в массив слов (ObjectController)
+		}
+
+		public function update(delta:Number):void
+		{
+			if (_go && this.stage)
+			{
+				this.y += speedY * delta;
+				_textLabel.text = wordIntoTextField.toString();
+				setTextFormat();
+			}
 		}
 		
 		//Фукнция нанесения урона слову по нажатию на клавишу
 		public function damage():void
-		{}
+		{
+			//Выводим слово после нанесения урона
+			wordIntoTextField = '';
+			wordSplitChars.shift();
+			for (var i:int = 0; i < wordSplitChars.length; i++)
+			{
+				wordIntoTextField += wordSplitChars[i].toString();
+			}
+
+			if (wordSplitChars.length <= 0 || this.y >= App.SCR_HEIGHT)
+			{
+				_textLabel.visible = false;
+				isDead = true;
+				GunBase.isAttackedWord = false;
+			}
+		}
 		
 		//Нанесение урона пулей
 		public function destruction():void
 		{
+			_wordsArrayLenght--;
 			if (_wordsArrayLenght <= 0 && wordSplitChars.length <= 0)
 			{
 				free();
@@ -71,17 +98,7 @@ package com.wartype.words
 			}
 			
 		    _universe.removeChild(this);
-			_universe.words.remove(this);
-		}
-		
-		public function update(delta:Number):void
-		{
-			if (_go)
-			{
-				this.y += speedY * delta;
-				_textLabel.text = wordIntoTextField.toString();
-				setTextFormat();
-			}
+			LevelManager.getWords.remove(this);
 		}
 		
 		public function stop():void

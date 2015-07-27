@@ -1,9 +1,8 @@
 package com.wartype
 {
-    import com.wartype.bullets.*;
     import com.wartype.controllers.ObjectController;
+    import com.wartype.guns.GunBase;
     import com.wartype.guns.GunSimple;
-    import com.wartype.levels.LevelBase;
     import com.wartype.levels.LevelManager;
     import com.wartype.words.*;
 
@@ -20,17 +19,18 @@ package com.wartype
         private var _timerWord:Timer; //Таймер выпадения слов
 /*        private var _timerWave:Timer;
         private var _timerSlowly:Timer;*/
-        private var _wordsArray:Array; //Массив слов
-        private var _wordObject:String; //Слово в стринг для передачи в конструктор WordBase
+        /*private var _wordsArray:Array; //Массив слов
+        private var _wordObject:String; //Слово в стринг для передачи в конструктор WordBase*/
         private var _lastTick:int = 0; //Последний тик таймера //Максимальное Delta-время
-        private var _gun:GunSimple = GunSimple.getInstance(); //Пушка
+        public var _gun:GunBase = GunBase.getInstance(); //Пушка
         private var _word:WordBase;
-        private var _speedY:int;
+        private var numberOfWords:int;
+        private var levelManager:LevelManager;
 
-        public var words:ObjectController;
         public var bullets:ObjectController;
         public var guns:ObjectController;
-        public var currentLevel:LevelBase;
+
+        private static var NUMBER_OF_WORDS_FIRST_LVL:uint = 10;
 
 
         public function Universe()
@@ -55,9 +55,10 @@ package com.wartype
             _timerWord.removeEventListener(TimerEvent.TIMER, create_new_word);
             stage.removeEventListener(KeyboardEvent.KEY_DOWN, _gun.keyDownHandler);
             this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
-            for (var i:int = 0; i < words.objects.length; i++)
+            var allWordsOnLevel:ObjectController = LevelManager.getWords;
+            for (var i:int = 0; i < allWordsOnLevel.objects.length; i++)
             {
-                _word = words.objects[i];
+                _word = LevelManager.getWords.objects[i];
                 _word.stop();
             }
             bullets.clear();
@@ -80,13 +81,12 @@ package com.wartype
             }
             _instance = this;
 
-            var _levelManager:LevelManager = new LevelManager();
-            currentLevel = _levelManager.getLevel(1); //Создаём уровень
-            currentLevel.load();
+            levelManager = new LevelManager();
+            levelManager.createLevel(NUMBER_OF_WORDS_FIRST_LVL); //Создаём уровень
 
             trace("Universe was created!");
 
-            words = new ObjectController();
+            //words = new ObjectController();
             bullets = new ObjectController();
             guns = new ObjectController();
             _gun = new GunSimple();
@@ -117,10 +117,10 @@ package com.wartype
 
             //Обновление всех объектов на экране
             bullets.update(_deltaTime);
-            words.update(_deltaTime);
+            LevelManager.getWords.update(_deltaTime);
             guns.update(_deltaTime);
 
-            if (_wordsArray.length <= 0 && words.objects.length == 0)
+            if (numberOfWords <= 0 && LevelManager.getWords.objects.length == 0)
             {
                 endGame();
             }
@@ -131,26 +131,21 @@ package com.wartype
         //Функция создаёт рандомно слово по тику таймера
         private function create_new_word(event:TimerEvent):void
         {
-            var _random:int;
-            if (_wordsArray.length - 1 >= 0)
-            {
-                _random = Math.random() * _wordsArray.length;
-                _wordObject = _wordsArray[_random];
-                _word = new WordSimple(_wordObject, _speedY);
-                _wordsArray.splice(_random, 1);  //удаляет элемент из массива
-            }
+            _word = levelManager.getRandomWordsArrayToOneLevel.pop();
+            this.addChild(_word);
+            trace(_word.wordSplitChars);
         }
 
         /*private function create_new_wave(event:TimerEvent):void
         {
-            _speedY = 100;
+            speedY = 100;
             trace("Prepare for battle! A new wave of words is coming!");
 
         }
 
         private function create_new_slowly(event:TimerEvent):void
         {
-            _speedY = 50;
+            speedY = 50;
             trace("Normal mode is enabled!");
             _timerWave.stop();
             _timerWave.start();
@@ -168,14 +163,6 @@ package com.wartype
             return (_instance == null) ? new Universe() : _instance;
         }
 
-        public function set wordsArray(value:Array):void
-        {
-            if (value != null)
-            {
-                _wordsArray = value;
-            }
-        }
-
         public function set timer(value:int):void
         {
             if (value != 0)
@@ -184,9 +171,5 @@ package com.wartype
             }
         }
 
-        public function set speedY(value:int):void
-        {
-            _speedY = value;
-        }
     }
 }
