@@ -1,4 +1,4 @@
-﻿package com.wartype.levels
+package com.wartype.levels
 {
 	import com.wartype.Universe;
 	import com.wartype.controllers.ObjectController;
@@ -19,26 +19,39 @@
 		private var numberOfWordsToCreate:uint;
 		private var wordObject:String; //Слово в стринг для передачи в конструктор WordBase
 		private var wordToAddToStage:WordBase;
+		private var allWords:Array;
 
 		private static var words:ObjectController;
 
 
-		public function LevelManager()
+		public function LevelManager(wordsFromFile:Array)
 		{
+			allWords = wordsFromFile;
 			words = new ObjectController();
 			randomWordsArrayToOneLevel = [];
 		}
 		
-		public function createLevel(typingSpeed:int)
+		public function createLevel(typingSpeed:int, countLetters:int)
 		{
+			wordsArray = getCurrentWords(countLetters);
 			universe.timer = timerWord;
 			numberOfWordsToCreate = typingSpeed / (timerWord/1000);
-			while(numberOfWordsToCreate > 0)
+			while(wordsArray.length > 0)
 			{
 				createWord();
 				getRandomWordsArrayToOneLevel.push(wordToAddToStage);
 				numberOfWordsToCreate--;
 			}
+		}
+		
+		private function getCurrentWords(countLetters:int):Array 
+		{
+			for(var element:Object in allWords) {
+				if (allWords[element].id == countLetters) {
+					return allWords[element].words;
+				}
+			}
+			return allWords[0].words;
 		}
 
 		private function createWord():void

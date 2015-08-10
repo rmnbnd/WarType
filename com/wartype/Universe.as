@@ -1,4 +1,4 @@
-package com.wartype
+﻿package com.wartype
 {
     import com.wartype.controllers.ObjectController;
     import com.wartype.guns.GunBase;
@@ -12,6 +12,9 @@ package com.wartype
     import flash.events.TimerEvent;
     import flash.utils.Timer;
     import flash.utils.getTimer;
+    import flash.net.URLLoader;
+    import flash.net.URLRequest;
+	import com.adobe.serialization.json.JSON;
 
     public class Universe extends Sprite
     {
@@ -26,6 +29,9 @@ package com.wartype
         public var guns:ObjectController;
 
         private static var TYPING_SPEED:uint = 90;
+        private static var ONE_LETTER:uint = 1;
+        private static var TWO_LETTER:uint = 2;
+        private static var THREE_LETTER:uint = 3;
 
 
         public function Universe()
@@ -76,12 +82,20 @@ package com.wartype
             }
             _instance = this;
 
-            levelManager = new LevelManager();
-            levelManager.createLevel(TYPING_SPEED); //Создаём уровень
+            var myTextLoader:URLLoader = new URLLoader();
+            myTextLoader.addEventListener(Event.COMPLETE, onLoaded);
+            myTextLoader.load(new URLRequest(".\\words.json"));
 
             trace("Universe was created!");
-
-            //words = new ObjectController();
+        }
+        
+        function onLoaded(e:Event):void {
+			var words:Array =  com.adobe.serialization.json.JSON.decode(e.target.data);
+			
+            levelManager = new LevelManager(words);
+            levelManager.createLevel(TYPING_SPEED, TWO_LETTER); //Создаём уровень			
+			
+			//words = new ObjectController();
             bullets = new ObjectController();
             guns = new ObjectController();
             _gun = new GunSimple();

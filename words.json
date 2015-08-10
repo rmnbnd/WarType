@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "words": ["A", "B", "C", "D", "E"]
+    },
+    {
+        "id": 2,
+        "words": ["AA", "AB", "AC", "AD", "AE"]
+    },
+    {
+        "id": 3,
+        "words": ["AAA", "AAB", "AAC", "ABA", "ABC"]
+    }
+]
