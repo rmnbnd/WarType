@@ -11,9 +11,7 @@ package com.wartype.controllers
 		
 		
 		public function ObjectController()
-		{
-			
-		}
+		{}
 		
 		//Добавление объекта в массив
 		public function add(obj:IObject):void

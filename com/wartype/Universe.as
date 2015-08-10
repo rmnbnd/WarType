@@ -17,20 +17,15 @@ package com.wartype
     {
         private static var _instance:Universe; //Ссылка на игровой мир
         private var _timerWord:Timer; //Таймер выпадения слов
-/*        private var _timerWave:Timer;
-        private var _timerSlowly:Timer;*/
-        /*private var _wordsArray:Array; //Массив слов
-        private var _wordObject:String; //Слово в стринг для передачи в конструктор WordBase*/
         private var _lastTick:int = 0; //Последний тик таймера //Максимальное Delta-время
         public var _gun:GunBase = GunBase.getInstance(); //Пушка
         private var _word:WordBase;
-        private var numberOfWords:int;
         private var levelManager:LevelManager;
 
         public var bullets:ObjectController;
         public var guns:ObjectController;
 
-        private static var NUMBER_OF_WORDS_FIRST_LVL:uint = 10;
+        private static var TYPING_SPEED:uint = 90;
 
 
         public function Universe()
@@ -82,7 +77,7 @@ package com.wartype
             _instance = this;
 
             levelManager = new LevelManager();
-            levelManager.createLevel(NUMBER_OF_WORDS_FIRST_LVL); //Создаём уровень
+            levelManager.createLevel(TYPING_SPEED); //Создаём уровень
 
             trace("Universe was created!");
 
@@ -120,10 +115,6 @@ package com.wartype
             LevelManager.getWords.update(_deltaTime);
             guns.update(_deltaTime);
 
-            if (numberOfWords <= 0 && LevelManager.getWords.objects.length == 0)
-            {
-                endGame();
-            }
             //Запоминаем последний тик таймера
             _lastTick = getTimer();
         }
@@ -131,9 +122,12 @@ package com.wartype
         //Функция создаёт рандомно слово по тику таймера
         private function create_new_word(event:TimerEvent):void
         {
-            _word = levelManager.getRandomWordsArrayToOneLevel.pop();
-            this.addChild(_word);
-            trace(_word.wordSplitChars);
+            if(levelManager.getRandomWordsArrayToOneLevel.length != 0)
+            {
+                _word = levelManager.getRandomWordsArrayToOneLevel.pop();
+                this.addChild(_word);
+                trace(_word.wordSplitChars);
+            }
         }
 
         /*private function create_new_wave(event:TimerEvent):void

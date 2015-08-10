@@ -29,7 +29,7 @@ package com.wartype.guns
         public static var isAttackedWord:Boolean; //Флаг, указывающий,
         //было ли атаковано слово (для захвата ссылки на объект)
         private static var _instanceGun:GunBase;
-
+        private static var wordsEnemies:Array;
 
         public function GunBase()
         {}
@@ -37,6 +37,7 @@ package com.wartype.guns
         //Инициализируем пушку
         public function init():void
         {
+            wordsEnemies = LevelManager.getWords.objects;
             _instanceGun = this;
             if (_body != null && _head != null && _textSprite != null)
             {
@@ -62,7 +63,7 @@ package com.wartype.guns
         public function update(delta:Number):void
         {
             _textFieldGun.text = "HP:" + _health.toString();
-            if (_health <= 0)
+            if (_health <= 0 || wordsEnemies.length == 0)
             {
                 _universe.endGame();
             }
@@ -85,12 +86,11 @@ package com.wartype.guns
         public function keyDownHandler(event:KeyboardEvent):void
         {
             _key = String.fromCharCode(event.keyCode);
-            var words_enemies:Array = LevelManager.getWords.objects;
             if (isAttackedWord == false)
             {
-                for (var i:int = words_enemies.length - 1; i >= 0; --i)
+                for (var i:int = wordsEnemies.length - 1; i >= 0; --i)
                 {
-                    _word = words_enemies[i];
+                    _word = wordsEnemies[i];
 
                     if (_key == _word.wordSplitChars[0] && _word.stage)
                     {

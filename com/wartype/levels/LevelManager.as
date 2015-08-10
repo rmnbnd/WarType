@@ -14,7 +14,7 @@
 			'LOW', 'BY', 'BUY', 'CAN', 'CAR', 'CAT', 'CALL', 'HEAD', 'GAME', 'CUT', 'DAY', 'DO', 'OLD',
 			'DRY', 'JUST', 'ROCK', 'EGG', 'EYE', 'FAR', 'RED', 'FILL', 'FEW', 'FIT', 'MAP', 'FIVE', 'MILK'];
 		private var speedY:int = 50;
-		private var timerWord:uint = 5000;
+		private var timerWord:uint = 3000;
 		private var randomWordsArrayToOneLevel:Array;
 		private var numberOfWordsToCreate:uint;
 		private var wordObject:String; //Слово в стринг для передачи в конструктор WordBase
@@ -29,10 +29,10 @@
 			randomWordsArrayToOneLevel = [];
 		}
 		
-		public function createLevel(numberOfWords:int)
+		public function createLevel(typingSpeed:int)
 		{
 			universe.timer = timerWord;
-			numberOfWordsToCreate = numberOfWords;
+			numberOfWordsToCreate = typingSpeed / (timerWord/1000);
 			while(numberOfWordsToCreate > 0)
 			{
 				createWord();
@@ -57,7 +57,7 @@
 
 		internal static function randomBoolean():Boolean
 		{
-			return Boolean( Math.round(Math.random()) );
+			return Boolean(Math.round(Math.random()));
 		}
 
 		public static function get getWords():ObjectController
@@ -68,11 +68,6 @@
 		public function get getRandomWordsArrayToOneLevel():Array
 		{
 			return randomWordsArrayToOneLevel;
-		}
-
-		public function get getWordToAddToStage():WordBase
-		{
-			return wordToAddToStage;
 		}
 	}
 }

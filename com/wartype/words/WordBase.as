@@ -21,8 +21,7 @@ package com.wartype.words
 		private var _speedY:int; //Скорость по Y
 		protected var _go:Boolean; //Движется ли слово
 		protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
-		protected var _gun:GunBase = GunBase.getInstance();
-		
+
 		public var isAttacked:Boolean; //Атаковано ли слово
 		public var wordSplitChars:Array = []; //Массив букв слова
 		public var isDead:Boolean; //Уничтожено ли слово

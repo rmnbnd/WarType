@@ -20,9 +20,9 @@
 		protected var _sprite:Sprite; //Спрайт пули
 		protected var _speed:Avector = new Avector(); //Скорость пули
 		protected var _isFree:Boolean = true;
-	
+
 		private var coef:Number = 0.8; //Коэффициент для плавности поворота в воздухе самонаводящейся пули
-		
+
 		public function BulletBase()
 		{
 			//nothing
@@ -45,14 +45,14 @@
 			{
 				addChild(_sprite);
 			}
-			
-			
+
+
 			//position bullet on player
 			this.x = ax;
 			this.y = ay;
-			
+
 			var bulletLifeTimer = 0;
-			
+
 			//calculate random bullet offset.
 			var randomNum = 1;
 				
@@ -71,9 +71,9 @@
 
 			this.x += xSpeed;
 			this.y += ySpeed;
-			
-			
-			
+
+
+
 			var enemyWord:WordBase; //Ссылка на атакуемое слово
 			var words:Array = LevelManager.getWords.objects; //Массив появившихся на экране слов
 			
