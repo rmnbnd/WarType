@@ -9,52 +9,72 @@ package com.wartype.levels
 	public class LevelManager
 	{
 		private var universe:Universe = Universe.getInstance();
-		private var wordsArray:Array = ['AIR', 'ADD', 'AGE', 'CITY', 'HELP', 'LIFE', 'ASK', 'AWAY', 'BABY',
-			'PEN', 'BED', 'BEAR', 'KIND', 'AS', 'HOW', 'ZERO', 'ICE', 'BITE', 'SKY', 'BOX', 'NOW', 'GIRL',
-			'LOW', 'BY', 'BUY', 'CAN', 'CAR', 'CAT', 'CALL', 'HEAD', 'GAME', 'CUT', 'DAY', 'DO', 'OLD',
-			'DRY', 'JUST', 'ROCK', 'EGG', 'EYE', 'FAR', 'RED', 'FILL', 'FEW', 'FIT', 'MAP', 'FIVE', 'MILK'];
+		private var wordsArray:Array;
 		private var speedY:int = 50;
 		private var timerWord:uint = 3000;
 		private var randomWordsArrayToOneLevel:Array;
-		private var numberOfWordsToCreate:uint;
 		private var wordObject:String; //Слово в стринг для передачи в конструктор WordBase
 		private var wordToAddToStage:WordBase;
 		private var allWords:Array;
 
-		private static var words:ObjectController;
+		private static var words:ObjectController = new ObjectController();
+
+		private static var FIRST_LEVEL_BORDER:Number;
+		private static var SECOND_LEVEL_BORDER:Number;
+		private static var THIRD_LEVEL_BORDER:Number;
+		private static var FOURTH_LEVEL_BORDER:Number;
+
+		private static const FIRST_DIFFICULTY_LETTERS:uint = 4;
+		private static const SECOND_DIFFICULTY_LETTERS:uint = 6;
+		private static const THIRD_DIFFICULTY_LETTERS:uint = 8;
+		private static const FOURTH_DIFFICULTY_LETTERS:uint = 11;
 
 
 		public function LevelManager(wordsFromFile:Array)
 		{
 			allWords = wordsFromFile;
-			words = new ObjectController();
 			randomWordsArrayToOneLevel = [];
+			FIRST_LEVEL_BORDER = 0.8;
+			SECOND_LEVEL_BORDER = 0.2;
+			THIRD_LEVEL_BORDER = 0.0;
+			FOURTH_LEVEL_BORDER = 0.0;
 		}
 		
-		public function createLevel(typingSpeed:int, countLetters:int)
+		public function createLevel(typingSpeed:int):void
 		{
-			wordsArray = getCurrentWords(countLetters);
+			var numberOfWordsFirstLvl:int = typingSpeed * FIRST_LEVEL_BORDER / FIRST_DIFFICULTY_LETTERS;
+			var numberOfWordsSecondLvl:int = typingSpeed * SECOND_LEVEL_BORDER / SECOND_DIFFICULTY_LETTERS;
+
 			universe.timer = timerWord;
-			numberOfWordsToCreate = typingSpeed / (timerWord/1000);
-			while(wordsArray.length > 0)
+
+			wordsArray = getCurrentWords(FIRST_DIFFICULTY_LETTERS);
+			while(numberOfWordsFirstLvl > 0)
 			{
-				createWord();
-				getRandomWordsArrayToOneLevel.push(wordToAddToStage);
-				numberOfWordsToCreate--;
+				createWord(FIRST_DIFFICULTY_LETTERS);
+				randomWordsArrayToOneLevel.push(wordToAddToStage);
+				numberOfWordsFirstLvl--;
+			}
+
+			wordsArray = getCurrentWords(SECOND_DIFFICULTY_LETTERS);
+			while(numberOfWordsSecondLvl > 0)
+			{
+				createWord(SECOND_DIFFICULTY_LETTERS);
+				randomWordsArrayToOneLevel.push(wordToAddToStage);
+				numberOfWordsSecondLvl--;
 			}
 		}
 		
-		private function getCurrentWords(countLetters:int):Array 
+		private function getCurrentWords(difficulty:int):Array
 		{
 			for(var element:Object in allWords) {
-				if (allWords[element].id == countLetters) {
+				if (allWords[element].difficulty == difficulty) {
 					return allWords[element].words;
 				}
 			}
 			return allWords[0].words;
 		}
 
-		private function createWord():void
+		private function createWord(difficulty:int):void
 		{
 			var random:int;
 			if (wordsArray.length - 1 >= 0)
@@ -62,15 +82,22 @@ package com.wartype.levels
 				random = Math.random() * wordsArray.length;
 				wordObject = wordsArray[random];
 				wordsArray.splice(random, 1);  //удаляет элемент из массива
-				randomBoolean() == 1
-						? wordToAddToStage = new WordL1(wordObject, speedY)
-						: wordToAddToStage = new WordL2(wordObject, speedY);
+				switch(difficulty)
+				{
+					case FIRST_DIFFICULTY_LETTERS:
+						wordToAddToStage = new WordL1(wordObject, speedY);
+						break;
+					case SECOND_DIFFICULTY_LETTERS:
+						wordToAddToStage = new WordL2(wordObject, speedY);
+						break;
+					case THIRD_DIFFICULTY_LETTERS:
+						wordToAddToStage = new WordL1(wordObject, speedY);
+						break;
+					case FOURTH_DIFFICULTY_LETTERS:
+						wordToAddToStage = new WordL2(wordObject, speedY);
+						break;
+				}
 			}
-		}
-
-		internal static function randomBoolean():Boolean
-		{
-			return Boolean(Math.round(Math.random()));
 		}
 
 		public static function get getWords():ObjectController

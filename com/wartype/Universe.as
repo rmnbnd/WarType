@@ -28,10 +28,8 @@
         public var bullets:ObjectController;
         public var guns:ObjectController;
 
-        private static var TYPING_SPEED:uint = 90;
-        private static var ONE_LETTER:uint = 1;
-        private static var TWO_LETTER:uint = 2;
-        private static var THREE_LETTER:uint = 3;
+        private static const TYPING_SPEED:uint = 90;
+        private static const PATH_TO_JSON:String = ".\\com/wartype/resources/words.json";
 
 
         public function Universe()
@@ -84,7 +82,7 @@
 
             var myTextLoader:URLLoader = new URLLoader();
             myTextLoader.addEventListener(Event.COMPLETE, onLoaded);
-            myTextLoader.load(new URLRequest(".\\words.json"));
+            myTextLoader.load(new URLRequest(PATH_TO_JSON));
 
             trace("Universe was created!");
         }
@@ -93,7 +91,7 @@
 			var words:Array =  com.adobe.serialization.json.JSON.decode(e.target.data);
 			
             levelManager = new LevelManager(words);
-            levelManager.createLevel(TYPING_SPEED, TWO_LETTER); //Создаём уровень			
+            levelManager.createLevel(TYPING_SPEED); //Создаём уровень
 			
 			//words = new ObjectController();
             bullets = new ObjectController();

@@ -1,0 +1,19 @@
+[
+    {
+        "difficulty": 4,
+        "words": ["AAA", "ABA", "ABAB", "ABBA", "ABABA", "BBB", "AABB", "AEA", "AEAE", "AAEE", "EEAA", "AEEA", "EAAE",
+        "AEE", "EAA", "AAE", "AAB", "BBA", "BEB", "EEBB", "BBEE"]
+    },
+    {
+        "difficulty": 6,
+        "words": ["CVCVC", "CVVCV", "VCVCVC", "CVCVCV", "VCCVVCC"]
+    },
+    {
+        "difficulty": 8,
+        "words": ["NTNTNTN", "TNTNTNN", "NTTNNTTN", "TNNTTNNT", "NTNTNTNTT"]
+    },
+    {
+        "difficulty": 11,
+        "words": ["XZXZXZXZX", "XXZXZXZXZZ", "XZXZXZXZXZ", "XXXZZXXZZXX", "XXZZXXZZXXZZ"]
+    }
+]

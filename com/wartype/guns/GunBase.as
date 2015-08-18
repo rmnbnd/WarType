@@ -31,6 +31,8 @@ package com.wartype.guns
         private static var _instanceGun:GunBase;
         private static var wordsEnemies:Array;
 
+        private static const OFFSET_PX_TO_START_OF_SCENE:uint = 50;
+
         public function GunBase()
         {}
 
@@ -92,7 +94,8 @@ package com.wartype.guns
                 {
                     _word = wordsEnemies[i];
 
-                    if (_key == _word.wordSplitChars[0] && _word.stage)
+                    if (_key == _word.wordSplitChars[0] && _word.stage &&
+                            _word.y > OFFSET_PX_TO_START_OF_SCENE)
                     {
                         _wordTarget = _word;
                     }
