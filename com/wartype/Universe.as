@@ -24,12 +24,19 @@
         public var _gun:GunBase = GunBase.getInstance(); //Пушка
         private var _word:WordBase;
         private var levelManager:LevelManager;
+        private var levelTimer:Timer;
 
         public var bullets:ObjectController;
         public var guns:ObjectController;
 
-        private static const TYPING_SPEED:uint = 90;
         private static const PATH_TO_JSON:String = ".\\com/wartype/resources/words.json";
+        private static var LEVEL_NUMBER:uint = 1;
+
+        private static var TYPING_SPEED:uint = 90;
+        private static var FIRST_LEVEL_BORDER:Number = 0.8;
+        private static var SECOND_LEVEL_BORDER:Number = 0.2;
+        private static var THIRD_LEVEL_BORDER:Number = 0.0;
+        private static var FOURTH_LEVEL_BORDER:Number = 0.0;
 
 
         public function Universe()
@@ -47,6 +54,8 @@
         public function endGame():void
         {
             _timerWord.stop();
+            levelTimer.stop();
+            levelTimer.removeEventListener(TimerEvent.TIMER, create_new_level);
 /*          _timerWave.stop();
             _timerSlowly.stop();
             _timerWave.removeEventListener(TimerEvent.TIMER, create_new_wave);
@@ -87,19 +96,22 @@
             trace("Universe was created!");
         }
         
-        function onLoaded(e:Event):void {
-			var words:Array =  com.adobe.serialization.json.JSON.decode(e.target.data);
+        private function onLoaded(e:Event):void {
+			var words:Array = com.adobe.serialization.json.JSON.decode(e.target.data);
 			
             levelManager = new LevelManager(words);
-            levelManager.createLevel(TYPING_SPEED); //Создаём уровень
-			
-			//words = new ObjectController();
+            levelManager.createLevel(TYPING_SPEED, FIRST_LEVEL_BORDER, SECOND_LEVEL_BORDER, THIRD_LEVEL_BORDER,
+                                        FOURTH_LEVEL_BORDER);
+            trace("Level " + LEVEL_NUMBER + " created!");
+
             bullets = new ObjectController();
             guns = new ObjectController();
             _gun = new GunSimple();
 
             //_timerWave = new Timer(60000);
             //_timerSlowly = new Timer(80000);
+            levelTimer = new Timer(60000);
+            levelTimer.addEventListener(TimerEvent.TIMER, create_new_level);
 
             addEventListener(Event.ENTER_FRAME, enterFrameHandler);
             stage.addEventListener(KeyboardEvent.KEY_DOWN, _gun.keyDownHandler); //Слушатель на нажатие кнопки
@@ -110,8 +122,24 @@
             //_timerSlowly.addEventListener(TimerEvent.TIMER, create_new_slowly);
             //_timerWave.start();
             //_timerSlowly.start();
+            levelTimer.start();
 
             removeEventListener(Event.ADDED_TO_STAGE, init);
+        }
+
+        private static function prepareVariablesToNewLevel():void
+        {
+            TYPING_SPEED += 10;
+            FIRST_LEVEL_BORDER -= 0.1;
+            SECOND_LEVEL_BORDER += 0.1;
+        }
+
+        private function create_new_level(event:TimerEvent):void
+        {
+            trace("Level " + ++LEVEL_NUMBER + " created!");
+            prepareVariablesToNewLevel();
+            levelManager.createLevel(TYPING_SPEED, FIRST_LEVEL_BORDER, SECOND_LEVEL_BORDER, THIRD_LEVEL_BORDER,
+                                        FOURTH_LEVEL_BORDER);
         }
 
         private function enterFrameHandler(event:Event):void

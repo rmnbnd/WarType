@@ -5,24 +5,21 @@ package com.wartype.levels
 	import com.wartype.words.WordBase;
 	import com.wartype.words.WordL1;
 	import com.wartype.words.WordL2;
+	import com.wartype.words.WordL3;
+	import com.wartype.words.WordL4;
 
 	public class LevelManager
 	{
 		private var universe:Universe = Universe.getInstance();
 		private var wordsArray:Array;
 		private var speedY:int = 50;
-		private var timerWord:uint = 3000;
+		private var timerWord:uint = 5000;
 		private var randomWordsArrayToOneLevel:Array;
 		private var wordObject:String; //Слово в стринг для передачи в конструктор WordBase
 		private var wordToAddToStage:WordBase;
 		private var allWords:Array;
 
 		private static var words:ObjectController = new ObjectController();
-
-		private static var FIRST_LEVEL_BORDER:Number;
-		private static var SECOND_LEVEL_BORDER:Number;
-		private static var THIRD_LEVEL_BORDER:Number;
-		private static var FOURTH_LEVEL_BORDER:Number;
 
 		private static const FIRST_DIFFICULTY_LETTERS:uint = 4;
 		private static const SECOND_DIFFICULTY_LETTERS:uint = 6;
@@ -34,16 +31,19 @@ package com.wartype.levels
 		{
 			allWords = wordsFromFile;
 			randomWordsArrayToOneLevel = [];
-			FIRST_LEVEL_BORDER = 0.8;
-			SECOND_LEVEL_BORDER = 0.2;
-			THIRD_LEVEL_BORDER = 0.0;
-			FOURTH_LEVEL_BORDER = 0.0;
 		}
 		
-		public function createLevel(typingSpeed:int):void
+		public function createLevel(typingSpeed:int, firstLevelBorder:Number, secondLevelBorder:Number,
+									 thirdLevelBorder:Number, fourthLevelBorder:Number):void
 		{
-			var numberOfWordsFirstLvl:int = typingSpeed * FIRST_LEVEL_BORDER / FIRST_DIFFICULTY_LETTERS;
-			var numberOfWordsSecondLvl:int = typingSpeed * SECOND_LEVEL_BORDER / SECOND_DIFFICULTY_LETTERS;
+			var charsPerFirstLevelWords:int = typingSpeed * firstLevelBorder;
+			var charsPerSecondLevelWords:int = typingSpeed * secondLevelBorder;
+			var charsPerThirdLevelWords:int = typingSpeed * thirdLevelBorder;
+			var charsPerFourthLevelWords:int = typingSpeed * fourthLevelBorder;
+			var numberOfWordsFirstLvl:int = charsPerFirstLevelWords / FIRST_DIFFICULTY_LETTERS;
+			var numberOfWordsSecondLvl:int = charsPerSecondLevelWords / SECOND_DIFFICULTY_LETTERS;
+			var numberOfWordsThirdLvl:int = charsPerThirdLevelWords / THIRD_DIFFICULTY_LETTERS;
+			var numberOfWordsFourthLvl:int = charsPerFourthLevelWords / FOURTH_DIFFICULTY_LETTERS;
 
 			universe.timer = timerWord;
 
@@ -61,6 +61,22 @@ package com.wartype.levels
 				createWord(SECOND_DIFFICULTY_LETTERS);
 				randomWordsArrayToOneLevel.push(wordToAddToStage);
 				numberOfWordsSecondLvl--;
+			}
+
+			wordsArray = getCurrentWords(THIRD_DIFFICULTY_LETTERS);
+			while(numberOfWordsThirdLvl > 0)
+			{
+				createWord(THIRD_DIFFICULTY_LETTERS);
+				randomWordsArrayToOneLevel.push(wordToAddToStage);
+				numberOfWordsThirdLvl--;
+			}
+
+			wordsArray = getCurrentWords(FOURTH_DIFFICULTY_LETTERS);
+			while(numberOfWordsFourthLvl > 0)
+			{
+				createWord(FOURTH_DIFFICULTY_LETTERS);
+				randomWordsArrayToOneLevel.push(wordToAddToStage);
+				numberOfWordsFourthLvl--;
 			}
 		}
 		
@@ -91,10 +107,10 @@ package com.wartype.levels
 						wordToAddToStage = new WordL2(wordObject, speedY);
 						break;
 					case THIRD_DIFFICULTY_LETTERS:
-						wordToAddToStage = new WordL1(wordObject, speedY);
+						wordToAddToStage = new WordL3(wordObject, speedY);
 						break;
 					case FOURTH_DIFFICULTY_LETTERS:
-						wordToAddToStage = new WordL2(wordObject, speedY);
+						wordToAddToStage = new WordL4(wordObject, speedY);
 						break;
 				}
 			}

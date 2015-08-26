@@ -1,19 +1,23 @@
 [
     {
         "difficulty": 4,
+        "description-chars": "4-5",
         "words": ["AAA", "ABA", "ABAB", "ABBA", "ABABA", "BBB", "AABB", "AEA", "AEAE", "AAEE", "EEAA", "AEEA", "EAAE",
         "AEE", "EAA", "AAE", "AAB", "BBA", "BEB", "EEBB", "BBEE"]
     },
     {
         "difficulty": 6,
-        "words": ["CVCVC", "CVVCV", "VCVCVC", "CVCVCV", "VCCVVCC"]
+        "description-chars": "5-6",
+        "words": ["CVCVC", "CVVCV", "VCVCVC", "CVCVCV", "VCCVVCC", "OLOLOL", "LOLLOL", "OLLOL", "LOLOL"]
     },
     {
         "difficulty": 8,
+        "description-chars": "7-8",
         "words": ["NTNTNTN", "TNTNTNN", "NTTNNTTN", "TNNTTNNT", "NTNTNTNTT"]
     },
     {
         "difficulty": 11,
+        "description-chars": "9-10",
         "words": ["XZXZXZXZX", "XXZXZXZXZZ", "XZXZXZXZXZ", "XXXZZXXZZXX", "XXZZXXZZXXZZ"]
     }
 ]
