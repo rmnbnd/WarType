@@ -33,8 +33,8 @@
         private static var LEVEL_NUMBER:uint = 1;
 
         private static var TYPING_SPEED:uint = 90;
-        private static var FIRST_LEVEL_BORDER:Number = 0.8;
-        private static var SECOND_LEVEL_BORDER:Number = 0.2;
+        private static var FIRST_LEVEL_BORDER:Number = 0.9;
+        private static var SECOND_LEVEL_BORDER:Number = 0.1;
         private static var THIRD_LEVEL_BORDER:Number = 0.0;
         private static var FOURTH_LEVEL_BORDER:Number = 0.0;
 
@@ -104,6 +104,13 @@
                                         FOURTH_LEVEL_BORDER);
             trace("Level " + LEVEL_NUMBER + " created!");
 
+            trace("=========");
+            trace("FIRST " + FIRST_LEVEL_BORDER);
+            trace("SECOND " + SECOND_LEVEL_BORDER);
+            trace("THIRD " + THIRD_LEVEL_BORDER);
+            trace("FOURTH " + FOURTH_LEVEL_BORDER);
+            trace("=========");
+
             bullets = new ObjectController();
             guns = new ObjectController();
             _gun = new GunSimple();
@@ -127,11 +134,52 @@
             removeEventListener(Event.ADDED_TO_STAGE, init);
         }
 
-        private static function prepareVariablesToNewLevel():void
+        private function prepareVariablesToNewLevel():void
         {
             TYPING_SPEED += 10;
-            FIRST_LEVEL_BORDER -= 0.1;
-            SECOND_LEVEL_BORDER += 0.1;
+
+            if(FIRST_LEVEL_BORDER < 1 && SECOND_LEVEL_BORDER < 1 && THIRD_LEVEL_BORDER < 1 &&
+                FOURTH_LEVEL_BORDER < 1)
+            {
+                if(FIRST_LEVEL_BORDER > 0)
+                {
+                    FIRST_LEVEL_BORDER = toFixedNumber(FIRST_LEVEL_BORDER, 1, "minus", 0.2);
+                    SECOND_LEVEL_BORDER = toFixedNumber(SECOND_LEVEL_BORDER, 1, "plus", 0.1);
+                    THIRD_LEVEL_BORDER = toFixedNumber(THIRD_LEVEL_BORDER, 1, "plus", 0.1);
+                }
+                else if(SECOND_LEVEL_BORDER > 0)
+                {
+                    SECOND_LEVEL_BORDER = toFixedNumber(SECOND_LEVEL_BORDER, 1, "minus", 0.1);
+                    THIRD_LEVEL_BORDER = 0.5;
+                    FOURTH_LEVEL_BORDER = toFixedNumber(FOURTH_LEVEL_BORDER, 1, "plus", 0.1);
+                } else
+                {
+                    THIRD_LEVEL_BORDER = toFixedNumber(THIRD_LEVEL_BORDER, 1, "minus", 0.1);
+                    FOURTH_LEVEL_BORDER = toFixedNumber(FOURTH_LEVEL_BORDER, 1, "plus", 0.1);
+                }
+            }
+            trace("=========");
+            trace("FIRST " + FIRST_LEVEL_BORDER);
+            trace("SECOND " + SECOND_LEVEL_BORDER);
+            trace("THIRD " + THIRD_LEVEL_BORDER);
+            trace("FOURTH " + FOURTH_LEVEL_BORDER);
+            trace("=========");
+        }
+
+        private function toFixedNumber(number:Number, decPlaces:Number, sign:String, value:Number):Number
+        {
+            var resultNumber:Number = number;
+            if("plus" == sign)
+            {
+                resultNumber += value;
+                return Number(resultNumber.toFixed(decPlaces));
+            }
+            else if("minus" == sign)
+            {
+                resultNumber -= value;
+                return Number(resultNumber.toFixed(decPlaces));
+            }
+            return 0;
         }
 
         private function create_new_level(event:TimerEvent):void

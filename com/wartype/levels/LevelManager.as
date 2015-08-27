@@ -37,9 +37,13 @@ package com.wartype.levels
 									 thirdLevelBorder:Number, fourthLevelBorder:Number):void
 		{
 			var charsPerFirstLevelWords:int = typingSpeed * firstLevelBorder;
+			trace("Chars 1 lvl: " + charsPerFirstLevelWords);
 			var charsPerSecondLevelWords:int = typingSpeed * secondLevelBorder;
+			trace("Chars 2 lvl: " + charsPerSecondLevelWords);
 			var charsPerThirdLevelWords:int = typingSpeed * thirdLevelBorder;
+			trace("Chars 3 lvl: " + charsPerThirdLevelWords);
 			var charsPerFourthLevelWords:int = typingSpeed * fourthLevelBorder;
+			trace("Chars 4 lvl: " + charsPerFourthLevelWords);
 			var numberOfWordsFirstLvl:int = charsPerFirstLevelWords / FIRST_DIFFICULTY_LETTERS;
 			var numberOfWordsSecondLvl:int = charsPerSecondLevelWords / SECOND_DIFFICULTY_LETTERS;
 			var numberOfWordsThirdLvl:int = charsPerThirdLevelWords / THIRD_DIFFICULTY_LETTERS;
@@ -48,35 +52,32 @@ package com.wartype.levels
 			universe.timer = timerWord;
 
 			wordsArray = getCurrentWords(FIRST_DIFFICULTY_LETTERS);
-			while(numberOfWordsFirstLvl > 0)
-			{
-				createWord(FIRST_DIFFICULTY_LETTERS);
-				randomWordsArrayToOneLevel.push(wordToAddToStage);
-				numberOfWordsFirstLvl--;
-			}
+			createWordsByDifficulty(FIRST_DIFFICULTY_LETTERS, numberOfWordsFirstLvl);
 
 			wordsArray = getCurrentWords(SECOND_DIFFICULTY_LETTERS);
-			while(numberOfWordsSecondLvl > 0)
-			{
-				createWord(SECOND_DIFFICULTY_LETTERS);
-				randomWordsArrayToOneLevel.push(wordToAddToStage);
-				numberOfWordsSecondLvl--;
-			}
+			createWordsByDifficulty(SECOND_DIFFICULTY_LETTERS, numberOfWordsSecondLvl);
 
 			wordsArray = getCurrentWords(THIRD_DIFFICULTY_LETTERS);
-			while(numberOfWordsThirdLvl > 0)
-			{
-				createWord(THIRD_DIFFICULTY_LETTERS);
-				randomWordsArrayToOneLevel.push(wordToAddToStage);
-				numberOfWordsThirdLvl--;
-			}
+			createWordsByDifficulty(THIRD_DIFFICULTY_LETTERS, numberOfWordsThirdLvl);
 
 			wordsArray = getCurrentWords(FOURTH_DIFFICULTY_LETTERS);
-			while(numberOfWordsFourthLvl > 0)
+			createWordsByDifficulty(FOURTH_DIFFICULTY_LETTERS, numberOfWordsFourthLvl);
+			randomWordsArrayToOneLevel.sort(randomSort);
+		}
+
+		private static function randomSort(firstElement:*, secondElement:*):Number
+		{
+			if (Math.random() < 0.5) return -1;
+			else return 1;
+		}
+
+		private function createWordsByDifficulty(difficulty_letters:uint, numberOfWordsByDifficulty:int):void
+		{
+			while(numberOfWordsByDifficulty > 0)
 			{
-				createWord(FOURTH_DIFFICULTY_LETTERS);
+				createWord(difficulty_letters);
 				randomWordsArrayToOneLevel.push(wordToAddToStage);
-				numberOfWordsFourthLvl--;
+				numberOfWordsByDifficulty--;
 			}
 		}
 		
