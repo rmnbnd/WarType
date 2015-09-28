@@ -26,6 +26,11 @@ package com.wartype.levels
 		private static const THIRD_DIFFICULTY_LETTERS:uint = 8;
 		private static const FOURTH_DIFFICULTY_LETTERS:uint = 11;
 
+		private var timeToThrowWordFirstLevel:int;
+		private var timeToThrowWordSecondLevel:int;
+		private var timeToThrowWordThirdLevel:int;
+		private var timeToThrowWordFourthLevel:int;
+
 
 		public function LevelManager(wordsFromFile:Array)
 		{
@@ -45,11 +50,15 @@ package com.wartype.levels
 			var charsPerFourthLevelWords:int = typingSpeed * fourthLevelBorder;
 			trace("Chars 4 lvl: " + charsPerFourthLevelWords);
 			var numberOfWordsFirstLvl:int = charsPerFirstLevelWords / FIRST_DIFFICULTY_LETTERS;
+			trace("Number of words 1 lvl: " + numberOfWordsFirstLvl);
 			var numberOfWordsSecondLvl:int = charsPerSecondLevelWords / SECOND_DIFFICULTY_LETTERS;
 			var numberOfWordsThirdLvl:int = charsPerThirdLevelWords / THIRD_DIFFICULTY_LETTERS;
 			var numberOfWordsFourthLvl:int = charsPerFourthLevelWords / FOURTH_DIFFICULTY_LETTERS;
 
-			universe.timer = timerWord;
+			timeToThrowWordFirstLevel = ((60000 * firstLevelBorder) * FIRST_DIFFICULTY_LETTERS) / charsPerFirstLevelWords;
+			timeToThrowWordSecondLevel = ((60000 * secondLevelBorder) * SECOND_DIFFICULTY_LETTERS) / charsPerSecondLevelWords;
+			timeToThrowWordThirdLevel = ((60000 * thirdLevelBorder) * THIRD_DIFFICULTY_LETTERS) / charsPerThirdLevelWords;
+			timeToThrowWordFourthLevel = ((60000 * fourthLevelBorder) * FOURTH_DIFFICULTY_LETTERS) / charsPerFourthLevelWords;
 
 			wordsArray = getCurrentWords(FIRST_DIFFICULTY_LETTERS);
 			createWordsByDifficulty(FIRST_DIFFICULTY_LETTERS, numberOfWordsFirstLvl);
@@ -102,16 +111,16 @@ package com.wartype.levels
 				switch(difficulty)
 				{
 					case FIRST_DIFFICULTY_LETTERS:
-						wordToAddToStage = new WordL1(wordObject, speedY);
+						wordToAddToStage = new WordL1(wordObject, speedY, timeToThrowWordFirstLevel);
 						break;
 					case SECOND_DIFFICULTY_LETTERS:
-						wordToAddToStage = new WordL2(wordObject, speedY);
+						wordToAddToStage = new WordL2(wordObject, speedY, timeToThrowWordSecondLevel);
 						break;
 					case THIRD_DIFFICULTY_LETTERS:
-						wordToAddToStage = new WordL3(wordObject, speedY);
+						wordToAddToStage = new WordL3(wordObject, speedY, timeToThrowWordThirdLevel);
 						break;
 					case FOURTH_DIFFICULTY_LETTERS:
-						wordToAddToStage = new WordL4(wordObject, speedY);
+						wordToAddToStage = new WordL4(wordObject, speedY, timeToThrowWordFourthLevel);
 						break;
 				}
 			}

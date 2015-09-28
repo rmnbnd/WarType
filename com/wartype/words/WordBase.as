@@ -21,6 +21,7 @@ package com.wartype.words
 		private var _speedY:int; //Скорость по Y
 		protected var _go:Boolean; //Движется ли слово
 		protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
+		protected var _throwTimeWord:uint;
 
 		public var isAttacked:Boolean; //Атаковано ли слово
 		public var wordSplitChars:Array = []; //Массив букв слова
@@ -124,6 +125,11 @@ package com.wartype.words
 			{
 				_textLabel.setTextFormat(textFormat, 0, 1);
 			}
+		}
+
+		public function get throwTimeWord():uint
+		{
+			return _throwTimeWord;
 		}
 	}
 }

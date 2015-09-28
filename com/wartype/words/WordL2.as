@@ -7,7 +7,7 @@ package com.wartype.words
     public class WordL2 extends WordBase implements IObject
     {
 
-        public function WordL2(wordObject:String, speed:int)
+        public function WordL2(wordObject:String, speed:int, timerWord:uint)
         {
             _sprite = new wordL2_mc(); //Спрайт для слова
             textClip = new textlabel_mc(); //Клип для TextLabel
@@ -21,6 +21,7 @@ package com.wartype.words
             _go = true; //Флаг движения (потом понадобится)
             isDead = false; //Флаг "смерти" слова
             isAttacked = false; //Флаг атакуемости слова
+            _throwTimeWord = timerWord;
 
             init();
         }

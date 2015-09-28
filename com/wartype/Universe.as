@@ -98,10 +98,14 @@
         
         private function onLoaded(e:Event):void {
 			var words:Array = com.adobe.serialization.json.JSON.decode(e.target.data);
-			
+
             levelManager = new LevelManager(words);
             levelManager.createLevel(TYPING_SPEED, FIRST_LEVEL_BORDER, SECOND_LEVEL_BORDER, THIRD_LEVEL_BORDER,
                                         FOURTH_LEVEL_BORDER);
+           /* var wordsArrayToOneLevelLength:int = levelManager.getRandomWordsArrayToOneLevel.length;
+            _timerWord = new Timer(levelManager.getRandomWordsArrayToOneLevel[wordsArrayToOneLevelLength-1].throwTimeWord);*/
+            _timerWord = new Timer(levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord);
+            trace("Time to throw next word: " + _timerWord.delay);
             trace("Level " + LEVEL_NUMBER + " created!");
 
             trace("=========");
@@ -212,9 +216,12 @@
         {
             if(levelManager.getRandomWordsArrayToOneLevel.length != 0)
             {
-                _word = levelManager.getRandomWordsArrayToOneLevel.pop();
+                _word = levelManager.getRandomWordsArrayToOneLevel.shift();
                 this.addChild(_word);
                 trace(_word.wordSplitChars);
+				trace("Next word: " + levelManager.getRandomWordsArrayToOneLevel[0].wordSplitChars);
+                _timerWord.delay = levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord;
+                trace(_timerWord.delay);
             }
         }
 
