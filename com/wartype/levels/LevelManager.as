@@ -75,6 +75,12 @@ package com.wartype.levels
 			wordsArray = getCurrentWords(FOURTH_DIFFICULTY_LETTERS);
 			createWordsByDifficulty(FOURTH_DIFFICULTY_LETTERS, numberOfWordsFourthLvl);
 			randomWordsArrayToOneLevel.sort(randomSort);
+
+			for(var i:int = 0; i < allWords.length; i++) {
+				if (allWords[i].difficulty == 4) {
+					trace(allWords[i].words);
+				}
+			}
 		}
 
 		private static function randomSort(firstElement:*, secondElement:*):Number
@@ -97,10 +103,10 @@ package com.wartype.levels
 		{
 			for(var element:Object in allWords) {
 				if (allWords[element].difficulty == difficulty) {
-					return allWords[element].words;
+					return allWords[element].words as Array;
 				}
 			}
-			return allWords[0].words;
+			return allWords[0].words as Array;
 		}
 
 		private function createWord(difficulty:int):void
@@ -110,7 +116,7 @@ package com.wartype.levels
 			{
 				random = Math.random() * wordsArray.length;
 				wordObject = wordsArray[random];
-				wordsArray.splice(random, 1);  //удаляет элемент из массива
+				//wordsArray.splice(random, 1);  //удаляет элемент из массива
 				switch(difficulty)
 				{
 					case FIRST_DIFFICULTY_LETTERS:

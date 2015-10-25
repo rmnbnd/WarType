@@ -10,6 +10,7 @@
     import flash.events.Event;
     import flash.events.KeyboardEvent;
     import flash.events.TimerEvent;
+    import flash.text.TextField;
     import flash.utils.Timer;
     import flash.utils.getTimer;
     import flash.net.URLLoader;
@@ -25,6 +26,8 @@
         private var _word:WordBase;
         private var levelManager:LevelManager;
         private var levelTimer:Timer;
+        private var numberLevelSprite:Sprite;
+        private var numberLevelTextField:TextField;
 
         public var bullets:ObjectController;
         public var guns:ObjectController;
@@ -95,6 +98,21 @@
         private function onLoaded(e:Event):void {
 			var words:Array = com.adobe.serialization.json.JSON.decode(e.target.data);
 
+            numberLevelSprite = new numberlevel_mc();
+            numberLevelSprite.x = 100;
+            numberLevelSprite.y = 100;
+            if (numberLevelSprite != null)
+            {
+                addChild(numberLevelSprite);
+            }
+
+            if (numberLevelSprite["text"] != null)
+            {
+                numberLevelTextField = numberLevelSprite["text"] as TextField;
+            }
+
+            numberLevelTextField.text = "test";
+
             levelManager = new LevelManager(words);
             levelManager.createLevel(TYPING_SPEED, FIRST_LEVEL_BORDER, SECOND_LEVEL_BORDER, THIRD_LEVEL_BORDER,
                                         FOURTH_LEVEL_BORDER);
@@ -126,7 +144,7 @@
             removeEventListener(Event.ADDED_TO_STAGE, init);
         }
 
-        private function prepareVariablesToNewLevel():void
+        private static function prepareVariablesToNewLevel():void
         {
             TYPING_SPEED += 10;
 
@@ -158,7 +176,7 @@
             trace("=========");
         }
 
-        private function toFixedNumber(number:Number, decPlaces:Number, sign:String, value:Number):Number
+        private static function toFixedNumber(number:Number, decPlaces:Number, sign:String, value:Number):Number
         {
             var resultNumber:Number = number;
             if("plus" == sign)
@@ -184,6 +202,7 @@
 
         private function enterFrameHandler(event:Event):void
         {
+            numberLevelTextField.text = "Level " + LEVEL_NUMBER;
             //Расчёты Delta-времени для избежания ошибок в выводе графики при низких fps
             //getTimer() считает время с момента запуска приложения до вызова функции
             var _deltaTime:Number = (getTimer() - _lastTick) / 1000;
