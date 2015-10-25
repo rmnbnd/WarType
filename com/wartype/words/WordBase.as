@@ -54,7 +54,9 @@ package com.wartype.words
 			{
 				this.y += speedY * delta;
 				_textLabel.text = wordIntoTextField.toString();
-				setTextFormat();
+				if(isAttacked) {
+					setTextFormat();
+				}
 			}
 		}
 		

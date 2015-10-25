@@ -15,7 +15,6 @@ package com.wartype.words
             wordIntoTextField = wordObject; //Записываем слово, передаваемое в конструктор, в переменную
             wordSplitChars = wordObject.split(''); //Разделяем слово по буквам
             _wordsArrayLenght = wordSplitChars.length; //Записываем размерность массива в переменную
-            //trace(wordSplitChars);
 
             speedY = speed; //Устанавливаем скорость
             _go = true; //Флаг движения (потом понадобится)

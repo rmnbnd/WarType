@@ -2,18 +2,9 @@
     {
         "difficulty": 4,
         "description-chars": "3-4",
-        "words": ["AAA", "ABA", "ABAB", "ABBA", "BBB", "AABB", "AEA", "AEAE", "AAEE", "EEAA", "AEEA", "EAAE",
-        "AEE", "EAA", "AAE", "AAB", "BBA", "BEB", "EEBB", "BBEE",
-            "AAA", "ABA", "ABAB", "ABBA", "BBB", "AABB", "AEA", "AEAE", "AAEE", "EEAA", "AEEA", "EAAE",
-            "AEE", "EAA", "AAE", "AAB", "BBA", "BEB", "EEBB", "BBEE",
-            "AAA", "ABA", "ABAB", "ABBA", "BBB", "AABB", "AEA", "AEAE", "AAEE", "EEAA", "AEEA", "EAAE",
-            "AEE", "EAA", "AAE", "AAB", "BBA", "BEB", "EEBB", "BBEE",
-            "AAA", "ABA", "ABAB", "ABBA", "BBB", "AABB", "AEA", "AEAE", "AAEE", "EEAA", "AEEA", "EAAE",
-            "AEE", "EAA", "AAE", "AAB", "BBA", "BEB", "EEBB", "BBEE",
-            "AAA", "ABA", "ABAB", "ABBA", "BBB", "AABB", "AEA", "AEAE", "AAEE", "EEAA", "AEEA", "EAAE",
-            "AEE", "EAA", "AAE", "AAB", "BBA", "BEB", "EEBB", "BBEE",
-            "AAA", "ABA", "ABAB", "ABBA", "BBB", "AABB", "AEA", "AEAE", "AAEE", "EEAA", "AEEA", "EAAE",
-            "AEE", "EAA", "AAE", "AAB", "BBA", "BEB", "EEBB", "BBEE"]
+        "words": ["CAT", "CAR", "BUT", "NOPE", "BOOB", "YES", "YEAH", "YEP", "CAMP", "LOL", "CAP",
+                "TRAP", "GOD", "AIM", "AIR", "POO", "LOOP", "TEA", "TEAM", "BEST", "COW", "JACK",
+                "BILL", "FLY", "HOT", "BIG"]
     },
     {
         "difficulty": 6,

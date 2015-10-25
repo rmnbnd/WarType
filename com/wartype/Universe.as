@@ -56,10 +56,6 @@
             _timerWord.stop();
             levelTimer.stop();
             levelTimer.removeEventListener(TimerEvent.TIMER, create_new_level);
-/*          _timerWave.stop();
-            _timerSlowly.stop();
-            _timerWave.removeEventListener(TimerEvent.TIMER, create_new_wave);
-            _timerSlowly.removeEventListener(TimerEvent.TIMER, create_new_slowly);*/
             _timerWord.removeEventListener(TimerEvent.TIMER, create_new_word);
             stage.removeEventListener(KeyboardEvent.KEY_DOWN, _gun.keyDownHandler);
             this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
@@ -102,8 +98,6 @@
             levelManager = new LevelManager(words);
             levelManager.createLevel(TYPING_SPEED, FIRST_LEVEL_BORDER, SECOND_LEVEL_BORDER, THIRD_LEVEL_BORDER,
                                         FOURTH_LEVEL_BORDER);
-           /* var wordsArrayToOneLevelLength:int = levelManager.getRandomWordsArrayToOneLevel.length;
-            _timerWord = new Timer(levelManager.getRandomWordsArrayToOneLevel[wordsArrayToOneLevelLength-1].throwTimeWord);*/
             _timerWord = new Timer(levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord);
             trace("Time to throw next word: " + _timerWord.delay);
             trace("Level " + LEVEL_NUMBER + " created!");
@@ -119,8 +113,6 @@
             guns = new ObjectController();
             _gun = new GunSimple();
 
-            //_timerWave = new Timer(60000);
-            //_timerSlowly = new Timer(80000);
             levelTimer = new Timer(60000);
             levelTimer.addEventListener(TimerEvent.TIMER, create_new_level);
 
@@ -129,10 +121,6 @@
 
             _timerWord.addEventListener(TimerEvent.TIMER, create_new_word); //Words timer
             _timerWord.start(); //Старт таймера
-            //_timerWave.addEventListener(TimerEvent.TIMER, create_new_wave);
-            //_timerSlowly.addEventListener(TimerEvent.TIMER, create_new_slowly);
-            //_timerWave.start();
-            //_timerSlowly.start();
             levelTimer.start();
 
             removeEventListener(Event.ADDED_TO_STAGE, init);
@@ -214,32 +202,20 @@
         //Функция создаёт рандомно слово по тику таймера
         private function create_new_word(event:TimerEvent):void
         {
+			trace("WORDS IN ARRAY: " + levelManager.getRandomWordsArrayToOneLevel.length);
             if(levelManager.getRandomWordsArrayToOneLevel.length != 0)
             {
                 _word = levelManager.getRandomWordsArrayToOneLevel.shift();
                 this.addChild(_word);
                 trace(_word.wordSplitChars);
-				trace("Next word: " + levelManager.getRandomWordsArrayToOneLevel[0].wordSplitChars);
-                _timerWord.delay = levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord;
-                trace(_timerWord.delay);
+                if(levelManager.getRandomWordsArrayToOneLevel.length > 0)
+                {
+                    trace("Next word: " + levelManager.getRandomWordsArrayToOneLevel[0].wordSplitChars);
+                    _timerWord.delay = levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord;
+                    trace(_timerWord.delay);
+                }
             }
         }
-
-        /*private function create_new_wave(event:TimerEvent):void
-        {
-            speedY = 100;
-            trace("Prepare for battle! A new wave of words is coming!");
-
-        }
-
-        private function create_new_slowly(event:TimerEvent):void
-        {
-            speedY = 50;
-            trace("Normal mode is enabled!");
-            _timerWave.stop();
-            _timerWave.start();
-
-        }*/
 
         public function get word():WordBase
         {

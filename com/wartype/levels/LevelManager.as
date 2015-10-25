@@ -52,8 +52,11 @@ package com.wartype.levels
 			var numberOfWordsFirstLvl:int = charsPerFirstLevelWords / FIRST_DIFFICULTY_LETTERS;
 			trace("Number of words 1 lvl: " + numberOfWordsFirstLvl);
 			var numberOfWordsSecondLvl:int = charsPerSecondLevelWords / SECOND_DIFFICULTY_LETTERS;
+			trace("Number of words 2 lvl: " + numberOfWordsSecondLvl);
 			var numberOfWordsThirdLvl:int = charsPerThirdLevelWords / THIRD_DIFFICULTY_LETTERS;
+			trace("Number of words 3 lvl: " + numberOfWordsThirdLvl);
 			var numberOfWordsFourthLvl:int = charsPerFourthLevelWords / FOURTH_DIFFICULTY_LETTERS;
+			trace("Number of words 4 lvl: " + numberOfWordsFourthLvl);
 
 			timeToThrowWordFirstLevel = ((60000 * firstLevelBorder) * FIRST_DIFFICULTY_LETTERS) / charsPerFirstLevelWords;
 			timeToThrowWordSecondLevel = ((60000 * secondLevelBorder) * SECOND_DIFFICULTY_LETTERS) / charsPerSecondLevelWords;
