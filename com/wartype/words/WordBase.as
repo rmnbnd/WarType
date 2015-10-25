@@ -25,6 +25,7 @@ package com.wartype.words
 
 		public var isAttacked:Boolean; //Атаковано ли слово
 		public var wordSplitChars:Array = []; //Массив букв слова
+		public var cloneWordSplitChars:Array = []; //Массив букв слова
 		public var isDead:Boolean; //Уничтожено ли слово
 
 		private static const RED_COLOR_16BIT:String = "0xff0000";
@@ -132,6 +133,11 @@ package com.wartype.words
 		public function get throwTimeWord():uint
 		{
 			return _throwTimeWord;
+		}
+
+		public function restoreWord():void
+		{
+			wordSplitChars = cloneWordSplitChars;
 		}
 	}
 }
