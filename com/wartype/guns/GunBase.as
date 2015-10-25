@@ -101,44 +101,47 @@ package com.wartype.guns
                     }
                 }
             }
-
-            if (_wordTarget != null)
+            if (_key == " ")
             {
-                if (_wordTarget.y >= App.SCR_HEIGHT)
-                {
-                    isAttackedWord = false;
-                    _wordTarget = null;
+                isAttackedWord = false;
+                _wordTarget = null;
+                _word.restoreWord();
+                return;
+            }
+            if (_wordTarget == null) {
+                return;
+            }
+            if (_wordTarget.y >= App.SCR_HEIGHT)
+            {
+                isAttackedWord = false;
+                _wordTarget = null;
 
-                }
-                else if (_wordTarget.isDead == true)
-                {
-                    isAttackedWord = false;
-                    _wordTarget = null;
-                }
-                else
-                {
-                    if (_key == _wordTarget.wordSplitChars[0])
-                    {
-                        _wordTarget.isAttacked = true;
-                        if (_wordTarget.isAttacked == true)
-                        {
-                            isAttackedWord = true;
-                        }
-
-                        //update our player location parameters
-                        var playerX:Number = this.x;
-                        var playerY:Number = this.y;
-
-                        //calculate player_mc rotation
-                        var rotationDirection:Number = Math.round(180 - ((Math.atan2(_wordTarget.x - playerX,
-                                _wordTarget.y - playerY)) * 180/Math.PI));
-
-                        //set rotation
-                        this.rotation = rotationDirection;
-
-                        _wordTarget.damage();
-                        shoot();
+            }
+            else if (_wordTarget.isDead == true)
+            {
+                isAttackedWord = false;
+                _wordTarget = null;
+            }
+            else {
+                if (_key == _wordTarget.wordSplitChars[0]) {
+                    _wordTarget.isAttacked = true;
+                    if (_wordTarget.isAttacked == true) {
+                        isAttackedWord = true;
                     }
+
+                    //update our player location parameters
+                    var playerX:Number = this.x;
+                    var playerY:Number = this.y;
+
+                    //calculate player_mc rotation
+                    var rotationDirection:Number = Math.round(180 - ((Math.atan2(_wordTarget.x - playerX,
+                                    _wordTarget.y - playerY)) * 180 / Math.PI));
+
+                    //set rotation
+                    this.rotation = rotationDirection;
+
+                    _wordTarget.damage();
+                    shoot();
                 }
             }
         }
