@@ -115,35 +115,36 @@ package com.wartype.guns
             {
                 isAttackedWord = false;
                 _wordTarget = null;
+                return;
 
             }
             else if (_wordTarget.isDead == true)
             {
                 isAttackedWord = false;
                 _wordTarget = null;
+                return;
             }
-            else {
-                if (_key == _wordTarget.wordSplitChars[0]) {
-                    _wordTarget.isAttacked = true;
-                    if (_wordTarget.isAttacked == true) {
-                        isAttackedWord = true;
-                    }
-
-                    //update our player location parameters
-                    var playerX:Number = this.x;
-                    var playerY:Number = this.y;
-
-                    //calculate player_mc rotation
-                    var rotationDirection:Number = Math.round(180 - ((Math.atan2(_wordTarget.x - playerX,
-                                    _wordTarget.y - playerY)) * 180 / Math.PI));
-
-                    //set rotation
-                    this.rotation = rotationDirection;
-
-                    _wordTarget.damage();
-                    shoot();
-                }
+            if (_key != _wordTarget.wordSplitChars[0]) {
+                return;
             }
+            _wordTarget.isAttacked = true;
+            if (_wordTarget.isAttacked == true) {
+                isAttackedWord = true;
+            }
+
+            //update our player location parameters
+            var playerX:Number = this.x;
+            var playerY:Number = this.y;
+
+            //calculate player_mc rotation
+            var rotationDirection:Number = Math.round(180 - ((Math.atan2(_wordTarget.x - playerX,
+                            _wordTarget.y - playerY)) * 180 / Math.PI));
+
+            //set rotation
+            this.rotation = rotationDirection;
+
+            _wordTarget.damage();
+            shoot();
         }
 
         //Функция выстрела
