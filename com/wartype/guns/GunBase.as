@@ -1,4 +1,4 @@
-package com.wartype.guns
+﻿package com.wartype.guns
 {
 
     import com.wartype.App;
@@ -105,7 +105,7 @@ package com.wartype.guns
             if (event.keyCode == SPACE_CODE)
             {
                 isAttackedWord = false;
-                _wordTarget.restoreWord();
+                _wordTarget.unselectWord();
                 return;
             }
             if (_wordTarget == null) {

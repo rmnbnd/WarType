@@ -1,4 +1,4 @@
-package com.wartype.words
+﻿package com.wartype.words
 {
 	import com.wartype.App;
 	import com.wartype.Universe;
@@ -17,7 +17,6 @@ package com.wartype.words
 		protected var _textLabel:TextField; //Текстовое поле для вывода текста слова на экран
 		protected var textClip:Sprite; //Спрайт для вывода текста слова на экран
 		protected var wordIntoTextField:String; //Собственно, само слово
-		protected var cloneWordIntoTextField:String;
 		protected var _sprite:Sprite; //Спрайт слова
 		private var _speedY:int; //Скорость по Y
 		protected var _go:Boolean; //Движется ли слово
@@ -26,7 +25,6 @@ package com.wartype.words
 
 		public var isAttacked:Boolean; //Атаковано ли слово
 		public var wordSplitChars:Array = []; //Массив букв слова
-		public var cloneWordSplitChars:Array = []; //Массив букв слова
 		public var isDead:Boolean; //Уничтожено ли слово
 
 		private static const RED_COLOR_16BIT:String = "0xff0000";
@@ -136,13 +134,9 @@ package com.wartype.words
 			return _throwTimeWord;
 		}
 
-		public function restoreWord():void
+		public function unselectWord():void
 		{
-			wordIntoTextField = cloneWordIntoTextField;
-			wordSplitChars = cloneWordIntoTextField.split('');
-			_textLabel.text = wordIntoTextField.toString();
 			_textLabel.visible = true;
-			GunBase.isAttackedWord = false;
 			isAttacked = false;
 		}
 	}
