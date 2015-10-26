@@ -17,6 +17,7 @@ package com.wartype.words
 		protected var _textLabel:TextField; //Текстовое поле для вывода текста слова на экран
 		protected var textClip:Sprite; //Спрайт для вывода текста слова на экран
 		protected var wordIntoTextField:String; //Собственно, само слово
+		protected var cloneWordIntoTextField:String;
 		protected var _sprite:Sprite; //Спрайт слова
 		private var _speedY:int; //Скорость по Y
 		protected var _go:Boolean; //Движется ли слово
@@ -137,7 +138,12 @@ package com.wartype.words
 
 		public function restoreWord():void
 		{
-			wordSplitChars = cloneWordSplitChars;
+			wordIntoTextField = cloneWordIntoTextField;
+			wordSplitChars = cloneWordIntoTextField.split('');
+			_textLabel.text = wordIntoTextField.toString();
+			_textLabel.visible = true;
+			GunBase.isAttackedWord = false;
+			isAttacked = false;
 		}
 	}
 }

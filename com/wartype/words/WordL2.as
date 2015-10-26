@@ -13,6 +13,7 @@ package com.wartype.words
             textClip = new textlabel_mc(); //Клип для TextLabel
 
             wordIntoTextField = wordObject; //Записываем слово, передаваемое в конструктор, в переменную
+            cloneWordIntoTextField = wordObject;
             wordSplitChars = wordObject.split(''); //Разделяем слово по буквам
             _wordsArrayLenght = wordSplitChars.length; //Записываем размерность массива в переменную
 

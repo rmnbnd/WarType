@@ -32,6 +32,7 @@ package com.wartype.guns
         private static var wordsEnemies:Array;
 
         private static const OFFSET_PX_TO_START_OF_SCENE:uint = 50;
+		private static const SPACE_CODE:int = 32;
 
         public function GunBase()
         {}
@@ -101,11 +102,10 @@ package com.wartype.guns
                     }
                 }
             }
-            if (_key == " ")
+            if (event.keyCode == SPACE_CODE)
             {
                 isAttackedWord = false;
-                _wordTarget = null;
-                _word.restoreWord();
+                _wordTarget.restoreWord();
                 return;
             }
             if (_wordTarget == null) {
