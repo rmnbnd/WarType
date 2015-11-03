@@ -24,6 +24,7 @@
 		protected var _throwTimeWord:uint;
 
 		public var isAttacked:Boolean; //Атаковано ли слово
+		public var isSelected:Boolean;
 		public var wordSplitChars:Array = []; //Массив букв слова
 		public var isDead:Boolean; //Уничтожено ли слово
 
@@ -54,7 +55,7 @@
 			{
 				this.y += speedY * delta;
 				_textLabel.text = wordIntoTextField.toString();
-				if(isAttacked) {
+				if(isSelected) {
 					setTextFormat();
 				}
 			}
@@ -136,8 +137,7 @@
 
 		public function unselectWord():void
 		{
-			_textLabel.visible = true;
-			isAttacked = false;
+			isSelected = false;
 		}
 	}
 }

@@ -128,6 +128,7 @@
                 return;
             }
             _wordTarget.isAttacked = true;
+            _wordTarget.isSelected = true;
             if (_wordTarget.isAttacked == true) {
                 isAttackedWord = true;
             }
