@@ -9,8 +9,7 @@ package com.wartype.words
 
         public function WordL2(wordObject:String, speed:int, timerWord:uint)
         {
-            _sprite = new wordL2_mc(); //Спрайт для слова
-            textClip = new textlabel_mc(); //Клип для TextLabel
+            createSpritesForScene();
 
             wordIntoTextField = wordObject; //Записываем слово, передаваемое в конструктор, в переменную
             wordSplitChars = wordObject.split(''); //Разделяем слово по буквам
@@ -30,9 +29,15 @@ package com.wartype.words
             super.update(delta);
             if (this.y >= App.SCR_HEIGHT - 20)
             {
-                Universe.getInstance()._gun.setHealth = 10;
+                Universe.getInstance().gun.setHealth = 10;
                 free();
             }
+        }
+
+        private function createSpritesForScene():void
+        {
+            _sprite = new wordL2_mc();
+            textClip = new textlabel_mc();
         }
 
     }

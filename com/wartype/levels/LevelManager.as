@@ -1,6 +1,5 @@
 package com.wartype.levels
 {
-	import com.wartype.Universe;
 	import com.wartype.controllers.ObjectController;
 	import com.wartype.words.WordBase;
 	import com.wartype.words.WordL1;
@@ -10,10 +9,8 @@ package com.wartype.levels
 
 	public class LevelManager
 	{
-		private var universe:Universe = Universe.getInstance();
 		private var wordsArray:Array;
 		private var speedY:int = 50;
-		private var timerWord:uint = 5000;
 		private var randomWordsArrayToOneLevel:Array;
 		private var wordObject:String; //Слово в стринг для передачи в конструктор WordBase
 		private var wordToAddToStage:WordBase;
@@ -76,10 +73,9 @@ package com.wartype.levels
 			createWordsByDifficulty(FOURTH_DIFFICULTY_LETTERS, numberOfWordsFourthLvl);
 			randomWordsArrayToOneLevel.sort(randomSort);
 
+			//for debug only
 			for(var i:int = 0; i < allWords.length; i++) {
-				if (allWords[i].difficulty == 4) {
-					trace(allWords[i].words);
-				}
+				trace(allWords[i].words);
 			}
 		}
 
@@ -116,11 +112,12 @@ package com.wartype.levels
 			{
 				random = Math.random() * wordsArray.length;
 				wordObject = wordsArray[random];
-				//wordsArray.splice(random, 1);  //удаляет элемент из массива
+				//temporary solution needed for non-stop game
+				//wordsArray.splice(random, 1);
 				switch(difficulty)
 				{
 					case FIRST_DIFFICULTY_LETTERS:
-						wordToAddToStage = new WordL1(wordObject, speedY, timeToThrowWordFirstLevel);
+						wordToAddToStage = new WordL4(wordObject, speedY, timeToThrowWordFirstLevel);
 						break;
 					case SECOND_DIFFICULTY_LETTERS:
 						wordToAddToStage = new WordL2(wordObject, speedY, timeToThrowWordSecondLevel);

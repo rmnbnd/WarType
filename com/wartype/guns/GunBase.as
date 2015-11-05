@@ -1,6 +1,5 @@
 ﻿package com.wartype.guns
 {
-
     import com.wartype.App;
     import com.wartype.Universe;
     import com.wartype.bullets.BulletSimple;
@@ -66,7 +65,7 @@
         public function update(delta:Number):void
         {
             _textFieldGun.text = "HP:" + _health.toString();
-            if (_health <= 0 || wordsEnemies.length == 0)
+            if (_health <= 0)
             {
                 _universe.endGame();
             }

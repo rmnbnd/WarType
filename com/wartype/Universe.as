@@ -4,6 +4,7 @@
     import com.wartype.guns.GunBase;
     import com.wartype.guns.GunSimple;
     import com.wartype.levels.LevelManager;
+    import com.framework.math.Anumber;
     import com.wartype.words.*;
 
     import flash.display.Sprite;
@@ -19,22 +20,21 @@
 
     public class Universe extends Sprite
     {
-        private static var _instance:Universe; //Ссылка на игровой мир
-        private var _timerWord:Timer; //Таймер выпадения слов
-        private var _lastTick:int = 0; //Последний тик таймера //Максимальное Delta-время
-        public var _gun:GunBase = GunBase.getInstance(); //Пушка
-        private var _word:WordBase;
-        private var levelManager:LevelManager;
-        private var levelTimer:Timer;
-        private var numberLevelSprite:Sprite;
-        private var numberLevelTextField:TextField;
-
         public var bullets:ObjectController;
         public var guns:ObjectController;
+        public var gun:GunBase = GunBase.getInstance();
+
+        private var timerWord:Timer; //Таймер выпадения слов
+        private var lastTick:int = 0; //Последний тик таймера //Максимальное Delta-время
+        private var wordOnScene:WordBase;
+        private var levelManager:LevelManager;
+        private var levelTimer:Timer;
+        private var levelNumberSprite:Sprite;
+        private var levelNumberTextField:TextField;
 
         private static const PATH_TO_JSON:String = ".\\com/wartype/resources/words.json";
+        private static var _instance:Universe; //Ссылка на игровой мир
         private static var LEVEL_NUMBER:uint = 1;
-
         private static var TYPING_SPEED:uint = 90;
         private static var FIRST_LEVEL_BORDER:Number = 0.9;
         private static var SECOND_LEVEL_BORDER:Number = 0.1;
@@ -56,30 +56,22 @@
 
         public function endGame():void
         {
-            _timerWord.stop();
+            timerWord.stop();
             levelTimer.stop();
-            levelTimer.removeEventListener(TimerEvent.TIMER, create_new_level);
-            _timerWord.removeEventListener(TimerEvent.TIMER, create_new_word);
-            stage.removeEventListener(KeyboardEvent.KEY_DOWN, _gun.keyDownHandler);
+            levelTimer.removeEventListener(TimerEvent.TIMER, prepareAndCreateLevel);
+            timerWord.removeEventListener(TimerEvent.TIMER, create_new_word);
+            stage.removeEventListener(KeyboardEvent.KEY_DOWN, gun.keyDownHandler);
             this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
             var allWordsOnLevel:ObjectController = LevelManager.getWords;
             for (var i:int = 0; i < allWordsOnLevel.objects.length; i++)
             {
-                _word = LevelManager.getWords.objects[i];
-                _word.stop();
+                wordOnScene = LevelManager.getWords.objects[i];
+                wordOnScene.stop();
             }
             bullets.clear();
-            if (_gun.getHealth <= 0)
-            {
-                trace("Game over! You are dead!");
-            }
-            else
-            {
-                trace("You won!");
-            }
+            trace("Game over! You are dead!");
         }
 
-        //Фукнция инициализации игрового мира
         private function init(event:Event = null):void
         {
             if (_instance != null)
@@ -98,50 +90,56 @@
         private function onLoaded(e:Event):void {
 			var words:Array = com.adobe.serialization.json.JSON.decode(e.target.data);
 
-            numberLevelSprite = new numberlevel_mc();
-            numberLevelSprite.x = 100;
-            numberLevelSprite.y = 100;
-            if (numberLevelSprite != null)
-            {
-                addChild(numberLevelSprite);
-            }
-
-            if (numberLevelSprite["text"] != null)
-            {
-                numberLevelTextField = numberLevelSprite["text"] as TextField;
-            }
-
-            numberLevelTextField.text = "test";
+            createLevelNumberTextField();
 
             levelManager = new LevelManager(words);
-            levelManager.createLevel(TYPING_SPEED, FIRST_LEVEL_BORDER, SECOND_LEVEL_BORDER, THIRD_LEVEL_BORDER,
-                                        FOURTH_LEVEL_BORDER);
-            _timerWord = new Timer(levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord);
-            trace("Time to throw next word: " + _timerWord.delay);
-            trace("Level " + LEVEL_NUMBER + " created!");
+            createLevel();
+            timerWord = new Timer(levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord);
 
+            trace("Time to throw next word: " + timerWord.delay);
+            traceLevelsBorder();
+
+            bullets = new ObjectController();
+            guns = new ObjectController();
+            gun = new GunSimple();
+
+            levelTimer = new Timer(60000);
+            levelTimer.addEventListener(TimerEvent.TIMER, prepareAndCreateLevel);
+
+            addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+            stage.addEventListener(KeyboardEvent.KEY_DOWN, gun.keyDownHandler); //Слушатель на нажатие кнопки
+
+            timerWord.addEventListener(TimerEvent.TIMER, create_new_word); //Words timer
+            timerWord.start();
+            levelTimer.start();
+
+            removeEventListener(Event.ADDED_TO_STAGE, init);
+        }
+
+        private static function traceLevelsBorder():void
+        {
             trace("=========");
             trace("FIRST " + FIRST_LEVEL_BORDER);
             trace("SECOND " + SECOND_LEVEL_BORDER);
             trace("THIRD " + THIRD_LEVEL_BORDER);
             trace("FOURTH " + FOURTH_LEVEL_BORDER);
             trace("=========");
+        }
 
-            bullets = new ObjectController();
-            guns = new ObjectController();
-            _gun = new GunSimple();
+        private function createLevelNumberTextField():void
+        {
+            levelNumberSprite = new numberlevel_mc();
+            levelNumberSprite.x = 100;
+            levelNumberSprite.y = 100;
+            if (levelNumberSprite != null)
+            {
+                addChild(levelNumberSprite);
+            }
 
-            levelTimer = new Timer(60000);
-            levelTimer.addEventListener(TimerEvent.TIMER, create_new_level);
-
-            addEventListener(Event.ENTER_FRAME, enterFrameHandler);
-            stage.addEventListener(KeyboardEvent.KEY_DOWN, _gun.keyDownHandler); //Слушатель на нажатие кнопки
-
-            _timerWord.addEventListener(TimerEvent.TIMER, create_new_word); //Words timer
-            _timerWord.start(); //Старт таймера
-            levelTimer.start();
-
-            removeEventListener(Event.ADDED_TO_STAGE, init);
+            if (levelNumberSprite["text"] != null)
+            {
+                levelNumberTextField = levelNumberSprite["text"] as TextField;
+            }
         }
 
         private static function prepareVariablesToNewLevel():void
@@ -153,59 +151,45 @@
             {
                 if(FIRST_LEVEL_BORDER > 0)
                 {
-                    FIRST_LEVEL_BORDER = toFixedNumber(FIRST_LEVEL_BORDER, 1, "minus", 0.2);
-                    SECOND_LEVEL_BORDER = toFixedNumber(SECOND_LEVEL_BORDER, 1, "plus", 0.1);
-                    THIRD_LEVEL_BORDER = toFixedNumber(THIRD_LEVEL_BORDER, 1, "plus", 0.1);
+                    FIRST_LEVEL_BORDER = Anumber.toFixedNumber(FIRST_LEVEL_BORDER, 1, "minus", 0.2);
+                    SECOND_LEVEL_BORDER = Anumber.toFixedNumber(SECOND_LEVEL_BORDER, 1, "plus", 0.1);
+                    THIRD_LEVEL_BORDER = Anumber.toFixedNumber(THIRD_LEVEL_BORDER, 1, "plus", 0.1);
                 }
                 else if(SECOND_LEVEL_BORDER > 0)
                 {
-                    SECOND_LEVEL_BORDER = toFixedNumber(SECOND_LEVEL_BORDER, 1, "minus", 0.1);
+                    SECOND_LEVEL_BORDER = Anumber.toFixedNumber(SECOND_LEVEL_BORDER, 1, "minus", 0.1);
                     THIRD_LEVEL_BORDER = 0.5;
-                    FOURTH_LEVEL_BORDER = toFixedNumber(FOURTH_LEVEL_BORDER, 1, "plus", 0.1);
+                    FOURTH_LEVEL_BORDER = Anumber.toFixedNumber(FOURTH_LEVEL_BORDER, 1, "plus", 0.1);
                 } else
                 {
-                    THIRD_LEVEL_BORDER = toFixedNumber(THIRD_LEVEL_BORDER, 1, "minus", 0.1);
-                    FOURTH_LEVEL_BORDER = toFixedNumber(FOURTH_LEVEL_BORDER, 1, "plus", 0.1);
+                    THIRD_LEVEL_BORDER = Anumber.toFixedNumber(THIRD_LEVEL_BORDER, 1, "minus", 0.1);
+                    FOURTH_LEVEL_BORDER = Anumber.toFixedNumber(FOURTH_LEVEL_BORDER, 1, "plus", 0.1);
                 }
             }
-            trace("=========");
-            trace("FIRST " + FIRST_LEVEL_BORDER);
-            trace("SECOND " + SECOND_LEVEL_BORDER);
-            trace("THIRD " + THIRD_LEVEL_BORDER);
-            trace("FOURTH " + FOURTH_LEVEL_BORDER);
-            trace("=========");
+
+            traceLevelsBorder();
         }
 
-        private static function toFixedNumber(number:Number, decPlaces:Number, sign:String, value:Number):Number
+        private function prepareAndCreateLevel(event:TimerEvent):void
         {
-            var resultNumber:Number = number;
-            if("plus" == sign)
-            {
-                resultNumber += value;
-                return Number(resultNumber.toFixed(decPlaces));
-            }
-            else if("minus" == sign)
-            {
-                resultNumber -= value;
-                return Number(resultNumber.toFixed(decPlaces));
-            }
-            return 0;
-        }
-
-        private function create_new_level(event:TimerEvent):void
-        {
-            trace("Level " + ++LEVEL_NUMBER + " created!");
             prepareVariablesToNewLevel();
+            createLevel();
+            LEVEL_NUMBER++;
+        }
+
+        private function createLevel():void
+        {
+            trace("Level " + LEVEL_NUMBER + " created!");
             levelManager.createLevel(TYPING_SPEED, FIRST_LEVEL_BORDER, SECOND_LEVEL_BORDER, THIRD_LEVEL_BORDER,
-                                        FOURTH_LEVEL_BORDER);
+                    FOURTH_LEVEL_BORDER);
         }
 
         private function enterFrameHandler(event:Event):void
         {
-            numberLevelTextField.text = "Level " + LEVEL_NUMBER;
+            levelNumberTextField.text = "Level " + LEVEL_NUMBER;
             //Расчёты Delta-времени для избежания ошибок в выводе графики при низких fps
             //getTimer() считает время с момента запуска приложения до вызова функции
-            var _deltaTime:Number = (getTimer() - _lastTick) / 1000;
+            var _deltaTime:Number = (getTimer() - lastTick) / 1000;
             var _maxDeltaTime:Number = 0.03;
             _deltaTime = (_deltaTime > _maxDeltaTime) ? _maxDeltaTime : _deltaTime;
 
@@ -215,7 +199,7 @@
             guns.update(_deltaTime);
 
             //Запоминаем последний тик таймера
-            _lastTick = getTimer();
+            lastTick = getTimer();
         }
 
         //Функция создаёт рандомно слово по тику таймера
@@ -224,36 +208,26 @@
 			trace("WORDS IN ARRAY: " + levelManager.getRandomWordsArrayToOneLevel.length);
             if(levelManager.getRandomWordsArrayToOneLevel.length != 0)
             {
-                _word = levelManager.getRandomWordsArrayToOneLevel.shift();
-                this.addChild(_word);
-                trace(_word.wordSplitChars);
+                wordOnScene = levelManager.getRandomWordsArrayToOneLevel.shift();
+                this.addChild(wordOnScene);
+                trace(wordOnScene.wordSplitChars);
                 if(levelManager.getRandomWordsArrayToOneLevel.length > 0)
                 {
                     trace("Next word: " + levelManager.getRandomWordsArrayToOneLevel[0].wordSplitChars);
-                    _timerWord.delay = levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord;
-                    trace(_timerWord.delay);
+                    timerWord.delay = levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord;
+                    trace(timerWord.delay);
                 }
             }
         }
 
-        public function get word():WordBase
+        public function get getWordOnScene():WordBase
         {
-            return _word;
+            return wordOnScene;
         }
 
-        //Функция получения ссылки на игровой мир
         public static function getInstance():Universe
         {
             return (_instance == null) ? new Universe() : _instance;
         }
-
-        public function set timer(value:int):void
-        {
-            if (value != 0)
-            {
-                _timerWord = new Timer(value);
-            }
-        }
-
     }
 }

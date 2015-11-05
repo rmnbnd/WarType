@@ -22,18 +22,18 @@ package com.wartype
 
         private function getMoreSpeed(event:KeyboardEvent):void
         {
-            if(Universe.getInstance().word != null && String.fromCharCode(event.keyCode) == "(")
+            if(Universe.getInstance().getWordOnScene != null && String.fromCharCode(event.keyCode) == "(")
             {
-                currentSpeed = Universe.getInstance().word.speedY;
-                Universe.getInstance().word.speedY = 500;
+                currentSpeed = Universe.getInstance().getWordOnScene.speedY;
+                Universe.getInstance().getWordOnScene.speedY = 500;
             }
         }
 
         private function getBackToNormSpeed(event:KeyboardEvent):void
         {
-            if(Universe.getInstance().word != null && String.fromCharCode(event.keyCode) == "(")
+            if(Universe.getInstance().getWordOnScene != null && String.fromCharCode(event.keyCode) == "(")
             {
-                Universe.getInstance().word.speedY = currentSpeed;
+                Universe.getInstance().getWordOnScene.speedY = currentSpeed;
             }
         }
     }
