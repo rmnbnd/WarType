@@ -1,6 +1,8 @@
 package com.wartype
 {
-    import flash.display.Sprite;
+import com.wartype.words.WordBase;
+
+import flash.display.Sprite;
     import flash.display.Stage;
     import flash.events.KeyboardEvent;
 
@@ -8,6 +10,7 @@ package com.wartype
     {
         private var universe:Universe;
         private var currentSpeed:int;
+        private var wordOnScene:WordBase = Universe.getInstance().getWordOnScene;
 
         public function Game(stage:Stage)
         {
@@ -22,18 +25,18 @@ package com.wartype
 
         private function getMoreSpeed(event:KeyboardEvent):void
         {
-            if(Universe.getInstance().getWordOnScene != null && String.fromCharCode(event.keyCode) == "(")
+            if(wordOnScene != null && String.fromCharCode(event.keyCode) == "(")
             {
-                currentSpeed = Universe.getInstance().getWordOnScene.speedY;
-                Universe.getInstance().getWordOnScene.speedY = 500;
+                currentSpeed = wordOnScene.speedY;
+                wordOnScene.speedY = 500;
             }
         }
 
         private function getBackToNormSpeed(event:KeyboardEvent):void
         {
-            if(Universe.getInstance().getWordOnScene != null && String.fromCharCode(event.keyCode) == "(")
+            if(wordOnScene != null && String.fromCharCode(event.keyCode) == "(")
             {
-                Universe.getInstance().getWordOnScene.speedY = currentSpeed;
+                wordOnScene.speedY = currentSpeed;
             }
         }
     }
