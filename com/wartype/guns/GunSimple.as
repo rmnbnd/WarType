@@ -2,26 +2,24 @@
 {
 	public class GunSimple extends GunBase
 	{
-		
 		public function GunSimple()
 		{
-			_bulletSpeed = 800;
-			_health = 100;
-			_body = new gun_body_mc();
-			_head = new gun_head_mc();
-			_textSprite = new textlabel_mc();
+			bulletSpeed = GunConstants.BULLET_SPEED;
+			health = GunConstants.GUN_HEALTH;
+			body = new gun_body_mc();
+			head = new gun_head_mc();
+			healthSprite = new gunHealth_mc();
 			
-			init(); //Инициализируем пушку
+			init();
 		}
 		
 		override public function free():void
 		{
-			if (!_isFree)
+			if (!isFree)
 			{
 				super.free();
-				_isFree = true;
+				isFree = true;
 			}
 		}
-
 	}
 }

@@ -31,6 +31,7 @@
         private var levelTimer:Timer;
         private var levelNumberSprite:Sprite;
         private var levelNumberTextField:TextField;
+        private var backgroundSprite:Sprite;
 
         private static const PATH_TO_JSON:String = ".\\com/wartype/resources/words.json";
         private static var _instance:Universe; //Ссылка на игровой мир
@@ -90,6 +91,8 @@
         private function onLoaded(e:Event):void {
 			var words:Array = com.adobe.serialization.json.JSON.decode(e.target.data);
 
+            createBackground();
+
             createLevelNumberTextField();
 
             levelManager = new LevelManager(words);
@@ -114,6 +117,15 @@
             levelTimer.start();
 
             removeEventListener(Event.ADDED_TO_STAGE, init);
+        }
+
+        private function createBackground():void {
+            backgroundSprite = new backgroundDesert_mc();
+            backgroundSprite.y = 100;
+            backgroundSprite.x = -90;
+            if (backgroundSprite != null) {
+                addChild(backgroundSprite);
+            }
         }
 
         private static function traceLevelsBorder():void

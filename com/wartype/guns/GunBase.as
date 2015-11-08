@@ -14,24 +14,21 @@
 
     public class GunBase extends Sprite implements IObject
     {
-        protected var _body:MovieClip; //Постамент пушки
-        protected var _head:MovieClip; //Дуло пушки
-        protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
-        protected var _wordTarget:WordBase; //Ссылка на слово-цель
-        protected var _bulletSpeed:Number;
-        protected var _isFree:Boolean = true;
-        protected var _health:uint;
-        protected var _textFieldGun:TextField;
-        protected var _textSprite:Sprite;
-        private var _word:WordBase; //Ссылка на слово
-        internal var _key:String; //Нажатая кнопка
+        protected var body:MovieClip; //Постамент пушки
+        protected var head:MovieClip; //Дуло пушки
+        protected var universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
+        protected var wordTarget:WordBase; //Ссылка на слово-цель
+        protected var bulletSpeed:Number;
+        protected var isFree:Boolean = true;
+        protected var health:uint;
+        protected var textFieldGun:TextField;
+        protected var healthSprite:Sprite;
+        private var word:WordBase; //Ссылка на слово
+        internal var key:String; //Нажатая кнопка
         public static var isAttackedWord:Boolean; //Флаг, указывающий,
         //было ли атаковано слово (для захвата ссылки на объект)
-        private static var _instanceGun:GunBase;
+        private static var instanceGun:GunBase;
         private static var wordsEnemies:Array;
-
-        private static const OFFSET_PX_TO_START_OF_SCENE:uint = 50;
-		private static const SPACE_CODE:int = 32;
 
         public function GunBase()
         {}
@@ -40,95 +37,95 @@
         public function init():void
         {
             wordsEnemies = LevelManager.getWords.objects;
-            _instanceGun = this;
-            if (_body != null && _head != null && _textSprite != null)
+            instanceGun = this;
+            if (body != null && head != null && healthSprite != null)
             {
-                addChild(_body);
-                addChild(_head);
-                addChild(_textSprite);
+                addChild(body);
+                addChild(head);
+                addChild(healthSprite);
             }
-            if (_textSprite["text"] != null)
-            {
-                _textFieldGun = _textSprite["text"] as TextField;
-            }
-
             x = App.SCRN_WIDTH_HALF;
+
+            if (healthSprite[GunConstants.DEFAULT_WORD_TEXTFIELD_TEXT] != null)
+            {
+                textFieldGun = healthSprite[GunConstants.DEFAULT_WORD_TEXTFIELD_TEXT] as TextField;
+            }
             y = App.SCR_HEIGHT - this.height * 1.1;
-            _head.rotation = 270; //Разворачиваем пушку, т.к изначально она стоит дулом вправо (0 deg)
+            head.rotation = 270; //Разворачиваем пушку, т.к изначально она стоит дулом вправо (0 deg)
 
-            _isFree = false;
+            isFree = false;
 
-            _universe.guns.add(this); //Добавляем в контейнер пушку (ObjectController)
-            _universe.addChild(this);
+            universe.guns.add(this); //Добавляем в контейнер пушку (ObjectController)
+            universe.addChild(this);
         }
 
         public function update(delta:Number):void
         {
-            _textFieldGun.text = "HP:" + _health.toString();
-            if (_health <= 0)
+            textFieldGun.text = GunConstants.HEALTH_TEXT + health.toString();
+            if (health <= 0)
             {
-                _universe.endGame();
+                universe.endGame();
             }
         }
 
         public function free():void
         {
-            if (_body && contains(_body))
+            if (body && contains(body))
             {
-                removeChild(_body);
+                removeChild(body);
             }
-            if (_head && contains(_head))
+            if (head && contains(head))
             {
-                removeChild(_head);
+                removeChild(head);
             }
-            _universe.removeChild(this);
+            universe.removeChild(this);
         }
 
         //Функция-обработчик события нажатия на кнопку
         public function keyDownHandler(event:KeyboardEvent):void
         {
-            _key = String.fromCharCode(event.keyCode);
+            key = String.fromCharCode(event.keyCode);
             if (isAttackedWord == false)
             {
                 for (var i:int = wordsEnemies.length - 1; i >= 0; --i)
                 {
-                    _word = wordsEnemies[i];
+                    word = wordsEnemies[i];
 
-                    if (_key == _word.wordSplitChars[0] && _word.stage &&
-                            _word.y > OFFSET_PX_TO_START_OF_SCENE)
+                    if (key == word.wordSplitChars[0] && word.stage &&
+                            word.y > GunConstants.OFFSET_PX_TO_START_OF_SCENE)
                     {
-                        _wordTarget = _word;
+                        wordTarget = word;
                     }
                 }
             }
-            if (event.keyCode == SPACE_CODE)
+            if (event.keyCode == GunConstants.SPACE_CODE)
             {
                 isAttackedWord = false;
-                _wordTarget.unselectWord();
+                wordTarget.unselectWord();
                 return;
             }
-            if (_wordTarget == null) {
+            if (wordTarget == null) {
                 return;
             }
-            if (_wordTarget.y >= App.SCR_HEIGHT)
+            if (wordTarget.y >= App.SCR_HEIGHT)
             {
                 isAttackedWord = false;
-                _wordTarget = null;
+                wordTarget = null;
                 return;
 
             }
-            else if (_wordTarget.isDead == true)
+            else if (wordTarget.isDead == true)
             {
                 isAttackedWord = false;
-                _wordTarget = null;
+                wordTarget = null;
                 return;
             }
-            if (_key != _wordTarget.wordSplitChars[0]) {
+            if (key != wordTarget.wordSplitChars[0]) {
                 return;
             }
-            _wordTarget.isAttacked = true;
-            _wordTarget.isSelected = true;
-            if (_wordTarget.isAttacked == true) {
+            wordTarget.isAttacked = true;
+            wordTarget.isSelected = true;
+            if (wordTarget.isAttacked == true) {
                 isAttackedWord = true;
             }
 
@@ -137,13 +134,13 @@
             var playerY:Number = this.y;
 
             //calculate player_mc rotation
-            var rotationDirection:Number = Math.round(180 - ((Math.atan2(_wordTarget.x - playerX,
-                            _wordTarget.y - playerY)) * 180 / Math.PI));
+            var rotationDirection:Number = Math.round(180 - ((Math.atan2(wordTarget.x - playerX,
+                            wordTarget.y - playerY)) * 180 / Math.PI));
 
             //set rotation
             this.rotation = rotationDirection;
 
-            _wordTarget.damage();
+            wordTarget.damage();
             shoot();
         }
 
@@ -151,22 +148,22 @@
         private function shoot():void
         {
             var bullet:BulletSimple = new BulletSimple();
-            bullet.init(this.x, this.y, _bulletSpeed, this.rotation);
+            bullet.init(this.x, this.y, bulletSpeed, this.rotation);
         }
 
         public static function getInstance():GunBase
         {
-            return _instanceGun;
+            return instanceGun;
         }
 
         public function set setHealth(value:Number):void
         {
-            _health -= value;
+            health -= value;
         }
 
         public function get getHealth():int
         {
-            return _health;
+            return health;
         }
 
     }
