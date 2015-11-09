@@ -1,6 +1,7 @@
 ﻿package com.wartype.guns
 {
-    import com.wartype.App;
+import com.framework.math.Amath;
+import com.wartype.App;
     import com.wartype.Universe;
     import com.wartype.bullets.BulletSimple;
     import com.wartype.interfaces.IObject;
@@ -14,17 +15,17 @@
 
     public class GunBase extends Sprite implements IObject
     {
-        protected var body:MovieClip; //Постамент пушки
-        protected var head:MovieClip; //Дуло пушки
-        protected var universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
-        protected var wordTarget:WordBase; //Ссылка на слово-цель
+        protected var body:MovieClip;
+        protected var head:MovieClip;
+        protected var universe:Universe = Universe.getInstance();
+        protected var wordTarget:WordBase;
         protected var bulletSpeed:Number;
         protected var isFree:Boolean = true;
         protected var health:uint;
         protected var textFieldGun:TextField;
         protected var healthSprite:Sprite;
-        private var word:WordBase; //Ссылка на слово
-        internal var key:String; //Нажатая кнопка
+        private var word:WordBase;
+        private var key:String; //Нажатая кнопка
         public static var isAttackedWord:Boolean; //Флаг, указывающий,
         //было ли атаковано слово (для захвата ссылки на объект)
         private static var instanceGun:GunBase;
@@ -33,7 +34,6 @@
         public function GunBase()
         {}
 
-        //Инициализируем пушку
         public function init():void
         {
             wordsEnemies = LevelManager.getWords.objects;
@@ -50,8 +50,8 @@
             {
                 textFieldGun = healthSprite[GunConstants.DEFAULT_WORD_TEXTFIELD_TEXT] as TextField;
             }
-            y = App.SCR_HEIGHT - this.height * 1.1;
-            head.rotation = 270; //Разворачиваем пушку, т.к изначально она стоит дулом вправо (0 deg)
+            y = App.SCR_HEIGHT - this.height * GunConstants.COEF_HEIGHT_GUN_ON_THE_SCREEN;
+            head.rotation = GunConstants.GUN_ROTATION; //Разворачиваем пушку, т.к изначально она стоит дулом вправо (0 deg)
 
             isFree = false;
 
@@ -134,8 +134,8 @@
             var playerY:Number = this.y;
 
             //calculate player_mc rotation
-            var rotationDirection:Number = Math.round(180 - ((Math.atan2(wordTarget.x - playerX,
-                            wordTarget.y - playerY)) * 180 / Math.PI));
+            var rotationDirection:Number = Math.round(Amath.STRAIGHT_ANGLE - ((Math.atan2(wordTarget.x - playerX,
+                            wordTarget.y - playerY)) * Amath.STRAIGHT_ANGLE / Math.PI));
 
             //set rotation
             this.rotation = rotationDirection;

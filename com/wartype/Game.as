@@ -10,7 +10,6 @@ import flash.display.Sprite;
     {
         private var universe:Universe;
         private var currentSpeed:int;
-        private var wordOnScene:WordBase = Universe.getInstance().getWordOnScene;
 
         public function Game(stage:Stage)
         {
@@ -25,6 +24,7 @@ import flash.display.Sprite;
 
         private function getMoreSpeed(event:KeyboardEvent):void
         {
+            var wordOnScene:WordBase = Universe.getInstance().getWordOnScene;
             if(wordOnScene != null && String.fromCharCode(event.keyCode) == "(")
             {
                 currentSpeed = wordOnScene.speedY;
@@ -34,6 +34,7 @@ import flash.display.Sprite;
 
         private function getBackToNormSpeed(event:KeyboardEvent):void
         {
+            var wordOnScene:WordBase = Universe.getInstance().getWordOnScene;
             if(wordOnScene != null && String.fromCharCode(event.keyCode) == "(")
             {
                 wordOnScene.speedY = currentSpeed;

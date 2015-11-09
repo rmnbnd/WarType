@@ -3,11 +3,13 @@ package com.framework.math
 	
 	public class Amath extends Object
 	{
+
+		public static var STRAIGHT_ANGLE:Number = 180;
 		
 		//---------------------------------------
 		// PUBLIC METHODS
 		//---------------------------------------
-		
+
 		/**
 		 * Рассчитывает дистанцию между двумя точками.
 		 * 

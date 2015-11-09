@@ -7,7 +7,9 @@
     import com.framework.math.Anumber;
     import com.wartype.words.*;
 
-    import flash.display.Sprite;
+import flash.display.MovieClip;
+
+import flash.display.Sprite;
     import flash.events.Event;
     import flash.events.KeyboardEvent;
     import flash.events.TimerEvent;
@@ -214,6 +216,13 @@
             lastTick = getTimer();
         }
 
+        MovieClip.prototype.sendBackward = function():void{
+            var currentDepth = this.parent.getChildIndex(this);
+            if(currentDepth>0){
+                this.parent.setChildIndex(this, currentDepth-1);
+            }
+        }
+
         //Функция создаёт рандомно слово по тику таймера
         private function create_new_word(event:TimerEvent):void
         {
@@ -221,7 +230,8 @@
             if(levelManager.getRandomWordsArrayToOneLevel.length != 0)
             {
                 wordOnScene = levelManager.getRandomWordsArrayToOneLevel.shift();
-                this.addChild(wordOnScene);
+                this.addChildAt(wordOnScene, 1);
+                this.setChildIndex(gun, 1);
                 trace(wordOnScene.wordSplitChars);
                 if(levelManager.getRandomWordsArrayToOneLevel.length > 0)
                 {
