@@ -13,22 +13,21 @@
 
 	public class WordBase extends Sprite implements IObject
 	{
-		protected var _wordsArrayLenght:int; //Размерность массива
-		protected var _textLabel:TextField; //Текстовое поле для вывода текста слова на экран
-		protected var textClip:Sprite; //Спрайт для вывода текста слова на экран
-		protected var wordIntoTextField:String; //Собственно, само слово
-		protected var _sprite:Sprite; //Спрайт слова
-		private var _speedY:int; //Скорость по Y
-		protected var _go:Boolean; //Движется ли слово
-		protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
-		protected var _throwTimeWord:uint;
-
 		public var isAttacked:Boolean; //Атаковано ли слово
 		public var isSelected:Boolean;
 		public var wordSplitChars:Array = []; //Массив букв слова
 		public var isDead:Boolean; //Уничтожено ли слово
 
-		private static const RED_COLOR_16BIT:String = "0xff0000";
+		protected var wordsArrayLength:int; //Размерность массива
+		protected var textLabel:TextField; //Текстовое поле для вывода текста слова на экран
+		protected var textClip:Sprite; //Спрайт для вывода текста слова на экран
+		protected var wordIntoTextField:String; //Собственно, само слово
+		protected var sprite:Sprite; //Спрайт слова
+		protected var go:Boolean; //Движется ли слово
+		protected var universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
+		protected var throwTimeWord:uint;
+
+		private var speedY:int; //Скорость по Y
 		
 		public function WordBase()
 		{}
@@ -36,25 +35,25 @@
 		public function init():void
 		{
 			this.x = ((App.SCR_WIDTH - 50) - 50) * Math.random() + 50;
-			if (_sprite != null && textClip != null)
+			if (sprite != null && textClip != null)
 			{
-				addChild(_sprite);
+				addChild(sprite);
 				addChild(textClip);
 			}
 			
-			if (textClip["text"] != null)
+			if (textClip[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] != null)
 			{
-				_textLabel = textClip["text"] as TextField;
+				textLabel = textClip[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
 			}
 			LevelManager.getWords.add(this); //Добавляем слово в массив слов (ObjectController)
 		}
 
 		public function update(delta:Number):void
 		{
-			if (_go && this.stage)
+			if (go && this.stage)
 			{
-				this.y += speedY * delta;
-				_textLabel.text = wordIntoTextField.toString();
+				this.y += getSpeedY * delta;
+				textLabel.text = wordIntoTextField.toString();
 				if(isSelected) {
 					setTextFormat();
 				}
@@ -74,7 +73,7 @@
 
 			if (wordSplitChars.length <= 0 || this.y >= App.SCR_HEIGHT)
 			{
-				_textLabel.visible = false;
+				textLabel.visible = false;
 				isDead = true;
 				GunBase.isAttackedWord = false;
 			}
@@ -83,8 +82,8 @@
 		//Нанесение урона пулей
 		public function destruction():void
 		{
-			_wordsArrayLenght--;
-			if (_wordsArrayLenght <= 0 && wordSplitChars.length <= 0)
+			wordsArrayLength--;
+			if (wordsArrayLength <= 0 && wordSplitChars.length <= 0)
 			{
 				free();
 			}
@@ -92,47 +91,47 @@
 		
 		public function free():void
 		{
-			_go = false;
+			go = false;
 			isDead = true;
 			
-			if (_sprite && contains(_sprite))
+			if (sprite && contains(sprite))
 			{
-				removeChild(_sprite);
+				removeChild(sprite);
 			}
 			
-		    _universe.removeChild(this);
+		    universe.removeChild(this);
 			LevelManager.getWords.remove(this);
 		}
 		
 		public function stop():void
 		{
-			_speedY = 0;
+			getSpeedY = 0;
 		}
 
-		public function set speedY(value:int):void
+		public function set getSpeedY(value:int):void
 		{
-			_speedY = value;
+			speedY = value;
 		}
 
-		public function get speedY():int
+		public function get getSpeedY():int
 		{
-			return _speedY;
+			return speedY;
 		}
 
 		private function setTextFormat():void
 		{
 			var textFormat:TextFormat = new TextFormat();
-			textFormat.color = RED_COLOR_16BIT;
-			textFormat.size = 16;
+			textFormat.color = WordConstants.RED_COLOR_16BIT;
+			textFormat.size = WordConstants.TEXT_SIZE;
 			if(wordSplitChars.length != 0)
 			{
-				_textLabel.setTextFormat(textFormat, 0, 1);
+				textLabel.setTextFormat(textFormat, 0, 1);
 			}
 		}
 
-		public function get throwTimeWord():uint
+		public function get getThrowTimeWord():uint
 		{
-			return _throwTimeWord;
+			return throwTimeWord;
 		}
 
 		public function unselectWord():void

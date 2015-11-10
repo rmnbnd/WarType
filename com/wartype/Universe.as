@@ -1,15 +1,12 @@
 ﻿package com.wartype
 {
+    import com.framework.math.Anumber;
     import com.wartype.controllers.ObjectController;
     import com.wartype.guns.GunBase;
     import com.wartype.guns.GunSimple;
     import com.wartype.levels.LevelManager;
-    import com.framework.math.Anumber;
     import com.wartype.words.*;
-
-import flash.display.MovieClip;
-
-import flash.display.Sprite;
+    import flash.display.Sprite;
     import flash.events.Event;
     import flash.events.KeyboardEvent;
     import flash.events.TimerEvent;
@@ -99,7 +96,7 @@ import flash.display.Sprite;
 
             levelManager = new LevelManager(words);
             createLevel();
-            timerWord = new Timer(levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord);
+            timerWord = new Timer(levelManager.getRandomWordsArrayToOneLevel[0].getThrowTimeWord);
 
             trace("Time to throw next word: " + timerWord.delay);
             traceLevelsBorder();
@@ -216,13 +213,6 @@ import flash.display.Sprite;
             lastTick = getTimer();
         }
 
-        MovieClip.prototype.sendBackward = function():void{
-            var currentDepth = this.parent.getChildIndex(this);
-            if(currentDepth>0){
-                this.parent.setChildIndex(this, currentDepth-1);
-            }
-        }
-
         //Функция создаёт рандомно слово по тику таймера
         private function create_new_word(event:TimerEvent):void
         {
@@ -236,7 +226,7 @@ import flash.display.Sprite;
                 if(levelManager.getRandomWordsArrayToOneLevel.length > 0)
                 {
                     trace("Next word: " + levelManager.getRandomWordsArrayToOneLevel[0].wordSplitChars);
-                    timerWord.delay = levelManager.getRandomWordsArrayToOneLevel[0].throwTimeWord;
+                    timerWord.delay = levelManager.getRandomWordsArrayToOneLevel[0].getThrowTimeWord;
                     trace(timerWord.delay);
                 }
             }

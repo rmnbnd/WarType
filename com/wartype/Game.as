@@ -27,8 +27,8 @@ import flash.display.Sprite;
             var wordOnScene:WordBase = Universe.getInstance().getWordOnScene;
             if(wordOnScene != null && String.fromCharCode(event.keyCode) == "(")
             {
-                currentSpeed = wordOnScene.speedY;
-                wordOnScene.speedY = 500;
+                currentSpeed = wordOnScene.getSpeedY;
+                wordOnScene.getSpeedY = 500;
             }
         }
 
@@ -37,7 +37,7 @@ import flash.display.Sprite;
             var wordOnScene:WordBase = Universe.getInstance().getWordOnScene;
             if(wordOnScene != null && String.fromCharCode(event.keyCode) == "(")
             {
-                wordOnScene.speedY = currentSpeed;
+                wordOnScene.getSpeedY = currentSpeed;
             }
         }
     }

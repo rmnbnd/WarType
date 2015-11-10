@@ -1,7 +1,7 @@
 ﻿package com.wartype.guns
 {
-import com.framework.math.Amath;
-import com.wartype.App;
+    import com.framework.math.Amath;
+    import com.wartype.App;
     import com.wartype.Universe;
     import com.wartype.bullets.BulletSimple;
     import com.wartype.interfaces.IObject;
@@ -46,9 +46,9 @@ import com.wartype.App;
             }
             x = App.SCRN_WIDTH_HALF;
 
-            if (healthSprite[GunConstants.DEFAULT_WORD_TEXTFIELD_TEXT] != null)
+            if (healthSprite[GunConstants.DEFAULT_GUN_TEXTFIELD_TEXT] != null)
             {
-                textFieldGun = healthSprite[GunConstants.DEFAULT_WORD_TEXTFIELD_TEXT] as TextField;
+                textFieldGun = healthSprite[GunConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
             }
             y = App.SCR_HEIGHT - this.height * GunConstants.COEF_HEIGHT_GUN_ON_THE_SCREEN;
             head.rotation = GunConstants.GUN_ROTATION; //Разворачиваем пушку, т.к изначально она стоит дулом вправо (0 deg)

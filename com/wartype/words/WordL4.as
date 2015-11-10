@@ -19,13 +19,13 @@ package com.wartype.words
 
             wordIntoTextField = wordObject; //Записываем слово, передаваемое в конструктор, в переменную
             wordSplitChars = wordObject.split(''); //Разделяем слово по буквам
-            _wordsArrayLenght = wordSplitChars.length; //Записываем размерность массива в переменную
+            wordsArrayLength = wordSplitChars.length; //Записываем размерность массива в переменную
 
-            speedY = speed; //Устанавливаем скорость
-            _go = true; //Флаг движения (потом понадобится)
+            getSpeedY = speed; //Устанавливаем скорость
+            go = true; //Флаг движения (потом понадобится)
             isDead = false; //Флаг "смерти" слова
             isAttacked = false; //Флаг атакуемости слова
-            _throwTimeWord = timerWord;
+            super.throwTimeWord = timerWord;
 
             init();
 
@@ -52,7 +52,7 @@ package com.wartype.words
 
         private function createSpritesForScene():void
         {
-            _sprite = new wordL4_mc();
+            sprite = new wordL4_mc();
             textClip = new textlabel_mc();
             leftBladeSprite = new ospreyBlade_mc();
             rightBladeSprite = new ospreyBlade_mc();
