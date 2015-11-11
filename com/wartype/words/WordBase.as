@@ -13,10 +13,10 @@
 
 	public class WordBase extends Sprite implements IObject
 	{
-		public var isAttacked:Boolean; //Атаковано ли слово
+		public var isAttacked:Boolean;
 		public var isSelected:Boolean;
 		public var wordSplitChars:Array = []; //Массив букв слова
-		public var isDead:Boolean; //Уничтожено ли слово
+		public var isDead:Boolean;
 
 		protected var wordsArrayLength:int; //Размерность массива
 		protected var textLabel:TextField; //Текстовое поле для вывода текста слова на экран
@@ -27,7 +27,7 @@
 		protected var universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
 		protected var throwTimeWord:uint;
 
-		private var speedY:int; //Скорость по Y
+		private var speedY:int;
 		
 		public function WordBase()
 		{}
@@ -45,7 +45,7 @@
 			{
 				textLabel = textClip[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
 			}
-			LevelManager.getWords.add(this); //Добавляем слово в массив слов (ObjectController)
+			LevelManager.getWords.add(this);
 		}
 
 		public function update(delta:Number):void

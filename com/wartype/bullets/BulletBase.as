@@ -18,10 +18,7 @@
 		
 		protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
 		protected var _sprite:Sprite; //Спрайт пули
-		protected var _speed:Avector = new Avector(); //Скорость пули
 		protected var _isFree:Boolean = true;
-
-		private var coef:Number = 0.8; //Коэффициент для плавности поворота в воздухе самонаводящейся пули
 
 		public function BulletBase()
 		{
@@ -41,6 +38,7 @@
 		
 		public function init(ax:int, ay:int, speed:Number, angle:Number):void
 		{
+			_sprite.rotation = angle;
 			if (_sprite != null)
 			{
 				addChild(_sprite);

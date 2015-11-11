@@ -3,9 +3,12 @@ package com.wartype.words
     import com.wartype.App;
     import com.wartype.Universe;
     import com.wartype.interfaces.IObject;
+    import flash.display.Sprite;
 
     public class WordL2 extends WordBase implements IObject
     {
+        private var bladesSprite:Sprite;
+        private var bladeConusesSprite:Sprite;
 
         public function WordL2(wordObject:String, speed:int, timerWord:uint)
         {
@@ -22,14 +25,21 @@ package com.wartype.words
             throwTimeWord = timerWord;
 
             init();
+
+            if (bladesSprite != null && bladeConusesSprite != null)
+            {
+                addChild(bladesSprite);
+                addChild(bladeConusesSprite);
+            }
         }
 
         override public function update(delta:Number):void
         {
+            bladesSprite.rotation+=WordConstants.HELI_BLADES_ROTATION_SPEED;
             super.update(delta);
-            if (this.y >= App.SCR_HEIGHT - 20)
+            if (this.y >= App.SCR_HEIGHT - WordConstants.HELI_BOTTOM_MARGIN)
             {
-                Universe.getInstance().gun.setHealth = 10;
+                Universe.getInstance().gun.setHealth = WordConstants.HELI_DAMAGE;
                 free();
             }
         }
@@ -38,6 +48,10 @@ package com.wartype.words
         {
             sprite = new wordL2_mc();
             textClip = new textlabel_mc();
+            bladesSprite = new heliBlade_mc();
+            bladeConusesSprite = new heliConus_mc();
+            bladeConusesSprite.y += WordConstants.HELI_BLADE_POSITION_Y;
+            bladesSprite.y += WordConstants.HELI_BLADE_POSITION_Y;
         }
 
     }

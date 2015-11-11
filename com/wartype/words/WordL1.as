@@ -4,8 +4,6 @@ package com.wartype.words
     import com.wartype.Universe;
     import com.wartype.interfaces.IObject;
 
-    import flash.display.Sprite;
-
     public class WordL1 extends WordBase implements IObject
     {
 
@@ -29,9 +27,9 @@ package com.wartype.words
         override public function update(delta:Number):void
         {
             super.update(delta);
-            if (this.y >= App.SCR_HEIGHT - 20)
+            if (this.y >= App.SCR_HEIGHT - WordConstants.JET_BOTTOM_MARGIN)
             {
-                Universe.getInstance().gun.setHealth = 10;
+                Universe.getInstance().gun.setHealth = WordConstants.JET_DAMAGE;
                 free();
             }
         }

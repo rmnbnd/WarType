@@ -117,8 +117,7 @@ package com.wartype.levels
 				switch(difficulty)
 				{
 					case FIRST_DIFFICULTY_LETTERS:
-						//it's for testing Osprey
-						wordToAddToStage = new WordL4(wordObject, speedY, timeToThrowWordFirstLevel);
+						wordToAddToStage = new WordL1(wordObject, speedY, timeToThrowWordFirstLevel);
 						break;
 					case SECOND_DIFFICULTY_LETTERS:
 						wordToAddToStage = new WordL2(wordObject, speedY, timeToThrowWordSecondLevel);

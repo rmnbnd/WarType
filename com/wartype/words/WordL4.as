@@ -21,11 +21,11 @@ package com.wartype.words
             wordSplitChars = wordObject.split(''); //Разделяем слово по буквам
             wordsArrayLength = wordSplitChars.length; //Записываем размерность массива в переменную
 
-            getSpeedY = speed; //Устанавливаем скорость
-            go = true; //Флаг движения (потом понадобится)
-            isDead = false; //Флаг "смерти" слова
-            isAttacked = false; //Флаг атакуемости слова
-            super.throwTimeWord = timerWord;
+            getSpeedY = speed;
+            go = true;
+            isDead = false;
+            isAttacked = false;
+            throwTimeWord = timerWord;
 
             init();
 
@@ -40,12 +40,12 @@ package com.wartype.words
 
         override public function update(delta:Number):void
         {
-            leftBladeSprite.rotation+=56;
-            rightBladeSprite.rotation+=56;
+            leftBladeSprite.rotation += WordConstants.OSPREY_BLADES_ROTATION_SPEED;
+            rightBladeSprite.rotation += WordConstants.OSPREY_BLADES_ROTATION_SPEED;
             super.update(delta);
-            if (this.y >= App.SCR_HEIGHT - 20)
+            if (this.y >= App.SCR_HEIGHT - WordConstants.OSPREY_BOTTOM_MARGIN)
             {
-                Universe.getInstance().gun.setHealth = 10;
+                Universe.getInstance().gun.setHealth = WordConstants.OSPREY_DAMAGE;
                 free();
             }
         }
@@ -57,10 +57,10 @@ package com.wartype.words
             leftBladeSprite = new ospreyBlade_mc();
             rightBladeSprite = new ospreyBlade_mc();
             bladeConusesSprite = new bladeConuses_mc();
-            leftBladeSprite.x -= 90;
-            leftBladeSprite.y += 7;
-            rightBladeSprite.x += 90;
-            rightBladeSprite.y += 7;
+            leftBladeSprite.x -= WordConstants.OSPREY_BLADE_POSITION_X;
+            leftBladeSprite.y += WordConstants.OSPREY_BLADE_POSITION_Y;
+            rightBladeSprite.x += WordConstants.OSPREY_BLADE_POSITION_X;
+            rightBladeSprite.y += WordConstants.OSPREY_BLADE_POSITION_Y;
         }
 
     }
