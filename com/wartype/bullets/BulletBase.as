@@ -1,4 +1,4 @@
-﻿package com.wartype.bullets
+package com.wartype.bullets
 {
 	import com.wartype.Universe;
 	import com.wartype.App;
@@ -95,6 +95,10 @@
 					{
 						enemyWord.destruction(); //Урон пулей
 						free(); //Уничтожаем пулю
+                        if (!enemyWord.isSelected)
+                        {
+                            enemyWord.isAttacked = false;
+                        }
 						break;
 					}
 				}
