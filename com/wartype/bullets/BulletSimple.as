@@ -4,13 +4,13 @@ package com.wartype.bullets
 	{
 		public function BulletSimple()
 		{
-			_sprite = new bullet_mc(); //Добавляем спрайт пули
+			sprite = new bullet_mc();
 		}
 		
 		public override function free():void
 		{
 			super.free();
-			_isFree = true;
+			isFree = true;
 		}
 		
 	}

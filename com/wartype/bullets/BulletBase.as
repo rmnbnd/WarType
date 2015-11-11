@@ -5,72 +5,62 @@ package com.wartype.bullets
 	import com.wartype.levels.LevelManager;
 	import com.wartype.words.WordBase;
 	import com.wartype.interfaces.IObject;
-	import com.framework.math.*;
-	
 	import flash.display.Sprite;
 	
 	public class BulletBase extends Sprite implements IObject
 	{
-		internal var bulletSpeed:Number = 20; //pixels
+		private var bulletSpeed:Number = BulletConstants.BULLET_SPEED;
+		private var xSpeed:Number;
+		private var ySpeed:Number;
 		
-		internal var xSpeed:Number;
-		internal var ySpeed:Number;
-		
-		protected var _universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
-		protected var _sprite:Sprite; //Спрайт пули
-		protected var _isFree:Boolean = true;
+		protected var universe:Universe = Universe.getInstance();
+		protected var sprite:Sprite;
+		protected var isFree:Boolean = true;
 
 		public function BulletBase()
 		{
-			//nothing
+
 		}
 		
 		public function free():void
 		{
-			if (_sprite && contains(_sprite))
+			if (sprite && contains(sprite))
 			{
-				removeChild(_sprite);
+				removeChild(sprite);
 			}
 			
-			_universe.removeChild(this);
-			_universe.bullets.remove(this);
+			universe.removeChild(this);
+			universe.bullets.remove(this);
 		}
 		
 		public function init(ax:int, ay:int, speed:Number, angle:Number):void
 		{
-			_sprite.rotation = angle;
-			if (_sprite != null)
+			sprite.rotation = angle;
+			if (sprite != null)
 			{
-				addChild(_sprite);
+				addChild(sprite);
 			}
 
-
-			//position bullet on player
 			this.x = ax;
 			this.y = ay;
 
-			var bulletLifeTimer = 0;
-
 			//calculate random bullet offset.
-			var randomNum = 1;
-				
+			var randomNum:int = 1;
+
 			//set bullet firing angle
-			var bulletAngle = ((angle+randomNum-90)*Math.PI/180);
+			var bulletAngle:Number = ((angle+randomNum-90)*Math.PI/180);
 			xSpeed = Math.cos(bulletAngle)*bulletSpeed;
 			ySpeed = Math.sin(bulletAngle)*bulletSpeed;
 			
-			_isFree = false;
-			_universe.bullets.add(this);
-			_universe.addChild(this);
+			isFree = false;
+			universe.bullets.add(this);
+			universe.addChild(this);
 		}
 		
 		public function update(delta:Number):void
 		{
-
 			this.x += xSpeed;
 			this.y += ySpeed;
-
-
 
 			var enemyWord:WordBase; //Ссылка на атакуемое слово
 			var words:Array = LevelManager.getWords.objects; //Массив появившихся на экране слов
@@ -86,9 +76,6 @@ package com.wartype.bullets
 			for (var i:int = 0; i < words.length; i++)
 			{
 				enemyWord = words[i];
-				
-				//distance = Amath.distance(this.x, this.y, enemyWord.x, enemyWord.y);
-				//if (distance <= this.width / 2 + enemyWord.width / 4)
 				if(this.hitTestObject(enemyWord))
 				{
 					if (enemyWord.isAttacked == true)

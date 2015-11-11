@@ -1,6 +1,7 @@
 package com.wartype.levels
 {
 	import com.wartype.controllers.ObjectController;
+	import com.wartype.levels.LevelsConstants;
 	import com.wartype.words.WordBase;
 	import com.wartype.words.WordL1;
 	import com.wartype.words.WordL2;
@@ -10,24 +11,17 @@ package com.wartype.levels
 	public class LevelManager
 	{
 		private var wordsArray:Array;
-		private var speedY:int = 50;
+		private var speedY:int = LevelsConstants.WORD_SPEED;
 		private var randomWordsArrayToOneLevel:Array;
 		private var wordObject:String; //Слово в стринг для передачи в конструктор WordBase
 		private var wordToAddToStage:WordBase;
 		private var allWords:Array;
-
-		private static var words:ObjectController = new ObjectController();
-
-		private static const FIRST_DIFFICULTY_LETTERS:uint = 4;
-		private static const SECOND_DIFFICULTY_LETTERS:uint = 6;
-		private static const THIRD_DIFFICULTY_LETTERS:uint = 8;
-		private static const FOURTH_DIFFICULTY_LETTERS:uint = 11;
-
 		private var timeToThrowWordFirstLevel:int;
 		private var timeToThrowWordSecondLevel:int;
 		private var timeToThrowWordThirdLevel:int;
 		private var timeToThrowWordFourthLevel:int;
 
+		private static var words:ObjectController = new ObjectController();
 
 		public function LevelManager(wordsFromFile:Array)
 		{
@@ -46,31 +40,35 @@ package com.wartype.levels
 			trace("Chars 3 lvl: " + charsPerThirdLevelWords);
 			var charsPerFourthLevelWords:int = typingSpeed * fourthLevelBorder;
 			trace("Chars 4 lvl: " + charsPerFourthLevelWords);
-			var numberOfWordsFirstLvl:int = charsPerFirstLevelWords / FIRST_DIFFICULTY_LETTERS;
+			var numberOfWordsFirstLvl:int = charsPerFirstLevelWords / LevelsConstants.FIRST_DIFFICULTY_LETTERS;
 			trace("Number of words 1 lvl: " + numberOfWordsFirstLvl);
-			var numberOfWordsSecondLvl:int = charsPerSecondLevelWords / SECOND_DIFFICULTY_LETTERS;
+			var numberOfWordsSecondLvl:int = charsPerSecondLevelWords / LevelsConstants.SECOND_DIFFICULTY_LETTERS;
 			trace("Number of words 2 lvl: " + numberOfWordsSecondLvl);
-			var numberOfWordsThirdLvl:int = charsPerThirdLevelWords / THIRD_DIFFICULTY_LETTERS;
+			var numberOfWordsThirdLvl:int = charsPerThirdLevelWords / LevelsConstants.THIRD_DIFFICULTY_LETTERS;
 			trace("Number of words 3 lvl: " + numberOfWordsThirdLvl);
-			var numberOfWordsFourthLvl:int = charsPerFourthLevelWords / FOURTH_DIFFICULTY_LETTERS;
+			var numberOfWordsFourthLvl:int = charsPerFourthLevelWords / LevelsConstants.FOURTH_DIFFICULTY_LETTERS;
 			trace("Number of words 4 lvl: " + numberOfWordsFourthLvl);
 
-			timeToThrowWordFirstLevel = ((60000 * firstLevelBorder) * FIRST_DIFFICULTY_LETTERS) / charsPerFirstLevelWords;
-			timeToThrowWordSecondLevel = ((60000 * secondLevelBorder) * SECOND_DIFFICULTY_LETTERS) / charsPerSecondLevelWords;
-			timeToThrowWordThirdLevel = ((60000 * thirdLevelBorder) * THIRD_DIFFICULTY_LETTERS) / charsPerThirdLevelWords;
-			timeToThrowWordFourthLevel = ((60000 * fourthLevelBorder) * FOURTH_DIFFICULTY_LETTERS) / charsPerFourthLevelWords;
+			timeToThrowWordFirstLevel = ((LevelsConstants.ONE_MINUTE_IN_MILLISECONDS * firstLevelBorder)
+					* LevelsConstants.FIRST_DIFFICULTY_LETTERS) / charsPerFirstLevelWords;
+			timeToThrowWordSecondLevel = ((LevelsConstants.ONE_MINUTE_IN_MILLISECONDS * secondLevelBorder)
+					* LevelsConstants.SECOND_DIFFICULTY_LETTERS) / charsPerSecondLevelWords;
+			timeToThrowWordThirdLevel = ((LevelsConstants.ONE_MINUTE_IN_MILLISECONDS * thirdLevelBorder)
+					* LevelsConstants.THIRD_DIFFICULTY_LETTERS) / charsPerThirdLevelWords;
+			timeToThrowWordFourthLevel = ((LevelsConstants.ONE_MINUTE_IN_MILLISECONDS * fourthLevelBorder)
+					* LevelsConstants.FOURTH_DIFFICULTY_LETTERS) / charsPerFourthLevelWords;
 
-			wordsArray = getCurrentWords(FIRST_DIFFICULTY_LETTERS);
-			createWordsByDifficulty(FIRST_DIFFICULTY_LETTERS, numberOfWordsFirstLvl);
+			wordsArray = getCurrentWords(LevelsConstants.FIRST_DIFFICULTY_LETTERS);
+			createWordsByDifficulty(LevelsConstants.FIRST_DIFFICULTY_LETTERS, numberOfWordsFirstLvl);
 
-			wordsArray = getCurrentWords(SECOND_DIFFICULTY_LETTERS);
-			createWordsByDifficulty(SECOND_DIFFICULTY_LETTERS, numberOfWordsSecondLvl);
+			wordsArray = getCurrentWords(LevelsConstants.SECOND_DIFFICULTY_LETTERS);
+			createWordsByDifficulty(LevelsConstants.SECOND_DIFFICULTY_LETTERS, numberOfWordsSecondLvl);
 
-			wordsArray = getCurrentWords(THIRD_DIFFICULTY_LETTERS);
-			createWordsByDifficulty(THIRD_DIFFICULTY_LETTERS, numberOfWordsThirdLvl);
+			wordsArray = getCurrentWords(LevelsConstants.THIRD_DIFFICULTY_LETTERS);
+			createWordsByDifficulty(LevelsConstants.THIRD_DIFFICULTY_LETTERS, numberOfWordsThirdLvl);
 
-			wordsArray = getCurrentWords(FOURTH_DIFFICULTY_LETTERS);
-			createWordsByDifficulty(FOURTH_DIFFICULTY_LETTERS, numberOfWordsFourthLvl);
+			wordsArray = getCurrentWords(LevelsConstants.FOURTH_DIFFICULTY_LETTERS);
+			createWordsByDifficulty(LevelsConstants.FOURTH_DIFFICULTY_LETTERS, numberOfWordsFourthLvl);
 			randomWordsArrayToOneLevel.sort(randomSort);
 
 			//for debug only
@@ -116,16 +114,16 @@ package com.wartype.levels
 				//wordsArray.splice(random, 1);
 				switch(difficulty)
 				{
-					case FIRST_DIFFICULTY_LETTERS:
+					case LevelsConstants.FIRST_DIFFICULTY_LETTERS:
 						wordToAddToStage = new WordL1(wordObject, speedY, timeToThrowWordFirstLevel);
 						break;
-					case SECOND_DIFFICULTY_LETTERS:
+					case LevelsConstants.SECOND_DIFFICULTY_LETTERS:
 						wordToAddToStage = new WordL2(wordObject, speedY, timeToThrowWordSecondLevel);
 						break;
-					case THIRD_DIFFICULTY_LETTERS:
+					case LevelsConstants.THIRD_DIFFICULTY_LETTERS:
 						wordToAddToStage = new WordL3(wordObject, speedY, timeToThrowWordThirdLevel);
 						break;
-					case FOURTH_DIFFICULTY_LETTERS:
+					case LevelsConstants.FOURTH_DIFFICULTY_LETTERS:
 						wordToAddToStage = new WordL4(wordObject, speedY, timeToThrowWordFourthLevel);
 						break;
 				}
