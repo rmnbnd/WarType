@@ -1,6 +1,7 @@
 ﻿package com.wartype.words
 {
 	import com.wartype.App;
+	import com.wartype.MainConstants;
 	import com.wartype.Universe;
 	import com.wartype.guns.GunBase;
 	import com.wartype.guns.GunSimple;
@@ -34,7 +35,7 @@
 		
 		public function init():void
 		{
-			this.x = ((App.SCR_WIDTH - 50) - 50) * Math.random() + 50;
+			this.x = ((MainConstants.SCR_WIDTH - 50) - 50) * Math.random() + 50;
 			if (sprite != null && textClip != null)
 			{
 				addChild(sprite);
@@ -71,7 +72,7 @@
 				wordIntoTextField += wordSplitChars[i].toString();
 			}
 
-			if (wordSplitChars.length <= 0 || this.y >= App.SCR_HEIGHT)
+			if (wordSplitChars.length <= 0 || this.y >= MainConstants.SCR_HEIGHT)
 			{
 				textLabel.visible = false;
 				isDead = true;

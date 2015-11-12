@@ -2,6 +2,7 @@
 {
     import com.framework.math.Amath;
     import com.wartype.App;
+    import com.wartype.MainConstants;
     import com.wartype.Universe;
     import com.wartype.bullets.BulletSimple;
     import com.wartype.interfaces.IObject;
@@ -44,13 +45,13 @@
                 addChild(head);
                 addChild(healthSprite);
             }
-            x = App.SCRN_WIDTH_HALF;
+            x = MainConstants.SCRN_WIDTH_HALF;
 
             if (healthSprite[GunConstants.DEFAULT_GUN_TEXTFIELD_TEXT] != null)
             {
                 textFieldGun = healthSprite[GunConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
             }
-            y = App.SCR_HEIGHT - this.height * GunConstants.COEF_HEIGHT_GUN_ON_THE_SCREEN;
+            y = MainConstants.SCR_HEIGHT - this.height * GunConstants.COEF_HEIGHT_GUN_ON_THE_SCREEN;
             head.rotation = GunConstants.GUN_ROTATION; //Разворачиваем пушку, т.к изначально она стоит дулом вправо (0 deg)
 
             isFree = false;
@@ -107,7 +108,7 @@
             if (wordTarget == null) {
                 return;
             }
-            if (wordTarget.y >= App.SCR_HEIGHT)
+            if (wordTarget.y >= MainConstants.SCR_HEIGHT)
             {
                 isAttackedWord = false;
                 wordTarget = null;

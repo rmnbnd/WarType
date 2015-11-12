@@ -1,5 +1,6 @@
 package com.wartype.bullets
 {
+	import com.wartype.MainConstants;
 	import com.wartype.Universe;
 	import com.wartype.App;
 	import com.wartype.levels.LevelManager;
@@ -66,7 +67,7 @@ package com.wartype.bullets
 			var words:Array = LevelManager.getWords.objects; //Массив появившихся на экране слов
 			
 			//Проверка на выход за пределы сцены
-			if (this.x < 0 || this.x > App.SCR_WIDTH || this.y < 0 || this.y > App.SCR_HEIGHT)
+			if (this.x < 0 || this.x > MainConstants.SCR_WIDTH || this.y < 0 || this.y > MainConstants.SCR_HEIGHT)
 			{
 				free();
 				return;

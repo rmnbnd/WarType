@@ -1,4 +1,6 @@
 ﻿package com.wartype {
+	import com.wartype.MainConstants;
+
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -8,11 +10,6 @@
 	import fl.controls.Button;
 
 	public class App extends Sprite {
-		public static const SCR_WIDTH: int = 600;
-		public static const SCR_HEIGHT: int = 800;
-		public static const SCRN_WIDTH_HALF: int = SCR_WIDTH / 2;
-		public static const SCRN_HEIGHT_HALF: int = SCR_HEIGHT / 2;
-
 		public var startButton: Button;
 
 		public function App() {
@@ -22,7 +19,7 @@
 			addChild(startButton);
 		}
 
-		public function onClickStart(event: MouseEvent): void {
+		public function onClickStart(event: MouseEvent):void {
 			startButton.visible = false;			
 			
 			stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -30,13 +27,12 @@
 			addChild(_game);
 		}
 		
-		function createStartButton() {
+		function createStartButton():void {
 			startButton = new Button();
 			startButton.visible = true;
 			startButton.label = "Start Game";
-			startButton.x = SCRN_WIDTH_HALF - startButton.height;
-			startButton.y = SCRN_HEIGHT_HALF - startButton.width;
-			
+			startButton.x = MainConstants.SCRN_WIDTH_HALF - startButton.height;
+			startButton.y = MainConstants.SCRN_HEIGHT_HALF - startButton.width;
 			startButton.addEventListener(MouseEvent.CLICK, onClickStart);
 		}
 

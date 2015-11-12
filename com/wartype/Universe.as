@@ -1,6 +1,7 @@
 ﻿package com.wartype
 {
     import com.framework.math.Anumber;
+    import com.wartype.MainConstants;
     import com.wartype.controllers.ObjectController;
     import com.wartype.guns.GunBase;
     import com.wartype.guns.GunSimple;
@@ -32,15 +33,7 @@
         private var levelNumberTextField:TextField;
         private var backgroundSprite:Sprite;
 
-        private static const PATH_TO_JSON:String = ".\\com/wartype/resources/words.json";
-        private static var _instance:Universe; //Ссылка на игровой мир
-        private static var LEVEL_NUMBER:uint = 1;
-        private static var TYPING_SPEED:uint = 90;
-        private static var FIRST_LEVEL_BORDER:Number = 0.9;
-        private static var SECOND_LEVEL_BORDER:Number = 0.1;
-        private static var THIRD_LEVEL_BORDER:Number = 0.0;
-        private static var FOURTH_LEVEL_BORDER:Number = 0.0;
-
+        private static var _instance:Universe;
 
         public function Universe()
         {
@@ -82,7 +75,7 @@
 
             var myTextLoader:URLLoader = new URLLoader();
             myTextLoader.addEventListener(Event.COMPLETE, onLoaded);
-            myTextLoader.load(new URLRequest(PATH_TO_JSON));
+            myTextLoader.load(new URLRequest(MainConstants.PATH_TO_JSON));
 
             trace("Universe was created!");
         }
@@ -130,51 +123,58 @@
         private static function traceLevelsBorder():void
         {
             trace("=========");
-            trace("FIRST " + FIRST_LEVEL_BORDER);
-            trace("SECOND " + SECOND_LEVEL_BORDER);
-            trace("THIRD " + THIRD_LEVEL_BORDER);
-            trace("FOURTH " + FOURTH_LEVEL_BORDER);
+            trace("FIRST " + MainConstants.FIRST_LEVEL_BORDER);
+            trace("SECOND " + MainConstants.SECOND_LEVEL_BORDER);
+            trace("THIRD " + MainConstants.THIRD_LEVEL_BORDER);
+            trace("FOURTH " + MainConstants.FOURTH_LEVEL_BORDER);
             trace("=========");
         }
 
         private function createLevelNumberTextField():void
         {
             levelNumberSprite = new numberlevel_mc();
-            levelNumberSprite.x = 100;
-            levelNumberSprite.y = 100;
+            levelNumberSprite.x = MainConstants.LEVEL_NUMBER_POSITION_X;
+            levelNumberSprite.y = MainConstants.LEVEL_NUMBER_POSITION_Y;
             if (levelNumberSprite != null)
             {
                 addChild(levelNumberSprite);
             }
 
-            if (levelNumberSprite["text"] != null)
+            if (levelNumberSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] != null)
             {
-                levelNumberTextField = levelNumberSprite["text"] as TextField;
+                levelNumberTextField = levelNumberSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
             }
         }
 
         private static function prepareVariablesToNewLevel():void
         {
-            TYPING_SPEED += 10;
+            MainConstants.TYPING_SPEED += MainConstants.WORD_SPEED_ITERATION;
 
-            if(FIRST_LEVEL_BORDER < 1 && SECOND_LEVEL_BORDER < 1 && THIRD_LEVEL_BORDER < 1 &&
-                FOURTH_LEVEL_BORDER < 1)
+            if(MainConstants.FIRST_LEVEL_BORDER < 1 && MainConstants.SECOND_LEVEL_BORDER < 1 &&
+                    MainConstants.THIRD_LEVEL_BORDER < 1 && MainConstants.FOURTH_LEVEL_BORDER < 1)
             {
-                if(FIRST_LEVEL_BORDER > 0)
+                if(MainConstants.FIRST_LEVEL_BORDER > 0)
                 {
-                    FIRST_LEVEL_BORDER = Anumber.toFixedNumber(FIRST_LEVEL_BORDER, 1, "minus", 0.2);
-                    SECOND_LEVEL_BORDER = Anumber.toFixedNumber(SECOND_LEVEL_BORDER, 1, "plus", 0.1);
-                    THIRD_LEVEL_BORDER = Anumber.toFixedNumber(THIRD_LEVEL_BORDER, 1, "plus", 0.1);
+                    MainConstants.FIRST_LEVEL_BORDER =
+                            Anumber.toFixedNumber(MainConstants.FIRST_LEVEL_BORDER, 1, MainConstants.MINUS, 0.2);
+                    MainConstants.SECOND_LEVEL_BORDER =
+                            Anumber.toFixedNumber(MainConstants.SECOND_LEVEL_BORDER, 1, MainConstants.PLUS, 0.1);
+                    MainConstants.THIRD_LEVEL_BORDER =
+                            Anumber.toFixedNumber(MainConstants.THIRD_LEVEL_BORDER, 1, MainConstants.MINUS, 0.1);
                 }
-                else if(SECOND_LEVEL_BORDER > 0)
+                else if(MainConstants.SECOND_LEVEL_BORDER > 0)
                 {
-                    SECOND_LEVEL_BORDER = Anumber.toFixedNumber(SECOND_LEVEL_BORDER, 1, "minus", 0.1);
-                    THIRD_LEVEL_BORDER = 0.5;
-                    FOURTH_LEVEL_BORDER = Anumber.toFixedNumber(FOURTH_LEVEL_BORDER, 1, "plus", 0.1);
+                    MainConstants.SECOND_LEVEL_BORDER =
+                            Anumber.toFixedNumber(MainConstants.SECOND_LEVEL_BORDER, 1, MainConstants.MINUS, 0.1);
+                    MainConstants.THIRD_LEVEL_BORDER = 0.5;
+                    MainConstants.FOURTH_LEVEL_BORDER =
+                            Anumber.toFixedNumber(MainConstants.FOURTH_LEVEL_BORDER, 1, MainConstants.PLUS, 0.1);
                 } else
                 {
-                    THIRD_LEVEL_BORDER = Anumber.toFixedNumber(THIRD_LEVEL_BORDER, 1, "minus", 0.1);
-                    FOURTH_LEVEL_BORDER = Anumber.toFixedNumber(FOURTH_LEVEL_BORDER, 1, "plus", 0.1);
+                    MainConstants.THIRD_LEVEL_BORDER =
+                            Anumber.toFixedNumber(MainConstants.THIRD_LEVEL_BORDER, 1, MainConstants.MINUS, 0.1);
+                    MainConstants.FOURTH_LEVEL_BORDER =
+                            Anumber.toFixedNumber(MainConstants.FOURTH_LEVEL_BORDER, 1, MainConstants.PLUS, 0.1);
                 }
             }
 
@@ -185,19 +185,20 @@
         {
             prepareVariablesToNewLevel();
             createLevel();
-            LEVEL_NUMBER++;
+            MainConstants.LEVEL_NUMBER++;
         }
 
         private function createLevel():void
         {
-            trace("Level " + LEVEL_NUMBER + " created!");
-            levelManager.createLevel(TYPING_SPEED, FIRST_LEVEL_BORDER, SECOND_LEVEL_BORDER, THIRD_LEVEL_BORDER,
-                    FOURTH_LEVEL_BORDER);
+            trace("Level " + MainConstants.LEVEL_NUMBER + " created!");
+            levelManager.createLevel(MainConstants.TYPING_SPEED, MainConstants.FIRST_LEVEL_BORDER,
+                    MainConstants.SECOND_LEVEL_BORDER, MainConstants.THIRD_LEVEL_BORDER,
+                    MainConstants.FOURTH_LEVEL_BORDER);
         }
 
         private function enterFrameHandler(event:Event):void
         {
-            levelNumberTextField.text = "Level " + LEVEL_NUMBER;
+            levelNumberTextField.text = MainConstants.LEVEL_STATIC_TEXT + MainConstants.LEVEL_NUMBER;
             //Расчёты Delta-времени для избежания ошибок в выводе графики при низких fps
             //getTimer() считает время с момента запуска приложения до вызова функции
             var _deltaTime:Number = (getTimer() - lastTick) / 1000;

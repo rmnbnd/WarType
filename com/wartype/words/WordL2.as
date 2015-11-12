@@ -1,6 +1,7 @@
 package com.wartype.words
 {
     import com.wartype.App;
+    import com.wartype.MainConstants;
     import com.wartype.Universe;
     import com.wartype.interfaces.IObject;
     import flash.display.Sprite;
@@ -37,7 +38,7 @@ package com.wartype.words
         {
             bladesSprite.rotation+=WordConstants.HELI_BLADES_ROTATION_SPEED;
             super.update(delta);
-            if (this.y >= App.SCR_HEIGHT - WordConstants.HELI_BOTTOM_MARGIN)
+            if (this.y >= MainConstants.SCR_HEIGHT - WordConstants.HELI_BOTTOM_MARGIN)
             {
                 Universe.getInstance().gun.setHealth = WordConstants.HELI_DAMAGE;
                 free();
