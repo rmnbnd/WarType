@@ -110,8 +110,7 @@ package com.wartype.levels
 			{
 				random = Math.random() * wordsArray.length;
 				wordObject = wordsArray[random];
-				//temporary solution needed for non-stop game
-				//wordsArray.splice(random, 1);
+				wordsArray.splice(random, 1);
 				switch(difficulty)
 				{
 					case LevelsConstants.FIRST_DIFFICULTY_LETTERS:
