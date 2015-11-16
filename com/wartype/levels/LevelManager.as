@@ -70,11 +70,6 @@ package com.wartype.levels
 			wordsArray = getCurrentWords(LevelsConstants.FOURTH_DIFFICULTY_LETTERS);
 			createWordsByDifficulty(LevelsConstants.FOURTH_DIFFICULTY_LETTERS, numberOfWordsFourthLvl);
 			randomWordsArrayToOneLevel.sort(randomSort);
-
-			//for debug only
-			for(var i:int = 0; i < allWords.length; i++) {
-				trace(allWords[i].words);
-			}
 		}
 
 		private static function randomSort(firstElement:*, secondElement:*):Number

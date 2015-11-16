@@ -91,11 +91,11 @@
                 for (var i:int = wordsEnemies.length - 1; i >= 0; --i)
                 {
                     word = wordsEnemies[i];
-
                     if (key == word.wordSplitChars[0] && word.stage &&
                             word.y > GunConstants.OFFSET_PX_TO_START_OF_SCENE)
                     {
                         wordTarget = word;
+                        break;
                     }
                 }
             }
@@ -145,11 +145,16 @@
             shoot();
         }
 
-        //Функция выстрела
         private function shoot():void
         {
             var bullet:BulletSimple = new BulletSimple();
             bullet.init(this.x, this.y, bulletSpeed, this.rotation);
+        }
+
+        private function distanceBetweenTwoPoints(x1:Number, x2:Number, y1:Number, y2:Number):Number {
+            var dx:Number = x1-x2;
+            var dy:Number = y1-y2;
+            return Math.sqrt(dx * dx + dy * dy);
         }
 
         public static function getInstance():GunBase
