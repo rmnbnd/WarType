@@ -160,7 +160,7 @@
                     MainConstants.SECOND_LEVEL_BORDER =
                             Anumber.toFixedNumber(MainConstants.SECOND_LEVEL_BORDER, 1, MainConstants.PLUS, 0.1);
                     MainConstants.THIRD_LEVEL_BORDER =
-                            Anumber.toFixedNumber(MainConstants.THIRD_LEVEL_BORDER, 1, MainConstants.MINUS, 0.1);
+                            Anumber.toFixedNumber(MainConstants.THIRD_LEVEL_BORDER, 1, MainConstants.PLUS, 0.1);
                 }
                 else if(MainConstants.SECOND_LEVEL_BORDER > 0)
                 {
