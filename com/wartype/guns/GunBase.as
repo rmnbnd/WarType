@@ -87,14 +87,29 @@ package com.wartype.guns
         public function keyDownHandler(event:KeyboardEvent):void
         {
             key = String.fromCharCode(event.keyCode);
+            var minDistance:Number = Number.MAX_VALUE;
+            var wordWithMinDistance:WordBase;
+            var wordsWithSameStartChars:Array = selectWordsWithSameStartChars();
             if (isAttackedWord == false)
             {
+                for(var j:int = wordsWithSameStartChars.length - 1; j >= 0; --j)
+                {
+                    var distance:Number = distanceBetweenTwoPoints(wordsWithSameStartChars[j].x, this.x,
+                            wordsWithSameStartChars[j].y, this.y);
+                    if(distance < minDistance) {
+                        minDistance = distance;
+                        wordWithMinDistance = wordsWithSameStartChars[j];
+                    }
+                }
                 for (var i:int = wordsEnemies.length - 1; i >= 0; --i)
                 {
                     word = wordsEnemies[i];
-                    if (key == word.wordSplitChars[0] && word.stage &&
-                            word.y > GunConstants.OFFSET_PX_TO_START_OF_SCENE)
+                    if (isTarget(word.wordSplitChars[0]))
                     {
+                        if(wordWithMinDistance != null) {
+                            wordTarget = wordWithMinDistance;
+                            break;
+                        }
                         wordTarget = word;
                         break;
                     }
@@ -148,6 +163,22 @@ package com.wartype.guns
 
             wordTarget.damage();
             shoot();
+        }
+
+        private function selectWordsWithSameStartChars():Array {
+            var wordsWithSameStartChars:Array = [];
+            for (var k:int = wordsEnemies.length - 1; k >= 0; --k) {
+                word = wordsEnemies[k];
+                if (isTarget(word.wordSplitChars[0])) {
+                    wordsWithSameStartChars.push(word);
+                }
+            }
+            return wordsWithSameStartChars;
+        }
+
+        private function isTarget(char:String):Boolean {
+            return key == char && word.stage &&
+                    word.y > GunConstants.OFFSET_PX_TO_START_OF_SCENE;
         }
 
         private function shoot():void

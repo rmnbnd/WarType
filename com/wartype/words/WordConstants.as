@@ -8,7 +8,7 @@ package com.wartype.words {
 
         //Jet - L1
         public static const JET_BOTTOM_MARGIN:Number = 20;
-        public static const JET_DAMAGE:Number = 20;
+        public static const JET_DAMAGE:Number = 10;
 
         //Heli - L2
         public static const HELI_BLADES_ROTATION_SPEED:Number = 56;
