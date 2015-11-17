@@ -1,4 +1,4 @@
-﻿package com.wartype.words
+package com.wartype.words
 {
 	import com.wartype.App;
 	import com.wartype.MainConstants;
@@ -139,5 +139,9 @@
 		{
 			isSelected = false;
 		}
+        public function unatackedWord():void
+        {
+            isAttacked = false;
+        }
 	}
 }

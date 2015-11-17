@@ -92,5 +92,10 @@ package com.wartype.bullets
 				}
 			}
 		}
+        
+        public function getIsFree():Boolean
+        {
+            return this.isFree;
+        }
 	}
 }

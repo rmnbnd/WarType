@@ -1,4 +1,4 @@
-﻿package com.wartype.guns
+package com.wartype.guns
 {
     import com.framework.math.Amath;
     import com.wartype.App;
@@ -27,6 +27,7 @@
         protected var healthSprite:Sprite;
         private var word:WordBase;
         private var key:String; //Нажатая кнопка
+        private var bullet:BulletSimple;
         public static var isAttackedWord:Boolean; //Флаг, указывающий,
         //было ли атаковано слово (для захвата ссылки на объект)
         private static var instanceGun:GunBase;
@@ -103,6 +104,10 @@
             {
                 isAttackedWord = false;
                 wordTarget.unselectWord();
+                if (bullet != null && bullet.getIsFree()) 
+                {
+                    wordTarget.unatackedWord();
+                }
                 return;
             }
             if (wordTarget == null) {
@@ -147,7 +152,7 @@
 
         private function shoot():void
         {
-            var bullet:BulletSimple = new BulletSimple();
+            bullet = new BulletSimple();
             bullet.init(this.x, this.y, bulletSpeed, this.rotation);
         }
 
