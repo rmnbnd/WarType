@@ -89,9 +89,10 @@ package com.wartype.guns
             key = String.fromCharCode(event.keyCode);
             var minDistance:Number = Number.MAX_VALUE;
             var wordWithMinDistance:WordBase;
-            var wordsWithSameStartChars:Array = selectWordsWithSameStartChars();
+            var wordsWithSameStartChars:Array = [];
             if (isAttackedWord == false)
             {
+                wordsWithSameStartChars = selectWordsWithSameStartChars();
                 for(var j:int = wordsWithSameStartChars.length - 1; j >= 0; --j)
                 {
                     var distance:Number = distanceBetweenTwoPoints(wordsWithSameStartChars[j].x, this.x,
@@ -118,7 +119,9 @@ package com.wartype.guns
             if (event.keyCode == GunConstants.SPACE_CODE)
             {
                 isAttackedWord = false;
-                wordTarget.unselectWord();
+                if(wordTarget != null) {
+                    wordTarget.unselectWord();
+                }
                 if (bullet != null && bullet.getIsFree()) 
                 {
                     wordTarget.unatackedWord();
