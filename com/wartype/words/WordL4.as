@@ -22,7 +22,7 @@ package com.wartype.words
             wordSplitChars = wordObject.split(''); //Разделяем слово по буквам
             wordsArrayLength = wordSplitChars.length; //Записываем размерность массива в переменную
 
-            getSpeedY = speed;
+            setSpeedY = speed;
             go = true;
             isDead = false;
             isAttacked = false;

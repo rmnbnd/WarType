@@ -19,7 +19,7 @@ package com.wartype.words
             wordSplitChars = wordObject.split(''); //Разделяем слово по буквам
             wordsArrayLength = wordSplitChars.length; //Записываем размерность массива в переменную
 
-            getSpeedY = speed; //Устанавливаем скорость
+            setSpeedY = speed; //Устанавливаем скорость
             go = true; //Флаг движения (потом понадобится)
             isDead = false; //Флаг "смерти" слова
             isAttacked = false; //Флаг атакуемости слова

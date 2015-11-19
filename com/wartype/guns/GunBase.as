@@ -1,12 +1,12 @@
 package com.wartype.guns
 {
     import com.framework.math.Amath;
-    import com.wartype.App;
     import com.wartype.MainConstants;
     import com.wartype.Universe;
     import com.wartype.bullets.BulletSimple;
     import com.wartype.interfaces.IObject;
     import com.wartype.levels.LevelManager;
+    import com.wartype.levels.LevelsConstants;
     import com.wartype.words.WordBase;
 
     import flash.display.MovieClip;
@@ -145,6 +145,7 @@ package com.wartype.guns
                 return;
             }
             if (key != wordTarget.wordSplitChars[0]) {
+                wordTarget.setSpeedY = wordTarget.getSpeedY + 10;
                 return;
             }
             wordTarget.isAttacked = true;

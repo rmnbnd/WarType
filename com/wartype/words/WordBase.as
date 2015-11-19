@@ -1,12 +1,12 @@
 package com.wartype.words
 {
-	import com.wartype.App;
 	import com.wartype.MainConstants;
 	import com.wartype.Universe;
 	import com.wartype.guns.GunBase;
-	import com.wartype.guns.GunSimple;
 	import com.wartype.interfaces.IObject;
 	import com.wartype.levels.LevelManager;
+
+	import flash.display.MovieClip;
 
 	import flash.display.Sprite;
 	import flash.text.TextField;
@@ -23,7 +23,7 @@ package com.wartype.words
 		protected var textLabel:TextField; //Текстовое поле для вывода текста слова на экран
 		protected var textClip:Sprite; //Спрайт для вывода текста слова на экран
 		protected var wordIntoTextField:String; //Собственно, само слово
-		protected var sprite:Sprite; //Спрайт слова
+		protected var sprite:MovieClip; //Спрайт слова
 		protected var go:Boolean; //Движется ли слово
 		protected var universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
 		protected var throwTimeWord:uint;
@@ -106,10 +106,11 @@ package com.wartype.words
 		
 		public function stop():void
 		{
-			getSpeedY = 0;
+			setSpeedY = 0;
+			sprite.stop();
 		}
 
-		public function set getSpeedY(value:int):void
+		public function set setSpeedY(value:int):void
 		{
 			speedY = value;
 		}
