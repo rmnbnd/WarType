@@ -146,6 +146,7 @@ package com.wartype.guns
             }
             if (key != wordTarget.wordSplitChars[0]) {
                 wordTarget.setSpeedY = wordTarget.getSpeedY + 10;
+                wordTarget.boost();
                 return;
             }
             wordTarget.isAttacked = true;

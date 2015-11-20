@@ -27,6 +27,7 @@ package com.wartype.words
 		protected var go:Boolean; //Движется ли слово
 		protected var universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
 		protected var throwTimeWord:uint;
+		protected var highFlameFirstFrame:MovieClip;
 
 		private var speedY:int;
 		
@@ -102,6 +103,11 @@ package com.wartype.words
 			
 		    universe.removeChild(this);
 			LevelManager.getWords.remove(this);
+		}
+
+		public function boost():void
+		{
+
 		}
 		
 		public function stop():void

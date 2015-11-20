@@ -9,6 +9,9 @@ package com.wartype.words {
         //Jet - L1
         public static const JET_BOTTOM_MARGIN:Number = 20;
         public static const JET_DAMAGE:Number = 10;
+        public static const JET_MAX_FLAME_HEIGHT:Number = 54;
+        public static const JET_FLAME_POSTION_X:Number = 16;
+        public static const JET_FLAME_POSTION_Y:Number = 20;
 
         //Heli - L2
         public static const HELI_BLADES_ROTATION_SPEED:Number = 56;
@@ -19,6 +22,10 @@ package com.wartype.words {
         //JetEnterprise - L3
         public static const ENTERPRISE_BOTTOM_MARGIN:Number = 20;
         public static const ENTERPRISE_DAMAGE:Number = 20;
+        public static const ENTERPRISE_MAX_FLAME_HEIGHT:Number = 60;
+        public static const ENTERPRISE_FLAME_POSTION_X:Number = 15;
+        public static const ENTERPRISE_FLAME_POSTION_Y:Number = 40;
+
 
         //Osprey - L4
         public static const OSPREY_BLADES_ROTATION_SPEED:Number = 56;

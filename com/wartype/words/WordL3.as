@@ -35,10 +35,26 @@ package com.wartype.words
             }
         }
 
+        override public function boost():void
+        {
+            if(highFlameFirstFrame != null && highFlameFirstFrame.height < WordConstants.ENTERPRISE_MAX_FLAME_HEIGHT)
+            {
+                if(getChildByName("highFlameFirstFrame") == null)
+                {
+                    addChildAt(highFlameFirstFrame, 0);
+                }
+                highFlameFirstFrame.height += 5;
+            }
+        }
+
         private function createSpritesForScene():void
         {
             sprite = new wordL3_mc();
             textClip = new textlabel_mc();
+            highFlameFirstFrame = new jetL3_highFlame1();
+            highFlameFirstFrame.x += WordConstants.ENTERPRISE_FLAME_POSTION_X;
+            highFlameFirstFrame.y -= WordConstants.ENTERPRISE_FLAME_POSTION_Y;
+            highFlameFirstFrame.name = "highFlameFirstFrame";
         }
 
     }
