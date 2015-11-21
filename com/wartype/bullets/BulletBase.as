@@ -17,7 +17,8 @@ package com.wartype.bullets
 		protected var universe:Universe = Universe.getInstance();
 		protected var sprite:Sprite;
 		protected var isFree:Boolean = true;
-
+        protected var target:WordBase;
+        
 		public function BulletBase()
 		{
 
@@ -34,7 +35,7 @@ package com.wartype.bullets
 			universe.bullets.remove(this);
 		}
 		
-		public function init(ax:int, ay:int, speed:Number, angle:Number):void
+		public function init(ax:int, ay:int, speed:Number, angle:Number, wordTarget:WordBase):void
 		{
 			sprite.rotation = angle;
 			if (sprite != null)
@@ -54,6 +55,7 @@ package com.wartype.bullets
 			ySpeed = Math.sin(bulletAngle)*bulletSpeed;
 			
 			isFree = false;
+            target = wordTarget;
 			universe.bullets.add(this);
 			universe.addChild(this);
 		}
@@ -62,9 +64,6 @@ package com.wartype.bullets
 		{
 			this.x += xSpeed;
 			this.y += ySpeed;
-
-			var enemyWord:WordBase; //Ссылка на атакуемое слово
-			var words:Array = LevelManager.getWords.objects; //Массив появившихся на экране слов
 			
 			//Проверка на выход за пределы сцены
 			if (this.x < 0 || this.x > MainConstants.SCR_WIDTH || this.y < 0 || this.y > MainConstants.SCR_HEIGHT)
@@ -72,25 +71,19 @@ package com.wartype.bullets
 				free();
 				return;
 			}
-			
-			//Проверка на попадание, нанесение урона
-			for (var i:int = 0; i < words.length; i++)
-			{
-				enemyWord = words[i];
-				if(this.hitTestObject(enemyWord))
-				{
-					if (enemyWord.isAttacked == true)
-					{
-						enemyWord.destruction(); //Урон пулей
-						free(); //Уничтожаем пулю
-                        if (!enemyWord.isSelected)
-                        {
-                            enemyWord.isAttacked = false;
-                        }
-						break;
-					}
-				}
-			}
+            
+            if(this.hitTestObject(target))
+            {
+                if (target.isAttacked == true)
+                {
+                    target.destruction(); //Урон пулей
+                    free(); //Уничтожаем пулю
+                    if (!target.isSelected && !getIsFree())
+                    {
+                        target.isAttacked = false;
+                    }
+                }
+            }
 		}
         
         public function getIsFree():Boolean

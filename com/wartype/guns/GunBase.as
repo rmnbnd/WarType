@@ -1,4 +1,4 @@
-package com.wartype.guns
+﻿package com.wartype.guns
 {
     import com.framework.math.Amath;
     import com.wartype.MainConstants;
@@ -167,7 +167,7 @@ package com.wartype.guns
             this.rotation = rotationDirection;
 
             wordTarget.damage();
-            shoot();
+            shoot(wordTarget);
         }
 
         private function selectWordsWithSameStartChars():Array {
@@ -186,10 +186,10 @@ package com.wartype.guns
                     word.y > GunConstants.OFFSET_PX_TO_START_OF_SCENE;
         }
 
-        private function shoot():void
+        private function shoot(wordTarget:WordBase):void
         {
             bullet = new BulletSimple();
-            bullet.init(this.x, this.y, bulletSpeed, this.rotation);
+            bullet.init(this.x, this.y, bulletSpeed, this.rotation, wordTarget);
         }
 
         private function distanceBetweenTwoPoints(x1:Number, x2:Number, y1:Number, y2:Number):Number {
