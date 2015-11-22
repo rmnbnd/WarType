@@ -43,7 +43,7 @@ package com.wartype.words
                 {
                     addChildAt(highFlameFirstFrame, 0);
                 }
-                highFlameFirstFrame.height += 2;
+                highFlameFirstFrame.height += 4;
             }
         }
 

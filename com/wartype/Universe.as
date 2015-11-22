@@ -113,8 +113,6 @@
 
         private function createBackground():void {
             backgroundSprite = new backgroundDesert_mc();
-            backgroundSprite.y = 100;
-            backgroundSprite.x = -90;
             if (backgroundSprite != null) {
                 addChild(backgroundSprite);
             }

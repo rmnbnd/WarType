@@ -145,8 +145,11 @@
                 return;
             }
             if (key != wordTarget.wordSplitChars[0]) {
-                wordTarget.setSpeedY = wordTarget.getSpeedY + 10;
-                wordTarget.boost();
+                if(wordTarget.isAttacked)
+                {
+                    wordTarget.setSpeedY = wordTarget.getSpeedY + 20;
+                    wordTarget.boost();
+                }
                 return;
             }
             wordTarget.isAttacked = true;
