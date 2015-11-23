@@ -28,7 +28,6 @@
         private var lastTick:int = 0; //Последний тик таймера //Максимальное Delta-время
         private var wordOnScene:WordBase;
         private var levelManager:LevelManager;
-        private var levelTimer:Timer;
         private var levelNumberSprite:Sprite;
         private var levelNumberTextField:TextField;
         private var backgroundSprite:Sprite;
@@ -50,8 +49,6 @@
         public function endGame():void
         {
             timerWord.stop();
-            levelTimer.stop();
-            levelTimer.removeEventListener(TimerEvent.TIMER, prepareAndCreateLevel);
             timerWord.removeEventListener(TimerEvent.TIMER, create_new_word);
             stage.removeEventListener(KeyboardEvent.KEY_DOWN, gun.keyDownHandler);
             this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
@@ -98,15 +95,11 @@
             guns = new ObjectController();
             gun = new GunSimple();
 
-            levelTimer = new Timer(60000);
-            levelTimer.addEventListener(TimerEvent.TIMER, prepareAndCreateLevel);
-
             addEventListener(Event.ENTER_FRAME, enterFrameHandler);
-            stage.addEventListener(KeyboardEvent.KEY_DOWN, gun.keyDownHandler); //Слушатель на нажатие кнопки
+            stage.addEventListener(KeyboardEvent.KEY_DOWN, gun.keyDownHandler);
 
-            timerWord.addEventListener(TimerEvent.TIMER, create_new_word); //Words timer
+            timerWord.addEventListener(TimerEvent.TIMER, create_new_word);
             timerWord.start();
-            levelTimer.start();
 
             removeEventListener(Event.ADDED_TO_STAGE, init);
         }
@@ -179,7 +172,7 @@
             traceLevelsBorder();
         }
 
-        private function prepareAndCreateLevel(event:TimerEvent):void
+        private function prepareAndCreateNewLevel():void
         {
             prepareVariablesToNewLevel();
             createLevel();
@@ -228,6 +221,10 @@
                     timerWord.delay = levelManager.getRandomWordsArrayToOneLevel[0].getThrowTimeWord;
                     trace(timerWord.delay);
                 }
+            }
+            else
+            {
+                prepareAndCreateNewLevel();
             }
         }
 
