@@ -31,6 +31,7 @@
         private var levelNumberSprite:Sprite;
         private var levelNumberTextField:TextField;
         private var backgroundSprite:Sprite;
+        private var timerBetweenLevels:Timer;
 
         private static var _instance:Universe;
 
@@ -100,6 +101,9 @@
 
             timerWord.addEventListener(TimerEvent.TIMER, create_new_word);
             timerWord.start();
+
+            timerBetweenLevels = new Timer(5000);
+            timerBetweenLevels.addEventListener(TimerEvent.TIMER, prepareAndCreateNewLevel);
 
             removeEventListener(Event.ADDED_TO_STAGE, init);
         }
@@ -172,11 +176,20 @@
             traceLevelsBorder();
         }
 
-        private function prepareAndCreateNewLevel():void
+        private function createTimerBetweenLevels():void
         {
+            timerWord.stop();
+            timerBetweenLevels.start();
+            trace("Preparing to new level...");
+        }
+
+        private function prepareAndCreateNewLevel(event:TimerEvent):void
+        {
+            MainConstants.LEVEL_NUMBER++;
+            timerBetweenLevels.stop();
+            timerWord.start();
             prepareVariablesToNewLevel();
             createLevel();
-            MainConstants.LEVEL_NUMBER++;
         }
 
         private function createLevel():void
@@ -224,7 +237,7 @@
             }
             else
             {
-                prepareAndCreateNewLevel();
+                createTimerBetweenLevels();
             }
         }
 
