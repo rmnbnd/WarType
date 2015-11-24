@@ -13,6 +13,7 @@ package com.wartype {
         public static const MINUS:String = "minus";
         public static const PLUS:String = "plus";
         public static const LEVEL_STATIC_TEXT:String = "Level ";
+        public static const PAUSE_TEXT:String = "PAUSE";
         public static var LEVEL_NUMBER:uint = 1;
         public static var TYPING_SPEED:uint = 90;
         public static var FIRST_LEVEL_BORDER:Number = 0.9;

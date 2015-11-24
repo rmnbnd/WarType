@@ -33,6 +33,8 @@
         private var timerBetweenLevels:Timer;
         private var isStopGame:Boolean;
         private var timerBetweenLevelsWasRunning:Boolean;
+        private var pauseBoardSprite:Sprite;
+        private var pauseBoardTextField:TextField;
 
         private static var _instance:Universe;
 
@@ -61,13 +63,14 @@
             var allWordsOnLevel:ObjectController = LevelManager.getWords;
             for (var i:int = 0; i < allWordsOnLevel.objects.length; i++)
             {
-                wordOnScene = LevelManager.getWords.objects[i];
+                wordOnScene = allWordsOnLevel.objects[i];
                 wordOnScene.stop();
             }
             for (var j:int = 0; j < bullets.objects.length; j++)
             {
                 bullets.objects[j].stop();
             }
+            createPauseBoardTextField();
         }
 
         public function resetGame():void
@@ -83,13 +86,14 @@
             var allWordsOnLevel:ObjectController = LevelManager.getWords;
             for (var i:int = 0; i < allWordsOnLevel.objects.length; i++)
             {
-                wordOnScene = LevelManager.getWords.objects[i];
+                wordOnScene = allWordsOnLevel.objects[i];
                 wordOnScene.start();
             }
             for (var j:int = 0; j < bullets.objects.length; j++)
             {
                 bullets.objects[j].start();
             }
+            deletePauseBoardTextField();
         }
 
         public function endGame():void
@@ -151,6 +155,33 @@
             timerBetweenLevels.addEventListener(TimerEvent.TIMER, prepareAndCreateNewLevel);
 
             removeEventListener(Event.ADDED_TO_STAGE, init);
+        }
+
+        private function createPauseBoardTextField():void
+        {
+            pauseBoardSprite = new pauseBoard_mc();
+            pauseBoardSprite.name = "pauseBoard";
+            pauseBoardSprite.x = MainConstants.SCR_WIDTH / 2;
+            pauseBoardSprite.y = MainConstants.SCR_HEIGHT / 2;
+            if (pauseBoardSprite != null)
+            {
+                addChild(pauseBoardSprite);
+            }
+
+            if (pauseBoardSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] != null)
+            {
+                pauseBoardTextField = pauseBoardSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
+            }
+            pauseBoardTextField.text = MainConstants.PAUSE_TEXT;
+            pauseBoardTextField.alpha = 0.8;
+        }
+
+        private function deletePauseBoardTextField():void
+        {
+            if(getChildByName("pauseBoard") != null)
+            {
+                removeChild(pauseBoardSprite);
+            }
         }
 
         private function createBackground():void {
