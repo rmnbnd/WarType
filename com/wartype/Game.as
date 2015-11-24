@@ -1,8 +1,8 @@
 package com.wartype
 {
-import com.wartype.words.WordBase;
+    import com.wartype.words.WordBase;
 
-import flash.display.Sprite;
+    import flash.display.Sprite;
     import flash.display.Stage;
     import flash.events.KeyboardEvent;
 
@@ -17,18 +17,29 @@ import flash.display.Sprite;
 
             universe = new Universe();
             addChild(universe);
-            stage.addEventListener(KeyboardEvent.KEY_DOWN, getMoreSpeed); //Dev only, get more speed for words
+            stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownAction); //Dev only, get more speed for words
             stage.addEventListener(KeyboardEvent.KEY_UP, getBackToNormSpeed); //Dev only, get more speed for words
                                                                               //use Arrow-down key
         }
 
-        private function getMoreSpeed(event:KeyboardEvent):void
+        private function keyDownAction(event:KeyboardEvent):void
         {
             var wordOnScene:WordBase = Universe.getInstance().getWordOnScene;
             if(wordOnScene != null && String.fromCharCode(event.keyCode) == "(")
             {
                 currentSpeed = wordOnScene.getSpeedY;
                 wordOnScene.setSpeedY = 500;
+            }
+            if(event.ctrlKey)
+            {
+                if(!universe.getIsStopGame)
+                {
+                    universe.stopGame();
+                }
+                else
+                {
+                    universe.resetGame();
+                }
             }
         }
 

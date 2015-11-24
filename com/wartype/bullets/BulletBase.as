@@ -2,20 +2,22 @@ package com.wartype.bullets
 {
 	import com.wartype.MainConstants;
 	import com.wartype.Universe;
-	import com.wartype.App;
-	import com.wartype.levels.LevelManager;
-	import com.wartype.words.WordBase;
 	import com.wartype.interfaces.IObject;
+	import com.wartype.words.WordBase;
+
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	
+
 	public class BulletBase extends Sprite implements IObject
 	{
 		private var bulletSpeed:Number = BulletConstants.BULLET_SPEED;
 		private var xSpeed:Number;
 		private var ySpeed:Number;
-		
+		private var currentXSpeed:Number;
+		private var currentYSpeed:Number;
+
 		protected var universe:Universe = Universe.getInstance();
-		protected var sprite:Sprite;
+		protected var sprite:MovieClip;
 		protected var isFree:Boolean = true;
         protected var target:WordBase;
         
@@ -84,6 +86,22 @@ package com.wartype.bullets
                     }
                 }
             }
+		}
+
+		public function start():void
+		{
+			ySpeed = currentYSpeed;
+			xSpeed = currentXSpeed;
+			sprite.play();
+		}
+
+		public function stop():void
+		{
+			currentXSpeed = xSpeed;
+			currentYSpeed = ySpeed;
+			ySpeed = 0;
+			xSpeed = 0;
+			sprite.stop();
 		}
         
         public function getIsFree():Boolean

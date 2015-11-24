@@ -28,7 +28,7 @@ package com.wartype.words
 		protected var universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
 		protected var throwTimeWord:uint;
 		protected var highFlameFirstFrame:MovieClip;
-
+		private var currentSpeed:Number;
 		private var speedY:int;
 		
 		public function WordBase()
@@ -36,6 +36,7 @@ package com.wartype.words
 		
 		public function init():void
 		{
+			currentSpeed = getSpeedY;
 			this.x = ((MainConstants.SCR_WIDTH - 50) - 50) * Math.random() + 50;
 			if (sprite != null && textClip != null)
 			{
@@ -116,6 +117,12 @@ package com.wartype.words
 			sprite.stop();
 		}
 
+		public function start():void
+		{
+			setSpeedY = currentSpeed;
+			sprite.play();
+		}
+
 		public function set setSpeedY(value:int):void
 		{
 			speedY = value;
@@ -146,9 +153,20 @@ package com.wartype.words
 		{
 			isSelected = false;
 		}
+
         public function unatackedWord():void
         {
             isAttacked = false;
         }
+
+		public function get getCurrentSpeed():Number
+		{
+			return currentSpeed;
+		}
+
+		public function set setCurrentSpeed(speed:Number):void
+		{
+			currentSpeed = speed;
+		}
 	}
 }

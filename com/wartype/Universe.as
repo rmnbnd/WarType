@@ -1,7 +1,6 @@
 ﻿package com.wartype
 {
     import com.framework.math.Anumber;
-    import com.wartype.MainConstants;
     import com.wartype.controllers.ObjectController;
     import com.wartype.guns.GunBase;
     import com.wartype.guns.GunSimple;
@@ -32,6 +31,8 @@
         private var levelNumberTextField:TextField;
         private var backgroundSprite:Sprite;
         private var timerBetweenLevels:Timer;
+        private var isStopGame:Boolean;
+        private var timerBetweenLevelsWasRunning:Boolean;
 
         private static var _instance:Universe;
 
@@ -44,6 +45,50 @@
             else
             {
                 addEventListener(Event.ADDED_TO_STAGE, init);
+            }
+        }
+
+        public function stopGame():void
+        {
+            isStopGame = true;
+            if(timerBetweenLevelsWasRunning)
+            {
+                timerBetweenLevels.stop();
+            }
+            timerWord.stop();
+            stage.removeEventListener(KeyboardEvent.KEY_DOWN, gun.keyDownHandler);
+            this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
+            var allWordsOnLevel:ObjectController = LevelManager.getWords;
+            for (var i:int = 0; i < allWordsOnLevel.objects.length; i++)
+            {
+                wordOnScene = LevelManager.getWords.objects[i];
+                wordOnScene.stop();
+            }
+            for (var j:int = 0; j < bullets.objects.length; j++)
+            {
+                bullets.objects[j].stop();
+            }
+        }
+
+        public function resetGame():void
+        {
+            isStopGame = false;
+            if(timerBetweenLevelsWasRunning)
+            {
+                timerBetweenLevels.start();
+            }
+            timerWord.start();
+            stage.addEventListener(KeyboardEvent.KEY_DOWN, gun.keyDownHandler);
+            this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+            var allWordsOnLevel:ObjectController = LevelManager.getWords;
+            for (var i:int = 0; i < allWordsOnLevel.objects.length; i++)
+            {
+                wordOnScene = LevelManager.getWords.objects[i];
+                wordOnScene.start();
+            }
+            for (var j:int = 0; j < bullets.objects.length; j++)
+            {
+                bullets.objects[j].start();
             }
         }
 
@@ -180,6 +225,7 @@
         {
             timerWord.stop();
             timerBetweenLevels.start();
+            timerBetweenLevelsWasRunning = true;
             trace("Preparing to new level...");
         }
 
@@ -190,6 +236,7 @@
             timerWord.start();
             prepareVariablesToNewLevel();
             createLevel();
+            timerBetweenLevelsWasRunning = false;
         }
 
         private function createLevel():void
@@ -249,6 +296,10 @@
         public static function getInstance():Universe
         {
             return (_instance == null) ? new Universe() : _instance;
+        }
+
+        public function get getIsStopGame():Boolean {
+            return isStopGame;
         }
     }
 }

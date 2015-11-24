@@ -1,9 +1,9 @@
 package com.wartype.words
 {
-    import com.wartype.App;
     import com.wartype.MainConstants;
     import com.wartype.Universe;
     import com.wartype.interfaces.IObject;
+
     import flash.display.Sprite;
 
     public class WordL2 extends WordBase implements IObject
@@ -43,6 +43,12 @@ package com.wartype.words
                 Universe.getInstance().gun.setHealth = WordConstants.HELI_DAMAGE;
                 free();
             }
+        }
+
+        override public function boost():void
+        {
+            setSpeedY = getSpeedY + 20;
+            setCurrentSpeed = getSpeedY;
         }
 
         private function createSpritesForScene():void

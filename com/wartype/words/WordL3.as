@@ -1,6 +1,5 @@
 package com.wartype.words
 {
-    import com.wartype.App;
     import com.wartype.MainConstants;
     import com.wartype.Universe;
     import com.wartype.interfaces.IObject;
@@ -37,6 +36,8 @@ package com.wartype.words
 
         override public function boost():void
         {
+            setSpeedY = getSpeedY + 20;
+            setCurrentSpeed = getSpeedY;
             if(highFlameFirstFrame != null && highFlameFirstFrame.height < WordConstants.ENTERPRISE_MAX_FLAME_HEIGHT)
             {
                 if(getChildByName("highFlameFirstFrame") == null)

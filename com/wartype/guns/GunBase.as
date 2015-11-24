@@ -6,7 +6,6 @@
     import com.wartype.bullets.BulletSimple;
     import com.wartype.interfaces.IObject;
     import com.wartype.levels.LevelManager;
-    import com.wartype.levels.LevelsConstants;
     import com.wartype.words.WordBase;
 
     import flash.display.MovieClip;
@@ -86,6 +85,10 @@
         //Функция-обработчик события нажатия на кнопку
         public function keyDownHandler(event:KeyboardEvent):void
         {
+            if(event.ctrlKey)
+            {
+                return;
+            }
             key = String.fromCharCode(event.keyCode);
             var minDistance:Number = Number.MAX_VALUE;
             var wordWithMinDistance:WordBase;
@@ -147,7 +150,6 @@
             if (key != wordTarget.wordSplitChars[0]) {
                 if(wordTarget.isAttacked)
                 {
-                    wordTarget.setSpeedY = wordTarget.getSpeedY + 20;
                     wordTarget.boost();
                 }
                 return;
