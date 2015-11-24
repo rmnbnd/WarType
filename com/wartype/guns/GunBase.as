@@ -1,4 +1,4 @@
-﻿package com.wartype.guns
+package com.wartype.guns
 {
     import com.framework.math.Amath;
     import com.wartype.MainConstants;
@@ -195,6 +195,7 @@
         {
             bullet = new BulletSimple();
             bullet.init(this.x, this.y, bulletSpeed, this.rotation, wordTarget);
+            universe.getScore.inc();
         }
 
         private function distanceBetweenTwoPoints(x1:Number, x2:Number, y1:Number, y2:Number):Number {

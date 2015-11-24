@@ -1,10 +1,11 @@
-﻿package com.wartype
+package com.wartype
 {
     import com.framework.math.Anumber;
     import com.wartype.controllers.ObjectController;
     import com.wartype.guns.GunBase;
     import com.wartype.guns.GunSimple;
     import com.wartype.levels.LevelManager;
+    import com.wartype.scores.Score;
     import com.wartype.words.*;
     import flash.display.Sprite;
     import flash.events.Event;
@@ -22,6 +23,7 @@
         public var bullets:ObjectController;
         public var guns:ObjectController;
         public var gun:GunBase = GunBase.getInstance();
+        public var score:Score;
 
         private var timerWord:Timer; //Таймер выпадения слов
         private var lastTick:int = 0; //Последний тик таймера //Максимальное Delta-время
@@ -144,6 +146,7 @@
             bullets = new ObjectController();
             guns = new ObjectController();
             gun = new GunSimple();
+            score = new Score();
 
             addEventListener(Event.ENTER_FRAME, enterFrameHandler);
             stage.addEventListener(KeyboardEvent.KEY_DOWN, gun.keyDownHandler);
@@ -329,8 +332,14 @@
             return (_instance == null) ? new Universe() : _instance;
         }
 
-        public function get getIsStopGame():Boolean {
+        public function get getIsStopGame():Boolean
+        {
             return isStopGame;
+        }
+        
+        public function get getScore():Score
+        {
+            return this.score;
         }
     }
 }
