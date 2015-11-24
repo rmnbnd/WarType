@@ -151,6 +151,7 @@ package com.wartype.guns
                 if(wordTarget.isAttacked)
                 {
                     wordTarget.boost();
+                    universe.getScore.resetFactor();
                 }
                 return;
             }

@@ -79,6 +79,7 @@ package com.wartype.words
 				textLabel.visible = false;
 				isDead = true;
 				GunBase.isAttackedWord = false;
+                universe.getScore.incFactor();
 			}
 		}
 		
