@@ -164,8 +164,8 @@ package com.wartype
         {
             pauseBoardSprite = new pauseBoard_mc();
             pauseBoardSprite.name = "pauseBoard";
-            pauseBoardSprite.x = MainConstants.SCR_WIDTH / 2;
-            pauseBoardSprite.y = MainConstants.SCR_HEIGHT / 2;
+            pauseBoardSprite.x = MainConstants.SCRN_WIDTH_HALF;
+            pauseBoardSprite.y = MainConstants.SCRN_HEIGHT_HALF;
             if (pauseBoardSprite != null)
             {
                 addChild(pauseBoardSprite);
