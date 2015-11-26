@@ -24,6 +24,7 @@ package com.wartype.guns
         protected var health:uint;
         protected var textFieldGun:TextField;
         protected var healthSprite:Sprite;
+        protected var gunFire:MovieClip;
         private var word:WordBase;
         private var key:String; //Нажатая кнопка
         private var bullet:BulletSimple;
@@ -62,6 +63,10 @@ package com.wartype.guns
 
         public function update(delta:Number):void
         {
+            if(getChildByName("gunFire") != null)
+            {
+                gunFire.alpha -= 0.1;
+            }
             textFieldGun.text = GunConstants.HEALTH_TEXT + health.toString();
             if (health <= 0)
             {
@@ -88,6 +93,10 @@ package com.wartype.guns
             if(event.ctrlKey)
             {
                 return;
+            }
+            if(getChildByName("gunFire") != null)
+            {
+                removeChild(gunFire);
             }
             key = String.fromCharCode(event.keyCode);
             var minDistance:Number = Number.MAX_VALUE;
@@ -171,7 +180,12 @@ package com.wartype.guns
 
             //set rotation
             this.rotation = rotationDirection;
-
+            gunFire = new gunFire_mc();
+            gunFire.name = "gunFire";
+            if(gunFire != null)
+            {
+                addChildAt(gunFire, 2);
+            }
             wordTarget.damage();
             shoot(wordTarget);
         }
