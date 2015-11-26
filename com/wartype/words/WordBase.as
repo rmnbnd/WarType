@@ -1,5 +1,6 @@
 package com.wartype.words
 {
+	import com.framework.math.Anumber;
 	import com.wartype.MainConstants;
 	import com.wartype.Universe;
 	import com.wartype.guns.GunBase;
@@ -86,6 +87,8 @@ package com.wartype.words
 		//Нанесение урона пулей
 		public function destruction():void
 		{
+			universe.getMediumExplosion.create(Anumber.randRange(this.x - 10, this.x + 10),
+											Anumber.randRange(this.y - 10, this.y + 10));
 			wordsArrayLength--;
 			if (wordsArrayLength <= 0 && wordSplitChars.length <= 0)
 			{

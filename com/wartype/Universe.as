@@ -2,6 +2,7 @@ package com.wartype
 {
     import com.framework.math.Anumber;
     import com.wartype.controllers.ObjectController;
+    import com.wartype.explosions.MediumExplosion;
     import com.wartype.guns.GunBase;
     import com.wartype.guns.GunSimple;
     import com.wartype.levels.LevelManager;
@@ -37,6 +38,8 @@ package com.wartype
         private var timerBetweenLevelsWasRunning:Boolean;
         private var pauseBoardSprite:Sprite;
         private var pauseBoardTextField:TextField;
+
+        private var mediumExplosion:MediumExplosion;
 
         private static var _instance:Universe;
 
@@ -147,6 +150,7 @@ package com.wartype
             guns = new ObjectController();
             gun = new GunSimple();
             score = new Score();
+            mediumExplosion = new MediumExplosion(this);
 
             addEventListener(Event.ENTER_FRAME, enterFrameHandler);
             stage.addEventListener(KeyboardEvent.KEY_DOWN, gun.keyDownHandler);
@@ -283,6 +287,7 @@ package com.wartype
 
         private function enterFrameHandler(event:Event):void
         {
+            mediumExplosion.update();
             levelNumberTextField.text = MainConstants.LEVEL_STATIC_TEXT + MainConstants.LEVEL_NUMBER;
             //Расчёты Delta-времени для избежания ошибок в выводе графики при низких fps
             //getTimer() считает время с момента запуска приложения до вызова функции
@@ -340,6 +345,10 @@ package com.wartype
         public function get getScore():Score
         {
             return this.score;
+        }
+
+        public function get getMediumExplosion():MediumExplosion {
+            return mediumExplosion;
         }
     }
 }
