@@ -39,6 +39,9 @@ package com.wartype
         private var pauseBoardSprite:Sprite;
         private var pauseBoardTextField:TextField;
 
+        [Embed(source="../../assets/json/words.json", mimeType="application/octet-stream")]
+        private var jsonData:Class;
+
         private var mediumExplosion:MediumExplosion;
 
         private static var _instance:Universe;
@@ -133,8 +136,7 @@ package com.wartype
         }
         
         private function onLoaded(e:Event):void {
-			var words:Array = com.adobe.serialization.json.JSON.decode(e.target.data);
-
+            var words:Array = JSON.parse(new jsonData()) as Array;
             createBackground();
 
             createLevelNumberTextField();

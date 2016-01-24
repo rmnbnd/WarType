@@ -9,7 +9,7 @@ package com.wartype {
         public static const SCRN_HEIGHT_HALF: int = SCR_HEIGHT / 2;
 
         //Universe
-        public static const PATH_TO_JSON:String = ".\\com/wartype/resources/words.json";
+        public static const PATH_TO_JSON:String = "./assets/json/words.json";
         public static const MINUS:String = "minus";
         public static const PLUS:String = "plus";
         public static const LEVEL_STATIC_TEXT:String = "Level ";
