@@ -38,6 +38,8 @@ package com.wartype
         private var timerBetweenLevelsWasRunning:Boolean;
         private var pauseBoardSprite:Sprite;
         private var pauseBoardTextField:TextField;
+        private var charsPerMinuteSprite:Sprite;
+        private var charsPerMinuteField:TextField;
 
         [Embed(source="../../assets/json/words.json", mimeType="application/octet-stream")]
         private var jsonData:Class;
@@ -163,6 +165,8 @@ package com.wartype
             timerBetweenLevels = new Timer(5000);
             timerBetweenLevels.addEventListener(TimerEvent.TIMER, prepareAndCreateNewLevel);
 
+            createCharsPerMinuteBoard();
+
             removeEventListener(Event.ADDED_TO_STAGE, init);
         }
 
@@ -183,6 +187,25 @@ package com.wartype
             }
             pauseBoardTextField.text = MainConstants.PAUSE_TEXT;
             pauseBoardTextField.alpha = 0.8;
+        }
+
+        private function createCharsPerMinuteBoard():void
+        {
+            charsPerMinuteSprite = new charsPerMinuteText_mc();
+            charsPerMinuteSprite.x = MainConstants.CHARS_PER_MINUTE_POSITION_X;
+            charsPerMinuteSprite.y = MainConstants.CHARS_PER_MINUTE_POSITION_Y;
+            if (charsPerMinuteSprite != null)
+            {
+                addChild(charsPerMinuteSprite);
+            }
+
+            if (charsPerMinuteSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] != null)
+            {
+                charsPerMinuteField = charsPerMinuteSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
+            }
+            var charsPerMinuteText:String = "Enemies speed: " + MainConstants.TYPING_SPEED;
+            trace(charsPerMinuteText);
+            charsPerMinuteField.text = charsPerMinuteText;
         }
 
         private function deletePauseBoardTextField():void
@@ -277,6 +300,7 @@ package com.wartype
             prepareVariablesToNewLevel();
             createLevel();
             timerBetweenLevelsWasRunning = false;
+            charsPerMinuteField.text = "Enemies speed: " + String(MainConstants.TYPING_SPEED);
         }
 
         private function createLevel():void

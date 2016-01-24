@@ -23,7 +23,8 @@ package com.wartype {
         public static var WORD_SPEED_ITERATION:Number = 10;
         public static var LEVEL_NUMBER_POSITION_X:Number = 100;
         public static var LEVEL_NUMBER_POSITION_Y:Number = 100;
-
+        public static var CHARS_PER_MINUTE_POSITION_X:Number = MainConstants.SCR_WIDTH;
+        public static var CHARS_PER_MINUTE_POSITION_Y:Number = 100;
 
 
     }
