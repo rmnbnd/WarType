@@ -11,18 +11,18 @@ package com.wartype.explosions
 
 		override protected function setProps():void
 		{
-			numberOfFireballs = 15;
+			numberOfFireballs = 10;
 			explosionRange = 35;
 			growScale = Math.random() * 100 * .01;
 			growSpeed = .1;
 			growAlpha = Math.random() * 200 * .01;
-			fadeSpeed = .1;
+			fadeSpeed = .15;
 			randomRangeX = Math.random() * explosionRange - explosionRange * .5;
 			randomRangeY = Math.random() * explosionRange - explosionRange * .5;
 			randomNumber = Math.round(Math.random());
 			speedX = 0;
 			speedY = 0;
-			randomBlur = Math.random() * 3 + 3;
+			randomBlur = 0;
 		}
 
 		override protected function createLight(targetX:Number, targetY:Number):void

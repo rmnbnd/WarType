@@ -99,6 +99,7 @@ package com.wartype.guns
                 removeChild(gunFire);
             }
             key = String.fromCharCode(event.keyCode);
+            trace(key.toLowerCase());
             var minDistance:Number = Number.MAX_VALUE;
             var wordWithMinDistance:WordBase;
             var wordsWithSameStartChars:Array = [];

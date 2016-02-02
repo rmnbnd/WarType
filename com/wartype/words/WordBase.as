@@ -10,7 +10,9 @@ package com.wartype.words
 	import flash.display.MovieClip;
 
 	import flash.display.Sprite;
-	import flash.text.TextField;
+import flash.filters.BitmapFilterQuality;
+import flash.filters.BlurFilter;
+import flash.text.TextField;
 	import flash.text.TextFormat;
 
 	public class WordBase extends Sprite implements IObject
@@ -31,14 +33,21 @@ package com.wartype.words
 		protected var highFlameFirstFrame:MovieClip;
 		private var currentSpeed:Number;
 		private var speedY:int;
+		private var blurFilter:BlurFilter;
 		
 		public function WordBase()
 		{}
 		
 		public function init():void
 		{
+			blurFilter = new BlurFilter();
+			blurFilter.blurX = 1.15;
+			blurFilter.blurY = 1.15;
+			blurFilter.quality = BitmapFilterQuality.HIGH;
+
 			currentSpeed = getSpeedY;
 			this.x = ((MainConstants.SCR_WIDTH - 50) - 50) * Math.random() + 50;
+			sprite.filters = [blurFilter];
 			if (sprite != null && textClip != null)
 			{
 				addChild(sprite);
@@ -57,7 +66,7 @@ package com.wartype.words
 			if (go && this.stage)
 			{
 				this.y += getSpeedY * delta;
-				textLabel.text = wordIntoTextField.toString();
+				textLabel.text = wordIntoTextField.toString().toLowerCase();
 				if(isSelected) {
 					setTextFormat();
 				}
