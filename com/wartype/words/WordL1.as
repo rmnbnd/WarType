@@ -58,5 +58,11 @@ package com.wartype.words
             highFlameFirstFrame.name = "highFlameFirstFrame";
         }
 
+        override public function destruction():void
+        {
+            universe.getScore.inc(WordConstants.JET_SCORE_INC);
+            super.destruction();
+        }
+
     }
 }

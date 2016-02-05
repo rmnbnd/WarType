@@ -56,6 +56,12 @@ package com.wartype.words
             setCurrentSpeed = getSpeedY;
         }
 
+        override public function destruction():void
+        {
+            universe.getScore.inc(WordConstants.OSPREY_SCORE_INC);
+            super.destruction();
+        }
+
         private function createSpritesForScene():void
         {
             sprite = new wordL4_mc();

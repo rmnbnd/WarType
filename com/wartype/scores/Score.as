@@ -2,14 +2,24 @@ package com.wartype.scores
 {
     public class Score
 	{
-        private var count:Number = 1;
+        private var count:Number = 0;
         private var factor:Number = 1;
-        
-        public function inc():void
+        private var damagedEnemies:Number = 0;
+
+        public function inc(incNumber: Number):void
         {
-            count += factor * 1;
+            count += incNumber * factor;
             trace('Score: ' + count);
             trace('Factor: ' + factor);
+        }
+
+        public function incDamagedEnemies():void
+        {
+            damagedEnemies++;
+            if(damagedEnemies % 5 == 0)
+            {
+                factor++;
+            }
         }
         
         public function incFactor():void

@@ -1,7 +1,8 @@
 package com.wartype.guns
 {
     import com.framework.math.Amath;
-    import com.wartype.MainConstants;
+import com.framework.math.Avector;
+import com.wartype.MainConstants;
     import com.wartype.Universe;
     import com.wartype.bullets.BulletSimple;
     import com.wartype.interfaces.IObject;
@@ -99,7 +100,6 @@ package com.wartype.guns
                 removeChild(gunFire);
             }
             key = String.fromCharCode(event.keyCode);
-            trace(key.toLowerCase());
             var minDistance:Number = Number.MAX_VALUE;
             var wordWithMinDistance:WordBase;
             var wordsWithSameStartChars:Array = [];
@@ -108,7 +108,7 @@ package com.wartype.guns
                 wordsWithSameStartChars = selectWordsWithSameStartChars();
                 for(var j:int = wordsWithSameStartChars.length - 1; j >= 0; --j)
                 {
-                    var distance:Number = distanceBetweenTwoPoints(wordsWithSameStartChars[j].x, this.x,
+                    var distance:Number = Avector.distanceBetweenTwoPoints(wordsWithSameStartChars[j].x, this.x,
                             wordsWithSameStartChars[j].y, this.y);
                     if(distance < minDistance) {
                         minDistance = distance;
@@ -211,13 +211,6 @@ package com.wartype.guns
         {
             bullet = new BulletSimple();
             bullet.init(this.x, this.y, bulletSpeed, this.rotation, wordTarget);
-            universe.getScore.inc();
-        }
-
-        private function distanceBetweenTwoPoints(x1:Number, x2:Number, y1:Number, y2:Number):Number {
-            var dx:Number = x1-x2;
-            var dy:Number = y1-y2;
-            return Math.sqrt(dx * dx + dy * dy);
         }
 
         public static function getInstance():GunBase

@@ -10,9 +10,9 @@ package com.wartype.words
 	import flash.display.MovieClip;
 
 	import flash.display.Sprite;
-import flash.filters.BitmapFilterQuality;
-import flash.filters.BlurFilter;
-import flash.text.TextField;
+	import flash.filters.BitmapFilterQuality;
+	import flash.filters.BlurFilter;
+	import flash.text.TextField;
 	import flash.text.TextFormat;
 
 	public class WordBase extends Sprite implements IObject
@@ -89,7 +89,6 @@ import flash.text.TextField;
 				textLabel.visible = false;
 				isDead = true;
 				GunBase.isAttackedWord = false;
-                universe.getScore.incFactor();
 			}
 		}
 		
@@ -102,6 +101,7 @@ import flash.text.TextField;
 			if (wordsArrayLength <= 0 && wordSplitChars.length <= 0)
 			{
 				free();
+				universe.getScore.incDamagedEnemies();
 			}
 		}
 		

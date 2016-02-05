@@ -48,6 +48,12 @@ package com.wartype.words
             }
         }
 
+        override public function destruction():void
+        {
+            universe.getScore.inc(WordConstants.ENTERPRISE_SCORE_INC);
+            super.destruction();
+        }
+
         private function createSpritesForScene():void
         {
             sprite = new wordL3_mc();

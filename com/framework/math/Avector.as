@@ -90,6 +90,12 @@ package com.framework.math
 		{
 			return "{Avector: " + x.toString() + ", " + y.toString() + "}";
 		}
+
+		public static function distanceBetweenTwoPoints(x1:Number, x2:Number, y1:Number, y2:Number):Number {
+			var dx:Number = x1-x2;
+			var dy:Number = y1-y2;
+			return Math.sqrt(dx * dx + dy * dy);
+		}
 	}
 
 }
