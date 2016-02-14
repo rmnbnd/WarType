@@ -12,7 +12,6 @@ package com.wartype.guns
     import flash.display.MovieClip;
     import flash.display.Sprite;
     import flash.events.KeyboardEvent;
-    import flash.text.TextField;
 
     public class GunBase extends Sprite implements IObject
     {

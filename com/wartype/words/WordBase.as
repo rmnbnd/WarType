@@ -6,6 +6,7 @@ package com.wartype.words
 	import com.wartype.guns.GunBase;
 	import com.wartype.interfaces.IObject;
 	import com.wartype.levels.LevelManager;
+	import com.wartype.scores.ScoreWord;
 
 	import flash.display.MovieClip;
 
@@ -35,7 +36,11 @@ package com.wartype.words
 		private var currentSpeed:Number;
 		private var speedY:int;
 		private var blurFilter:BlurFilter;
-		private var highlightVisible = true;
+		private var highlightVisible:Boolean = true;
+		private var scoreWord:ScoreWord;
+		private var scoreWordArray:Array = [];
+
+		private var count:int = 0;
 		
 		public function WordBase()
 		{}
@@ -54,7 +59,7 @@ package com.wartype.words
 			if (sprite != null && textClip != null)
 			{
 				addChild(sprite);
-				addChild(textClip);
+				addChildAt(textClip, 0);
 			}
 			
 			if (textClip[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] != null)
@@ -74,13 +79,20 @@ package com.wartype.words
 					setTextFormat();
 				}
 			}
-			if(highlightVisible && highlight.alpha <= 1.1 && this._isSelected)
+			if(highlightVisible && highlight.alpha <= 1 && this._isSelected)
 			{
 				highlight.alpha += 0.1;
 			}
 			if(!highlightVisible && highlight.alpha > 0)
 			{
 				highlight.alpha -= 0.1;
+			}
+			if(scoreWordArray.length != 0)
+			{
+				for (var i:int = scoreWordArray.length - 1; i >= 0; i--)
+				{
+					scoreWordArray[i].update(this);
+				}
 			}
 		}
 		
@@ -109,7 +121,27 @@ package com.wartype.words
 			universe.getMediumExplosion.create(Anumber.randRange(this.x - 10, this.x + 10),
 											Anumber.randRange(this.y - 10, this.y + 10));
 			wordsArrayLength--;
-			if (wordsArrayLength <= 0 && wordSplitChars.length <= 0)
+			createScoreForWord();
+		}
+
+		private function createScoreForWord():void
+		{
+			var nameWord:String = "word #" + ++count;
+			scoreWordArray.push(new ScoreWord(this, nameWord));
+		}
+
+		public function removeScoreWord(obj:ScoreWord):void
+		{
+			for (var i:int = 0; i < scoreWordArray.length; i++)
+			{
+				if (scoreWordArray[i] == obj)
+				{
+					scoreWordArray[i] = null;
+					scoreWordArray.splice(i, 1);
+					break;
+				}
+			}
+			if (wordsArrayLength <= 0 && wordSplitChars.length <= 0 && scoreWordArray.length <= 0)
 			{
 				free();
 				universe.getScore.incDamagedEnemies();
@@ -120,12 +152,12 @@ package com.wartype.words
 		{
 			go = false;
 			isDead = true;
-			
+
 			if (sprite && contains(sprite))
 			{
 				removeChild(sprite);
 			}
-			
+
 		    universe.removeChild(this);
 			LevelManager.getWords.remove(this);
 		}
@@ -214,5 +246,6 @@ package com.wartype.words
 			}
 			_isSelected = value;
 		}
+
 	}
 }
