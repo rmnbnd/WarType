@@ -1,8 +1,8 @@
 package com.wartype.guns
 {
     import com.framework.math.Amath;
-import com.framework.math.Avector;
-import com.wartype.MainConstants;
+    import com.framework.math.Avector;
+    import com.wartype.MainConstants;
     import com.wartype.Universe;
     import com.wartype.bullets.BulletSimple;
     import com.wartype.interfaces.IObject;
@@ -23,8 +23,6 @@ import com.wartype.MainConstants;
         protected var bulletSpeed:Number;
         protected var isFree:Boolean = true;
         protected var health:uint;
-        protected var textFieldGun:TextField;
-        protected var healthSprite:Sprite;
         protected var gunFire:MovieClip;
         private var word:WordBase;
         private var key:String; //Нажатая кнопка
@@ -41,18 +39,13 @@ import com.wartype.MainConstants;
         {
             wordsEnemies = LevelManager.getWords.objects;
             instanceGun = this;
-            if (body != null && head != null && healthSprite != null)
+            if (body != null && head != null)
             {
                 addChild(body);
                 addChild(head);
-                addChild(healthSprite);
             }
             x = MainConstants.SCRN_WIDTH_HALF;
 
-            if (healthSprite[GunConstants.DEFAULT_GUN_TEXTFIELD_TEXT] != null)
-            {
-                textFieldGun = healthSprite[GunConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
-            }
             y = MainConstants.SCR_HEIGHT - this.height * GunConstants.COEF_HEIGHT_GUN_ON_THE_SCREEN;
             head.rotation = GunConstants.GUN_ROTATION; //Разворачиваем пушку, т.к изначально она стоит дулом вправо (0 deg)
 
@@ -68,7 +61,7 @@ import com.wartype.MainConstants;
             {
                 gunFire.alpha -= 0.1;
             }
-            textFieldGun.text = GunConstants.HEALTH_TEXT + health.toString();
+            Universe.getInstance().getTextFieldGun.text = GunConstants.HEALTH_TEXT + health.toString();
             if (health <= 0)
             {
                 universe.endGame();

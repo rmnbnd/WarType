@@ -1,5 +1,7 @@
 package com.wartype.scores
 {
+    import com.wartype.Universe;
+
     public class Score
 	{
         private var count:Number = 0;
@@ -9,7 +11,7 @@ package com.wartype.scores
         public function inc(incNumber: Number):void
         {
             count += incNumber * factor;
-            trace('Score: ' + count);
+            Universe.getInstance().getTextFieldScore.text = "Score: " + count.toString();
             trace('Factor: ' + factor);
         }
 
@@ -20,11 +22,6 @@ package com.wartype.scores
             {
                 factor++;
             }
-        }
-        
-        public function incFactor():void
-        {
-            factor++;
         }
         
         public function resetFactor():void

@@ -4,6 +4,7 @@ package com.wartype
     import com.wartype.controllers.ObjectController;
     import com.wartype.explosions.MediumExplosion;
     import com.wartype.guns.GunBase;
+    import com.wartype.guns.GunConstants;
     import com.wartype.guns.GunSimple;
     import com.wartype.levels.LevelManager;
     import com.wartype.scores.Score;
@@ -40,6 +41,10 @@ package com.wartype
         private var pauseBoardTextField:TextField;
         private var charsPerMinuteSprite:Sprite;
         private var charsPerMinuteField:TextField;
+        private var textFieldGun:TextField;
+        private var healthSprite:Sprite;
+        private var textFieldScore:TextField;
+        private var scoreSprite:Sprite;
 
         [Embed(source="../../assets/json/words.json", mimeType="application/octet-stream")]
         private var jsonData:Class;
@@ -142,6 +147,8 @@ package com.wartype
             createBackground();
 
             createLevelNumberTextField();
+            createHealthTextField();
+            createScoreTextField();
 
             levelManager = new LevelManager(words);
             createLevel();
@@ -223,6 +230,19 @@ package com.wartype
             }
         }
 
+        private function createHealthTextField():void {
+            healthSprite = new gunHealth_mc();
+            healthSprite.x = 200;
+            healthSprite.y = 130;
+            if (healthSprite != null) {
+                addChild(healthSprite);
+            }
+            if (healthSprite[GunConstants.DEFAULT_GUN_TEXTFIELD_TEXT] != null)
+            {
+                textFieldGun = healthSprite[GunConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
+            }
+        }
+
         private static function traceLevelsBorder():void
         {
             trace("=========");
@@ -247,6 +267,23 @@ package com.wartype
             {
                 levelNumberTextField = levelNumberSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
             }
+        }
+
+        private function createScoreTextField():void
+        {
+            scoreSprite = new scoreSprite_mc();
+            scoreSprite.x = 300;
+            scoreSprite.y = 130;
+            if (scoreSprite != null)
+            {
+                addChild(scoreSprite);
+            }
+
+            if (scoreSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] != null)
+            {
+                textFieldScore = scoreSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
+            }
+            textFieldScore.text = "Score: 0";
         }
 
         private static function prepareVariablesToNewLevel():void
@@ -375,6 +412,14 @@ package com.wartype
 
         public function get getMediumExplosion():MediumExplosion {
             return mediumExplosion;
+        }
+
+        public function get getTextFieldGun():TextField {
+            return textFieldGun;
+        }
+
+        public function get getTextFieldScore():TextField {
+            return textFieldScore;
         }
     }
 }

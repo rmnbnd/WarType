@@ -18,7 +18,7 @@ package com.wartype.words
 	public class WordBase extends Sprite implements IObject
 	{
 		public var isAttacked:Boolean;
-		public var isSelected:Boolean;
+		private var _isSelected:Boolean;
 		public var wordSplitChars:Array = []; //Массив букв слова
 		public var isDead:Boolean;
 
@@ -31,15 +31,18 @@ package com.wartype.words
 		protected var universe:Universe = Universe.getInstance(); //Ссылка на игровой мир
 		protected var throwTimeWord:uint;
 		protected var highFlameFirstFrame:MovieClip;
+		protected var highlight:MovieClip;
 		private var currentSpeed:Number;
 		private var speedY:int;
 		private var blurFilter:BlurFilter;
+		private var highlightVisible = true;
 		
 		public function WordBase()
 		{}
 		
 		public function init():void
 		{
+			highlight.alpha = 0;
 			blurFilter = new BlurFilter();
 			blurFilter.blurX = 1.15;
 			blurFilter.blurY = 1.15;
@@ -67,9 +70,17 @@ package com.wartype.words
 			{
 				this.y += getSpeedY * delta;
 				textLabel.text = wordIntoTextField.toString().toLowerCase();
-				if(isSelected) {
+				if(_isSelected) {
 					setTextFormat();
 				}
+			}
+			if(highlightVisible && highlight.alpha <= 1.1 && this._isSelected)
+			{
+				highlight.alpha += 0.1;
+			}
+			if(!highlightVisible && highlight.alpha > 0)
+			{
+				highlight.alpha -= 0.1;
 			}
 		}
 		
@@ -180,6 +191,28 @@ package com.wartype.words
 		public function set setCurrentSpeed(speed:Number):void
 		{
 			currentSpeed = speed;
+		}
+
+		public function get isSelected():Boolean
+		{
+			return _isSelected;
+		}
+
+		public function set isSelected(value:Boolean):void
+		{
+			if(highlight != null)
+			{
+				if(value)
+				{
+					addChildAt(highlight, 0);
+					highlightVisible = true;
+				}
+				else
+				{
+					highlightVisible = false;
+				}
+			}
+			_isSelected = value;
 		}
 	}
 }

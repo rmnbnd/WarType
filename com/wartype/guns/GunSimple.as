@@ -8,7 +8,6 @@
 			health = GunConstants.GUN_HEALTH;
 			body = new gun_body_mc();
 			head = new gun_head_mc();
-			healthSprite = new gunHealth_mc();
 			
 			init();
 		}

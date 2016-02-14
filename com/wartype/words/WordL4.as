@@ -64,6 +64,7 @@ package com.wartype.words
 
         private function createSpritesForScene():void
         {
+            highlight = new L1Highlight_mc();
             sprite = new wordL4_mc();
             textClip = new textlabel_mc();
             leftBladeSprite = new ospreyBlade_mc();

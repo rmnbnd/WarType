@@ -50,6 +50,7 @@ package com.wartype.words
 
         private function createSpritesForScene():void
         {
+            highlight = new L1Highlight_mc();
             sprite = new wordL1_mc();
             textClip = new textLabelL1_mc();
             highFlameFirstFrame = new jetL1_highFlame1();

@@ -59,8 +59,9 @@ package com.wartype.words
 
         private function createSpritesForScene():void
         {
+            highlight = new L1Highlight_mc();
             sprite = new wordL2_mc();
-            textClip = new textlabel_mc();
+            textClip = new textLabelL2_mc();
             bladesSprite = new heliBlade_mc();
             bladeConusesSprite = new heliConus_mc();
             bladeConusesSprite.y += WordConstants.HELI_BLADE_POSITION_Y;
