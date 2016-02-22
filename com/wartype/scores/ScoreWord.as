@@ -3,10 +3,15 @@ package com.wartype.scores
     import com.framework.math.Anumber;
     import com.wartype.words.WordBase;
     import com.wartype.words.WordConstants;
+    import com.wartype.words.WordL1;
+    import com.wartype.words.WordL2;
+    import com.wartype.words.WordL3;
+    import com.wartype.words.WordL4;
 
     import flash.display.MovieClip;
     import flash.display.Sprite;
     import flash.text.TextField;
+    import flash.utils.getQualifiedClassName;
 
     public class ScoreWord extends Sprite
     {
@@ -22,7 +27,21 @@ package com.wartype.scores
             {
                 scoreWordTextField = scoreWordSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
             }
-            scoreWordTextField.text = "+" + WordConstants.JET_SCORE_INC.toString();
+            switch (getQualifiedClassName(word))
+            {
+                case "com.wartype.words::WordL1":
+                    scoreWordTextField.text = "+" + WordConstants.JET_SCORE_INC.toString();
+                    break;
+                case "com.wartype.words::WordL2":
+                    scoreWordTextField.text = "+" + WordConstants.HELI_SCORE_INC.toString();
+                    break;
+                case "com.wartype.words::WordL3":
+                    scoreWordTextField.text = "+" + WordConstants.ENTERPRISE_SCORE_INC.toString();
+                    break;
+                case "com.wartype.words::WordL4":
+                    scoreWordTextField.text = "+" + WordConstants.OSPREY_SCORE_INC.toString();
+                    break;
+            }
             createScoreForWord(word);
             nameWord = name;
         }
