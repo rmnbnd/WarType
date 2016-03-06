@@ -1,12 +1,9 @@
 package com.wartype.scores
 {
     import com.framework.math.Anumber;
+    import com.wartype.Universe;
     import com.wartype.words.WordBase;
     import com.wartype.words.WordConstants;
-    import com.wartype.words.WordL1;
-    import com.wartype.words.WordL2;
-    import com.wartype.words.WordL3;
-    import com.wartype.words.WordL4;
 
     import flash.display.MovieClip;
     import flash.display.Sprite;
@@ -18,6 +15,7 @@ package com.wartype.scores
         private var scoreWordSprite:MovieClip;
         private var scoreWordTextField:TextField;
         public var nameWord:String;
+        private var universe:Universe = Universe.getInstance();
 
         public function ScoreWord(word: WordBase, name: String)
         {
@@ -30,16 +28,16 @@ package com.wartype.scores
             switch (getQualifiedClassName(word))
             {
                 case "com.wartype.words::WordL1":
-                    scoreWordTextField.text = "+" + WordConstants.JET_SCORE_INC.toString();
+                    scoreWordTextField.text = "+" + (WordConstants.JET_SCORE_INC * universe.score.getFactor.count).toString();
                     break;
                 case "com.wartype.words::WordL2":
-                    scoreWordTextField.text = "+" + WordConstants.HELI_SCORE_INC.toString();
+                    scoreWordTextField.text = "+" + (WordConstants.HELI_SCORE_INC * universe.score.getFactor.count).toString();
                     break;
                 case "com.wartype.words::WordL3":
-                    scoreWordTextField.text = "+" + WordConstants.ENTERPRISE_SCORE_INC.toString();
+                    scoreWordTextField.text = "+" + (WordConstants.ENTERPRISE_SCORE_INC * universe.score.getFactor.count).toString();
                     break;
                 case "com.wartype.words::WordL4":
-                    scoreWordTextField.text = "+" + WordConstants.OSPREY_SCORE_INC.toString();
+                    scoreWordTextField.text = "+" + (WordConstants.OSPREY_SCORE_INC * universe.score.getFactor.count).toString();
                     break;
             }
             createScoreForWord(word);

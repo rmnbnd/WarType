@@ -19,6 +19,7 @@ package com.wartype
     import flash.net.URLLoader;
     import flash.net.URLRequest;
 	import com.adobe.serialization.json.JSON;
+    import caurina.transitions.Tweener;
 
     public class Universe extends Sprite
     {
@@ -161,6 +162,13 @@ package com.wartype
             guns = new ObjectController();
             gun = new GunSimple();
             score = new Score();
+
+            if(score.getFactor.factorSprite != null)
+            {
+                addChild(score.getFactor.factorSprite);
+                Tweener.addTween(score.getFactor.factorSprite, { alpha: 1, time: 3} );
+            }
+
             mediumExplosion = new MediumExplosion(this);
 
             addEventListener(Event.ENTER_FRAME, enterFrameHandler);
