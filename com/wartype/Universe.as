@@ -7,7 +7,9 @@ package com.wartype
     import com.wartype.guns.GunConstants;
     import com.wartype.guns.GunSimple;
     import com.wartype.levels.LevelManager;
+    import com.wartype.menu.bar.StatusBar;
     import com.wartype.scores.Score;
+    import com.wartype.scores.ScoreConstants;
     import com.wartype.words.*;
     import flash.display.Sprite;
     import flash.events.Event;
@@ -147,6 +149,8 @@ package com.wartype
             var words:Array = JSON.parse(new jsonData()) as Array;
             createBackground();
 
+            var statusBar:StatusBar = new StatusBar();
+
             createLevelNumberTextField();
             createHealthTextField();
             createScoreTextField();
@@ -218,8 +222,7 @@ package com.wartype
             {
                 charsPerMinuteField = charsPerMinuteSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
             }
-            var charsPerMinuteText:String = "Enemies speed: " + MainConstants.TYPING_SPEED;
-            trace(charsPerMinuteText);
+            var charsPerMinuteText:String = String(MainConstants.TYPING_SPEED);
             charsPerMinuteField.text = charsPerMinuteText;
         }
 
@@ -240,8 +243,8 @@ package com.wartype
 
         private function createHealthTextField():void {
             healthSprite = new gunHealth_mc();
-            healthSprite.x = 200;
-            healthSprite.y = 130;
+            healthSprite.x = MainConstants.HEALTH_TEXT_FIELD_X;
+            healthSprite.y = MainConstants.HEALTH_TEXT_FIELD_Y;
             if (healthSprite != null) {
                 addChild(healthSprite);
             }
@@ -280,8 +283,8 @@ package com.wartype
         private function createScoreTextField():void
         {
             scoreSprite = new scoreSprite_mc();
-            scoreSprite.x = 300;
-            scoreSprite.y = 130;
+            scoreSprite.x = ScoreConstants.SCORE_SPRITE_X;
+            scoreSprite.y = ScoreConstants.SCORE_SPRITE_Y;
             if (scoreSprite != null)
             {
                 addChild(scoreSprite);
@@ -291,7 +294,7 @@ package com.wartype
             {
                 textFieldScore = scoreSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
             }
-            textFieldScore.text = "Score: 0";
+            textFieldScore.text = ScoreConstants.SCORE_DEFAULT_TEXT;
         }
 
         private static function prepareVariablesToNewLevel():void
@@ -345,7 +348,7 @@ package com.wartype
             prepareVariablesToNewLevel();
             createLevel();
             timerBetweenLevelsWasRunning = false;
-            charsPerMinuteField.text = "Enemies speed: " + String(MainConstants.TYPING_SPEED);
+            charsPerMinuteField.text = String(MainConstants.TYPING_SPEED);
         }
 
         private function createLevel():void

@@ -24,7 +24,7 @@ package com.wartype.guns
         protected var health:uint;
         protected var gunFire:MovieClip;
         private var word:WordBase;
-        private var key:String; //Нажатая кнопка
+        private var key:String;
         private var bullet:BulletSimple;
         public static var isAttackedWord:Boolean; //Флаг, указывающий,
         //было ли атаковано слово (для захвата ссылки на объект)
@@ -46,11 +46,11 @@ package com.wartype.guns
             x = MainConstants.SCRN_WIDTH_HALF;
 
             y = MainConstants.SCR_HEIGHT - this.height * GunConstants.COEF_HEIGHT_GUN_ON_THE_SCREEN;
-            head.rotation = GunConstants.GUN_ROTATION; //Разворачиваем пушку, т.к изначально она стоит дулом вправо (0 deg)
+            head.rotation = GunConstants.GUN_ROTATION;
 
             isFree = false;
 
-            universe.guns.add(this); //Добавляем в контейнер пушку (ObjectController)
+            universe.guns.add(this);
             universe.addChild(this);
         }
 
@@ -60,7 +60,7 @@ package com.wartype.guns
             {
                 gunFire.alpha -= 0.1;
             }
-            Universe.getInstance().getTextFieldGun.text = GunConstants.HEALTH_TEXT + health.toString();
+            Universe.getInstance().getTextFieldGun.text = health.toString() + "%";
             if (health <= 0)
             {
                 universe.endGame();
@@ -80,7 +80,6 @@ package com.wartype.guns
             universe.removeChild(this);
         }
 
-        //Функция-обработчик события нажатия на кнопку
         public function keyDownHandler(event:KeyboardEvent):void
         {
             if(event.ctrlKey)

@@ -15,17 +15,18 @@ package com.wartype {
         public static const LEVEL_STATIC_TEXT:String = "Level ";
         public static const PAUSE_TEXT:String = "PAUSE";
         public static var LEVEL_NUMBER:uint = 1;
-        public static var TYPING_SPEED:uint = 90;
+        public static var TYPING_SPEED:uint = 80;
         public static var FIRST_LEVEL_BORDER:Number = 0.9;
         public static var SECOND_LEVEL_BORDER:Number = 0.1;
         public static var THIRD_LEVEL_BORDER:Number = 0.0;
         public static var FOURTH_LEVEL_BORDER:Number = 0.0;
         public static var WORD_SPEED_ITERATION:Number = 10;
         public static var LEVEL_NUMBER_POSITION_X:Number = 100;
-        public static var LEVEL_NUMBER_POSITION_Y:Number = 100;
-        public static var CHARS_PER_MINUTE_POSITION_X:Number = MainConstants.SCR_WIDTH;
-        public static var CHARS_PER_MINUTE_POSITION_Y:Number = 100;
-
+        public static var LEVEL_NUMBER_POSITION_Y:Number = 79;
+        public static var CHARS_PER_MINUTE_POSITION_X:Number = 705;
+        public static var CHARS_PER_MINUTE_POSITION_Y:Number = 80;
+        public static var HEALTH_TEXT_FIELD_X:Number = 190;
+        public static var HEALTH_TEXT_FIELD_Y:Number = 108;
 
     }
 }
