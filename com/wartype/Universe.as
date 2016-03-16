@@ -48,6 +48,7 @@ package com.wartype
         private var healthSprite:Sprite;
         private var textFieldScore:TextField;
         private var scoreSprite:Sprite;
+        private var gameOverSprite:Sprite;
 
         [Embed(source="../../assets/json/words.json", mimeType="application/octet-stream")]
         private var jsonData:Class;
@@ -127,6 +128,7 @@ package com.wartype
                 wordOnScene.stop();
             }
             bullets.clear();
+            createGameOverScreen();
             trace("Game over! You are dead!");
         }
 
@@ -144,7 +146,7 @@ package com.wartype
 
             trace("Universe was created!");
         }
-        
+
         private function onLoaded(e:Event):void {
             var words:Array = JSON.parse(new jsonData()) as Array;
             createBackground();
@@ -187,6 +189,17 @@ package com.wartype
             createCharsPerMinuteBoard();
 
             removeEventListener(Event.ADDED_TO_STAGE, init);
+        }
+
+        private function createGameOverScreen():void
+        {
+          gameOverSprite = new gameOver_mc();
+          gameOverSprite.x = MainConstants.SCRN_WIDTH_HALF;
+          gameOverSprite.y = MainConstants.SCRN_HEIGHT_HALF;
+          if (gameOverSprite != null)
+          {
+            addChild(gameOverSprite);
+          }
         }
 
         private function createPauseBoardTextField():void
@@ -415,7 +428,7 @@ package com.wartype
         {
             return isStopGame;
         }
-        
+
         public function get getScore():Score
         {
             return this.score;
