@@ -2,6 +2,7 @@ package com.wartype
 {
     import com.framework.math.Anumber;
     import com.wartype.controllers.ObjectController;
+    import com.wartype.explosions.BigExplosion;
     import com.wartype.explosions.MediumExplosion;
     import com.wartype.guns.GunBase;
     import com.wartype.guns.GunConstants;
@@ -49,11 +50,11 @@ package com.wartype
         private var textFieldScore:TextField;
         private var scoreSprite:Sprite;
         private var gameOverSprite:Sprite;
+        private var mediumExplosion:MediumExplosion;
+        private var bigExplosion:BigExplosion;
 
         [Embed(source="../../assets/json/words.json", mimeType="application/octet-stream")]
         private var jsonData:Class;
-
-        private var mediumExplosion:MediumExplosion;
 
         private static var _instance:Universe;
 
@@ -176,6 +177,7 @@ package com.wartype
             }
 
             mediumExplosion = new MediumExplosion(this);
+            bigExplosion = new BigExplosion(this);
 
             addEventListener(Event.ENTER_FRAME, enterFrameHandler);
             stage.addEventListener(KeyboardEvent.KEY_DOWN, gun.keyDownHandler);
@@ -375,6 +377,7 @@ package com.wartype
         private function enterFrameHandler(event:Event):void
         {
             mediumExplosion.update();
+            bigExplosion.update();
             levelNumberTextField.text = MainConstants.LEVEL_STATIC_TEXT + MainConstants.LEVEL_NUMBER;
             //Расчёты Delta-времени для избежания ошибок в выводе графики при низких fps
             //getTimer() считает время с момента запуска приложения до вызова функции
@@ -436,6 +439,10 @@ package com.wartype
 
         public function get getMediumExplosion():MediumExplosion {
             return mediumExplosion;
+        }
+
+        public function get getBigExplosion():BigExplosion {
+            return bigExplosion;
         }
 
         public function get getTextFieldGun():TextField {

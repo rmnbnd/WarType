@@ -121,7 +121,13 @@ package com.wartype.words
 			universe.getMediumExplosion.create(Anumber.randRange(this.x - 10, this.x + 10),
 											Anumber.randRange(this.y - 10, this.y + 10));
 			wordsArrayLength--;
+			if (wordsArrayLength <= 0 && wordSplitChars.length <= 0)
+			{
+				universe.getBigExplosion.create(Anumber.randRange(this.x - 10, this.x + 10),
+						Anumber.randRange(this.y - 10, this.y + 10));
+			}
 			createScoreForWord();
+
 		}
 
 		private function createScoreForWord():void
@@ -141,10 +147,13 @@ package com.wartype.words
 					break;
 				}
 			}
-			if (wordsArrayLength <= 0 && wordSplitChars.length <= 0 && scoreWordArray.length <= 0)
+			if (wordsArrayLength <= 0 && wordSplitChars.length <= 0)
 			{
-				free();
-				universe.getScore.incDamagedEnemies();
+				if(scoreWordArray.length <= 0)
+				{
+					free();
+					universe.getScore.incDamagedEnemies();
+				}
 			}
 		}
 		
