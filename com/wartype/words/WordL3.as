@@ -50,8 +50,15 @@ package com.wartype.words
 
         override public function destruction():void
         {
-            universe.getScore.inc(WordConstants.ENTERPRISE_SCORE_INC);
             super.destruction();
+            if (wordsArrayLength <= 0 && wordSplitChars.length <= 0)
+            {
+                universe.getScore.inc(WordConstants.ENTERPRISE_SCORE_INC_FINAL);
+            }
+            else
+            {
+                universe.getScore.inc(WordConstants.ENTERPRISE_SCORE_INC);
+            }
         }
 
         private function createSpritesForScene():void

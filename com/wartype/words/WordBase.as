@@ -127,7 +127,6 @@ package com.wartype.words
 						Anumber.randRange(this.y - 10, this.y + 10));
 			}
 			createScoreForWord();
-
 		}
 
 		private function createScoreForWord():void
@@ -254,6 +253,11 @@ package com.wartype.words
 				}
 			}
 			_isSelected = value;
+		}
+
+		public function get getWordsArrayLength():int
+		{
+			return wordsArrayLength;
 		}
 
 	}

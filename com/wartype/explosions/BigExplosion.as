@@ -11,8 +11,8 @@ package com.wartype.explosions {
 
         override protected function setProps():void
         {
-            numberOfFireballs = 100;
-            explosionRange = 65;
+            numberOfFireballs = 60;
+            explosionRange = 75;
             growScale = Math.random() * 100 * .01;
             growSpeed = .1;
             growAlpha = Math.random() * 200 * .01;
