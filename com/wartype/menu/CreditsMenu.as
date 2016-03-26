@@ -1,26 +1,20 @@
-﻿package com.wartype.menu
-{
-	import com.wartype.Game;
+﻿package com.wartype.menu {
 
-	import flash.display.Stage;
-	import flash.events.MouseEvent;
+import com.wartype.App;
 
-	public class CreditsMenu extends BaseMenu
-		{
-			private var game:Game;
+import flash.events.MouseEvent;
 
-			public function CreditsMenu(stageRef:Stage = null, game:Game = null):void
-			{
-				this.game = game;
-				this.stageRef = stageRef;
-				btnReturn.addEventListener(MouseEvent.MOUSE_DOWN, returnMainMenu,  false, 0, true);
-			}
+public class CreditsMenu extends BaseMenu {
 
-			private function returnMainMenu(e:MouseEvent) : void
-			{
-				unload(new MainMenu(stageRef, game));
-			}
+    public function CreditsMenu(appRef:App = null):void {
+        super(appRef);
 
-		}
-	
+        btnReturn.addEventListener(MouseEvent.MOUSE_DOWN, returnMainMenu, false, 0, true);
+    }
+
+    private function returnMainMenu(e:MouseEvent):void {
+        this.appRef.createMainMenuFromExistView(this);
+    }
+
+}
 }
