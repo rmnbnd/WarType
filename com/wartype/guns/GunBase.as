@@ -13,7 +13,7 @@ package com.wartype.guns
     import flash.display.Sprite;
     import flash.events.KeyboardEvent;
 
-    public class GunBase extends Sprite implements IObject
+public class GunBase extends Sprite implements IObject
     {
         protected var body:MovieClip;
         protected var head:MovieClip;
@@ -207,6 +207,10 @@ package com.wartype.guns
         public static function getInstance():GunBase
         {
             return instanceGun;
+        }
+
+        public function resetIsAttackedWord():void {
+            isAttackedWord = false;
         }
 
         public function set setHealth(value:Number):void

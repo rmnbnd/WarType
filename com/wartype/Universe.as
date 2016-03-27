@@ -52,14 +52,16 @@ package com.wartype
         private var gameOverSprite:Sprite;
         private var mediumExplosion:MediumExplosion;
         private var bigExplosion:BigExplosion;
+        private var game:Game;
 
         [Embed(source="../../assets/json/words.json", mimeType="application/octet-stream")]
         private var jsonData:Class;
 
         private static var _instance:Universe;
 
-        public function Universe()
+        public function Universe(game:Game = null)
         {
+            this.game = game;
             if (stage)
             {
                 init();
@@ -129,16 +131,13 @@ package com.wartype
                 wordOnScene.stop();
             }
             bullets.clear();
+            gun.resetIsAttackedWord();
             createGameOverScreen();
             trace("Game over! You are dead!");
         }
 
         private function init(event:Event = null):void
         {
-            if (_instance != null)
-            {
-                throw("The universe is already created. Use the Universe.getInstance();");
-            }
             _instance = this;
 
             var myTextLoader:URLLoader = new URLLoader();
@@ -195,13 +194,7 @@ package com.wartype
 
         private function createGameOverScreen():void
         {
-          gameOverSprite = new gameOver_mc();
-          gameOverSprite.x = MainConstants.SCRN_WIDTH_HALF;
-          gameOverSprite.y = MainConstants.SCRN_HEIGHT_HALF;
-          if (gameOverSprite != null)
-          {
-            addChild(gameOverSprite);
-          }
+            game.openGameOverScreen();
         }
 
         private function createPauseBoardTextField():void

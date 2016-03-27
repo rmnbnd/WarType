@@ -30,20 +30,20 @@ public class App extends Sprite {
 
     public function createGame(currentMenu:BaseMenu = null):void {
         stage.removeChild(currentMenu);
-        var game:Game = new Game(stage);
+        var game:Game = new Game(stage, this);
         stage.addChild(game);
+    }
+
+    public function loadMenu(menu:BaseMenu = null):void {
+        stage.addChild(menu);
+        Tweener.addTween(menu, {
+            alpha: 1, y: 0, time: 0.7
+        });
     }
 
     private function createMainMenu():void {
         var menu:BaseMenu = new MainMenu(this);
         loadMenu(menu);
-    }
-
-    private function loadMenu(menu:BaseMenu = null):void {
-        stage.addChild(menu);
-        Tweener.addTween(menu, {
-            alpha: 1, y: 0, time: 0.7
-        });
     }
 }
 }
