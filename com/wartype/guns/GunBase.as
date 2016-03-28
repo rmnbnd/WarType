@@ -21,7 +21,7 @@ public class GunBase extends Sprite implements IObject
         protected var wordTarget:WordBase;
         protected var bulletSpeed:Number;
         protected var isFree:Boolean = true;
-        protected var health:uint;
+        protected var health:int;
         protected var gunFire:MovieClip;
         private var word:WordBase;
         private var key:String;
@@ -63,6 +63,7 @@ public class GunBase extends Sprite implements IObject
             Universe.getInstance().getTextFieldGun.text = health.toString() + "%";
             if (health <= 0)
             {
+                Universe.getInstance().getTextFieldGun.text = "0%";
                 universe.endGame();
             }
         }
