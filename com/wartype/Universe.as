@@ -53,6 +53,7 @@ package com.wartype
         private var mediumExplosion:MediumExplosion;
         private var bigExplosion:BigExplosion;
         private var game:Game;
+        private var statusBar:StatusBar;
 
         [Embed(source="../../assets/json/words.json", mimeType="application/octet-stream")]
         private var jsonData:Class;
@@ -132,6 +133,7 @@ package com.wartype
             }
             bullets.clear();
             gun.resetIsAttackedWord();
+            statusBar.removeEventListeners();
             createGameOverScreen();
             trace("Game over! You are dead!");
         }
@@ -151,7 +153,7 @@ package com.wartype
             var words:Array = JSON.parse(new jsonData()) as Array;
             createBackground();
 
-            var statusBar:StatusBar = new StatusBar();
+            statusBar = new StatusBar();
 
             createLevelNumberTextField();
             createHealthTextField();
