@@ -24,6 +24,7 @@ public class Game extends Sprite {
     }
 
     public function openGameOverScreen():void {
+        stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownAction);
         app.loadMenu(new GameOverMenu(this));
     }
 
