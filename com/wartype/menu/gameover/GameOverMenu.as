@@ -18,10 +18,15 @@ public class GameOverMenu extends BaseMenu {
         this.y = MainConstants.SCRN_HEIGHT_HALF / 2;
 
         menuButton.addEventListener(MouseEvent.MOUSE_DOWN, openMainMenu, false, 0, true);
+        playAgainButton.addEventListener(MouseEvent.MOUSE_DOWN, playAgain, false, 0, true);
     }
 
     private function openMainMenu(e:MouseEvent):void {
         game.openMainMenuScreen(this);
+    }
+
+    private function playAgain(e:MouseEvent):void {
+        game.playAgain(this);
     }
 
 }

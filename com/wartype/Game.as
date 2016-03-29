@@ -33,6 +33,11 @@ public class Game extends Sprite {
         app.createMainMenuFromExistView(menuView);
     }
 
+    public function playAgain(menuView:BaseMenu):void {
+        removeChild(universe);
+        app.createGame(menuView);
+    }
+
     private function keyDownAction(event:KeyboardEvent):void {
         var wordOnScene:WordBase = Universe.getInstance().getWordOnScene;
         if (wordOnScene != null && String.fromCharCode(event.keyCode) == "(") {
