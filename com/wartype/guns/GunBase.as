@@ -12,8 +12,10 @@ package com.wartype.guns
     import flash.display.MovieClip;
     import flash.display.Sprite;
     import flash.events.KeyboardEvent;
+    import flash.filters.BitmapFilterQuality;
+    import flash.filters.BlurFilter;
 
-public class GunBase extends Sprite implements IObject
+    public class GunBase extends Sprite implements IObject
     {
         protected var body:MovieClip;
         protected var head:MovieClip;
@@ -34,19 +36,25 @@ public class GunBase extends Sprite implements IObject
         public function GunBase()
         {}
 
-        public function init():void
-        {
+        public function init():void {
             wordsEnemies = LevelManager.getWords.objects;
             instanceGun = this;
+
+            var blurFilter:BlurFilter = new BlurFilter();
+            blurFilter.blurX = 1.1;
+            blurFilter.blurY = 1.1;
+            blurFilter.quality = BitmapFilterQuality.HIGH;
+            head.filters = [blurFilter];
+            body.filters = [blurFilter];
+
             if (body != null && head != null)
             {
                 addChild(body);
                 addChild(head);
             }
-            x = MainConstants.SCRN_WIDTH_HALF;
+            x = MainConstants.SCRN_WIDTH_HALF - 20;
 
-            y = MainConstants.SCR_HEIGHT - this.height * GunConstants.COEF_HEIGHT_GUN_ON_THE_SCREEN;
-            head.rotation = GunConstants.GUN_ROTATION;
+            y = MainConstants.SCR_HEIGHT - 83;
 
             isFree = false;
 
