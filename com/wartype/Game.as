@@ -33,7 +33,7 @@ public class Game extends Sprite {
         app.createMainMenuFromExistView(menuView);
     }
 
-    public function playAgain(menuView:BaseMenu):void {
+    public function removeMenuAndCreateGame(menuView:BaseMenu):void {
         removeChild(universe);
         app.createGame(menuView);
     }

@@ -26,7 +26,7 @@ public class GameOverMenu extends BaseMenu {
     }
 
     private function playAgain(e:MouseEvent):void {
-        game.playAgain(this);
+        game.removeMenuAndCreateGame(this);
     }
 
 }
