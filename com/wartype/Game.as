@@ -23,9 +23,9 @@ public class Game extends Sprite {
         stage.addEventListener(KeyboardEvent.KEY_UP, getBackToNormSpeed); //Dev only, get more speed for words//use Arrow-down key
     }
 
-    public function openGameOverScreen():void {
+    public function openGameOverScreen(score:Number):void {
         stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownAction);
-        app.loadMenu(new GameOverMenu(this));
+        app.loadMenu(new GameOverMenu(this, score));
     }
 
     public function openMainMenuScreen(menuView:BaseMenu):void {

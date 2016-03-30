@@ -196,7 +196,7 @@ package com.wartype
 
         private function createGameOverScreen():void
         {
-            game.openGameOverScreen();
+            game.openGameOverScreen(score.getCount);
         }
 
         private function createPauseBoardTextField():void

@@ -8,6 +8,8 @@ package com.wartype.menu {
         public static const MENU_ICON_Y: Number = 85;
         public static const HEALTH_ICON_X: Number = 138;
         public static const HEALTH_ICON_Y: Number = 85;
+        public static const GAME_OVER_HSCORE_X: Number = 20;
+        public static const GAME_OVER_HSCORE_Y: Number = 380;
 
     }
 }
