@@ -36,8 +36,8 @@ package com.wartype.words {
         public static const OSPREY_BLADES_ROTATION_SPEED:Number = 56;
         public static const OSPREY_BOTTOM_MARGIN:Number = 20;
         public static const OSPREY_DAMAGE:Number = 20;
-        public static const OSPREY_BLADE_POSITION_X:Number = 90;
-        public static const OSPREY_BLADE_POSITION_Y:Number = 7;
+        public static const OSPREY_BLADE_POSITION_X:Number = 78;
+        public static const OSPREY_BLADE_POSITION_Y:Number = 5;
         public static const OSPREY_SCORE_INC:Number = 35;
         public static const OSPREY_SCORE_INC_FINAL:Number = 50;
     }

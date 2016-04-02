@@ -16,6 +16,8 @@ package com.wartype
     import flash.events.Event;
     import flash.events.KeyboardEvent;
     import flash.events.TimerEvent;
+    import flash.filters.BitmapFilterQuality;
+    import flash.filters.BlurFilter;
     import flash.text.TextField;
     import flash.utils.Timer;
     import flash.utils.getTimer;
@@ -49,11 +51,11 @@ package com.wartype
         private var healthSprite:Sprite;
         private var textFieldScore:TextField;
         private var scoreSprite:Sprite;
-        private var gameOverSprite:Sprite;
         private var mediumExplosion:MediumExplosion;
         private var bigExplosion:BigExplosion;
         private var game:Game;
         private var statusBar:StatusBar;
+        private var blurFilter:BlurFilter;
 
         [Embed(source="../../assets/json/words.json", mimeType="application/octet-stream")]
         private var jsonData:Class;
@@ -196,7 +198,21 @@ package com.wartype
 
         private function createGameOverScreen():void
         {
+            blurFilter = new BlurFilter();
+            blurFilter.blurX = 2.95;
+            blurFilter.blurY = 2.95;
+            blurFilter.quality = BitmapFilterQuality.HIGH;
+            backgroundSprite.filters = [blurFilter];
+            gun.filters = [blurFilter];
+            var allWordsOnLevel:ObjectController = LevelManager.getWords;
+            for (var i:int = 0; i < allWordsOnLevel.objects.length; i++)
+            {
+                wordOnScene = LevelManager.getWords.objects[i];
+                wordOnScene.filters = [blurFilter];
+            }
             game.openGameOverScreen(score.getCount);
+            getMediumExplosion.blurExplosion();
+            getBigExplosion.blurExplosion();
         }
 
         private function createPauseBoardTextField():void

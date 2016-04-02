@@ -65,7 +65,7 @@ package com.wartype.words
         {
             highlight = new L1Highlight_mc();
             sprite = new wordL3_mc();
-            textClip = new textlabel_mc();
+            textClip = new textLabelL3_mc();
             highFlameFirstFrame = new jetL3_highFlame1();
             highFlameFirstFrame.x += WordConstants.ENTERPRISE_FLAME_POSTION_X;
             highFlameFirstFrame.y -= WordConstants.ENTERPRISE_FLAME_POSTION_Y;

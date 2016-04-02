@@ -63,6 +63,18 @@ package com.wartype.explosions
 			}
 		}
 
+		public function blurExplosion():void {
+			for (var i:int = 0; i < particles.length; i++)
+			{
+				tempParticle = particles[i] as Particle;
+				blurFilter = new BlurFilter();
+				blurFilter.blurX = 2.5;
+				blurFilter.blurY = 2.5;
+				blurFilter.quality = BitmapFilterQuality.HIGH;
+				tempParticle.filters = [blurFilter];
+			}
+		}
+
 		protected function setProps():void
 		{
 

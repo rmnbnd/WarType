@@ -66,7 +66,7 @@ package com.wartype.words
         {
             highlight = new L1Highlight_mc();
             sprite = new wordL4_mc();
-            textClip = new textlabel_mc();
+            textClip = new textLabelL4_mc();
             leftBladeSprite = new ospreyBlade_mc();
             rightBladeSprite = new ospreyBlade_mc();
             bladeConusesSprite = new bladeConuses_mc();

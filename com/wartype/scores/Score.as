@@ -29,6 +29,15 @@ package com.wartype.scores
                     case 3:
                         createNewFactorSprite(factorX3_mc);
                         break;
+                    case 4:
+                        createNewFactorSprite(factorX4_mc);
+                        break;
+                    case 5:
+                        createNewFactorSprite(factorX5_mc);
+                        break;
+                    case 6:
+                        createNewFactorSprite(factorX6_mc);
+                        break;
                 }
             }
         }

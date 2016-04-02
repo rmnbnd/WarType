@@ -25,7 +25,7 @@ package com.wartype {
         public static var LEVEL_NUMBER_POSITION_Y:Number = 79;
         public static var CHARS_PER_MINUTE_POSITION_X:Number = 705;
         public static var CHARS_PER_MINUTE_POSITION_Y:Number = 80;
-        public static var HEALTH_TEXT_FIELD_X:Number = 190;
+        public static var HEALTH_TEXT_FIELD_X:Number = 205;
         public static var HEALTH_TEXT_FIELD_Y:Number = 108;
 
     }
