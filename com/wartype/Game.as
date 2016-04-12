@@ -25,6 +25,7 @@ public class Game extends Sprite {
 
     public function openGameOverScreen(score:Number):void {
         stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownAction);
+        MainConstants.LEVEL_NUMBER = 1;
         app.loadMenu(new GameOverMenu(this, score));
     }
 
