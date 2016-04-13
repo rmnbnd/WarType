@@ -30,6 +30,7 @@ public class App extends Sprite {
 
     public function createGame(currentMenu:BaseMenu = null):void {
         stage.removeChild(currentMenu);
+        stage.focus = stage;
         var game:Game = new Game(stage, this);
         stage.addChild(game);
     }
