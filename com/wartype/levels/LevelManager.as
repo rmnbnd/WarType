@@ -1,5 +1,7 @@
 package com.wartype.levels
 {
+	import com.framework.math.Anumber;
+	import com.wartype.MainConstants;
 	import com.wartype.controllers.ObjectController;
 	import com.wartype.levels.LevelsConstants;
 	import com.wartype.words.WordBase;
@@ -10,6 +12,8 @@ package com.wartype.levels
 
 	public class LevelManager
 	{
+		private static const WORD_SPEED_ITERATION:Number = 10;
+
 		private var wordsArray:Array;
 		private var speedY:int = LevelsConstants.WORD_SPEED;
 		private var randomWordsArrayToOneLevel:Array;
@@ -20,8 +24,14 @@ package com.wartype.levels
 		private var timeToThrowWordSecondLevel:int;
 		private var timeToThrowWordThirdLevel:int;
 		private var timeToThrowWordFourthLevel:int;
+
 		private var typingSpeed:int = 70;
 		private var levelNumber:uint = 0;
+
+		public var firstLevelBorder:Number = 0.9;
+		public var secondLevelBorder:Number = 0.1;
+		public var thirdLevelBorder:Number = 0.0;
+		public var fourthLevelBorder:Number = 0.0;
 
 		private static var words:ObjectController = new ObjectController();
 
@@ -31,10 +41,8 @@ package com.wartype.levels
 			randomWordsArrayToOneLevel = [];
 		}
 		
-		public function createLevel(incSpeed:int, firstLevelBorder:Number, secondLevelBorder:Number,
-									 thirdLevelBorder:Number, fourthLevelBorder:Number):void
-		{
-			typingSpeed += incSpeed;
+		public function createLevel():void {
+			typingSpeed += WORD_SPEED_ITERATION;
 			levelNumber++;
 			var charsPerFirstLevelWords:int = typingSpeed * firstLevelBorder;
 			trace("Chars 1 lvl: " + charsPerFirstLevelWords);
@@ -74,6 +82,34 @@ package com.wartype.levels
 			wordsArray = getCurrentWords(LevelsConstants.FOURTH_DIFFICULTY_LETTERS);
 			createWordsByDifficulty(LevelsConstants.FOURTH_DIFFICULTY_LETTERS, numberOfWordsFourthLvl);
 			randomWordsArrayToOneLevel.sort(randomSort);
+		}
+
+		public function prepareVariablesToNewLevel():void {
+			if (firstLevelBorder < 1 && secondLevelBorder < 1 && thirdLevelBorder < 1 && fourthLevelBorder < 1) {
+				if (firstLevelBorder > 0) {
+					firstLevelBorder = Anumber.toFixedNumber(firstLevelBorder, 1, MainConstants.MINUS, 0.2);
+					secondLevelBorder = Anumber.toFixedNumber(secondLevelBorder, 1, MainConstants.PLUS, 0.1);
+					thirdLevelBorder = Anumber.toFixedNumber(thirdLevelBorder, 1, MainConstants.PLUS, 0.1);
+				}
+				else if (secondLevelBorder > 0) {
+					secondLevelBorder = Anumber.toFixedNumber(secondLevelBorder, 1, MainConstants.MINUS, 0.1);
+					thirdLevelBorder = 0.5;
+					fourthLevelBorder = Anumber.toFixedNumber(fourthLevelBorder, 1, MainConstants.PLUS, 0.1);
+				} else {
+					thirdLevelBorder = Anumber.toFixedNumber(thirdLevelBorder, 1, MainConstants.MINUS, 0.1);
+					fourthLevelBorder = Anumber.toFixedNumber(fourthLevelBorder, 1, MainConstants.PLUS, 0.1);
+				}
+			}
+			traceLevelsBorder();
+		}
+
+		public function traceLevelsBorder():void {
+			trace("=========");
+			trace("FIRST " + firstLevelBorder);
+			trace("SECOND " + secondLevelBorder);
+			trace("THIRD " + thirdLevelBorder);
+			trace("FOURTH " + fourthLevelBorder);
+			trace("=========");
 		}
 
 		private static function randomSort(firstElement:*, secondElement:*):Number

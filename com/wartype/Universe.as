@@ -166,7 +166,7 @@ package com.wartype
             timerWord = new Timer(levelManager.getRandomWordsArrayToOneLevel[0].getThrowTimeWord);
 
             trace("Time to throw next word: " + timerWord.delay);
-            traceLevelsBorder();
+            levelManager.traceLevelsBorder();
 
             bullets = new ObjectController();
             guns = new ObjectController();
@@ -280,16 +280,6 @@ package com.wartype
             }
         }
 
-        private static function traceLevelsBorder():void
-        {
-            trace("=========");
-            trace("FIRST " + MainConstants.FIRST_LEVEL_BORDER);
-            trace("SECOND " + MainConstants.SECOND_LEVEL_BORDER);
-            trace("THIRD " + MainConstants.THIRD_LEVEL_BORDER);
-            trace("FOURTH " + MainConstants.FOURTH_LEVEL_BORDER);
-            trace("=========");
-        }
-
         private function createLevelNumberTextField():void
         {
             levelNumberSprite = new numberlevel_mc();
@@ -323,39 +313,6 @@ package com.wartype
             textFieldScore.text = ScoreConstants.SCORE_DEFAULT_TEXT;
         }
 
-        private static function prepareVariablesToNewLevel():void
-        {
-            if(MainConstants.FIRST_LEVEL_BORDER < 1 && MainConstants.SECOND_LEVEL_BORDER < 1 &&
-                    MainConstants.THIRD_LEVEL_BORDER < 1 && MainConstants.FOURTH_LEVEL_BORDER < 1)
-            {
-                if(MainConstants.FIRST_LEVEL_BORDER > 0)
-                {
-                    MainConstants.FIRST_LEVEL_BORDER =
-                            Anumber.toFixedNumber(MainConstants.FIRST_LEVEL_BORDER, 1, MainConstants.MINUS, 0.2);
-                    MainConstants.SECOND_LEVEL_BORDER =
-                            Anumber.toFixedNumber(MainConstants.SECOND_LEVEL_BORDER, 1, MainConstants.PLUS, 0.1);
-                    MainConstants.THIRD_LEVEL_BORDER =
-                            Anumber.toFixedNumber(MainConstants.THIRD_LEVEL_BORDER, 1, MainConstants.PLUS, 0.1);
-                }
-                else if(MainConstants.SECOND_LEVEL_BORDER > 0)
-                {
-                    MainConstants.SECOND_LEVEL_BORDER =
-                            Anumber.toFixedNumber(MainConstants.SECOND_LEVEL_BORDER, 1, MainConstants.MINUS, 0.1);
-                    MainConstants.THIRD_LEVEL_BORDER = 0.5;
-                    MainConstants.FOURTH_LEVEL_BORDER =
-                            Anumber.toFixedNumber(MainConstants.FOURTH_LEVEL_BORDER, 1, MainConstants.PLUS, 0.1);
-                } else
-                {
-                    MainConstants.THIRD_LEVEL_BORDER =
-                            Anumber.toFixedNumber(MainConstants.THIRD_LEVEL_BORDER, 1, MainConstants.MINUS, 0.1);
-                    MainConstants.FOURTH_LEVEL_BORDER =
-                            Anumber.toFixedNumber(MainConstants.FOURTH_LEVEL_BORDER, 1, MainConstants.PLUS, 0.1);
-                }
-            }
-
-            traceLevelsBorder();
-        }
-
         private function createTimerBetweenLevels():void
         {
             timerWord.stop();
@@ -368,7 +325,7 @@ package com.wartype
         {
             timerBetweenLevels.stop();
             timerWord.start();
-            prepareVariablesToNewLevel();
+            levelManager.prepareVariablesToNewLevel();
             createLevel();
             timerBetweenLevelsWasRunning = false;
             charsPerMinuteField.text = String(levelManager.getTypingSpeed);
@@ -377,9 +334,7 @@ package com.wartype
         private function createLevel():void
         {
             trace("Level " + levelManager.getLevelNumber + " created!");
-            levelManager.createLevel(MainConstants.WORD_SPEED_ITERATION, MainConstants.FIRST_LEVEL_BORDER,
-                    MainConstants.SECOND_LEVEL_BORDER, MainConstants.THIRD_LEVEL_BORDER,
-                    MainConstants.FOURTH_LEVEL_BORDER);
+            levelManager.createLevel();
         }
 
         private function enterFrameHandler(event:Event):void

@@ -14,11 +14,6 @@ package com.wartype {
         public static const PLUS:String = "plus";
         public static const LEVEL_STATIC_TEXT:String = "Level ";
         public static const PAUSE_TEXT:String = "PAUSE";
-        public static var FIRST_LEVEL_BORDER:Number = 0.9;
-        public static var SECOND_LEVEL_BORDER:Number = 0.1;
-        public static var THIRD_LEVEL_BORDER:Number = 0.0;
-        public static var FOURTH_LEVEL_BORDER:Number = 0.0;
-        public static var WORD_SPEED_ITERATION:Number = 10;
         public static var LEVEL_NUMBER_POSITION_X:Number = 100;
         public static var LEVEL_NUMBER_POSITION_Y:Number = 79;
         public static var CHARS_PER_MINUTE_POSITION_X:Number = 705;
