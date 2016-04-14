@@ -248,7 +248,7 @@ package com.wartype
             {
                 charsPerMinuteField = charsPerMinuteSprite[WordConstants.DEFAULT_GUN_TEXTFIELD_TEXT] as TextField;
             }
-            var charsPerMinuteText:String = String(MainConstants.TYPING_SPEED);
+            var charsPerMinuteText:String = String(levelManager.getTypingSpeed);
             charsPerMinuteField.text = charsPerMinuteText;
         }
 
@@ -325,8 +325,6 @@ package com.wartype
 
         private static function prepareVariablesToNewLevel():void
         {
-            MainConstants.TYPING_SPEED += MainConstants.WORD_SPEED_ITERATION;
-
             if(MainConstants.FIRST_LEVEL_BORDER < 1 && MainConstants.SECOND_LEVEL_BORDER < 1 &&
                     MainConstants.THIRD_LEVEL_BORDER < 1 && MainConstants.FOURTH_LEVEL_BORDER < 1)
             {
@@ -368,19 +366,18 @@ package com.wartype
 
         private function prepareAndCreateNewLevel(event:TimerEvent):void
         {
-            MainConstants.LEVEL_NUMBER++;
             timerBetweenLevels.stop();
             timerWord.start();
             prepareVariablesToNewLevel();
             createLevel();
             timerBetweenLevelsWasRunning = false;
-            charsPerMinuteField.text = String(MainConstants.TYPING_SPEED);
+            charsPerMinuteField.text = String(levelManager.getTypingSpeed);
         }
 
         private function createLevel():void
         {
-            trace("Level " + MainConstants.LEVEL_NUMBER + " created!");
-            levelManager.createLevel(MainConstants.TYPING_SPEED, MainConstants.FIRST_LEVEL_BORDER,
+            trace("Level " + levelManager.getLevelNumber + " created!");
+            levelManager.createLevel(MainConstants.WORD_SPEED_ITERATION, MainConstants.FIRST_LEVEL_BORDER,
                     MainConstants.SECOND_LEVEL_BORDER, MainConstants.THIRD_LEVEL_BORDER,
                     MainConstants.FOURTH_LEVEL_BORDER);
         }
@@ -389,7 +386,7 @@ package com.wartype
         {
             mediumExplosion.update();
             bigExplosion.update();
-            levelNumberTextField.text = MainConstants.LEVEL_STATIC_TEXT + MainConstants.LEVEL_NUMBER;
+            levelNumberTextField.text = MainConstants.LEVEL_STATIC_TEXT + levelManager.getLevelNumber;
             //Расчёты Delta-времени для избежания ошибок в выводе графики при низких fps
             //getTimer() считает время с момента запуска приложения до вызова функции
             var _deltaTime:Number = (getTimer() - lastTick) / 1000;

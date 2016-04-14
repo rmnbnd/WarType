@@ -20,6 +20,8 @@ package com.wartype.levels
 		private var timeToThrowWordSecondLevel:int;
 		private var timeToThrowWordThirdLevel:int;
 		private var timeToThrowWordFourthLevel:int;
+		private var typingSpeed:int = 70;
+		private var levelNumber:uint = 0;
 
 		private static var words:ObjectController = new ObjectController();
 
@@ -29,9 +31,11 @@ package com.wartype.levels
 			randomWordsArrayToOneLevel = [];
 		}
 		
-		public function createLevel(typingSpeed:int, firstLevelBorder:Number, secondLevelBorder:Number,
+		public function createLevel(incSpeed:int, firstLevelBorder:Number, secondLevelBorder:Number,
 									 thirdLevelBorder:Number, fourthLevelBorder:Number):void
 		{
+			typingSpeed += incSpeed;
+			levelNumber++;
 			var charsPerFirstLevelWords:int = typingSpeed * firstLevelBorder;
 			trace("Chars 1 lvl: " + charsPerFirstLevelWords);
 			var charsPerSecondLevelWords:int = typingSpeed * secondLevelBorder;
@@ -132,6 +136,14 @@ package com.wartype.levels
 		public function get getRandomWordsArrayToOneLevel():Array
 		{
 			return randomWordsArrayToOneLevel;
+		}
+
+		public function get getTypingSpeed():int {
+			return typingSpeed;
+		}
+
+		public function get getLevelNumber():uint {
+			return levelNumber;
 		}
 	}
 }
